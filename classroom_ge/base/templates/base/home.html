@@ -1,0 +1,17 @@
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+    {% trans "base_homepage_welcome_text" %}
+    <br>
+
+    <a href="{% url 'url-student-home' %}">აქ იქნება მოსწავლეების მთავარი გვერდი</a>
+    <br>
+
+    <a href="{% url 'url-teacher-home' %}">აქ იქნება მასწავლებლების მთავარი გვერდი</a>    
+    <br>
+    
+    <a href="{% url 'url-admin-home' %}">აქ იქნება ადმინისტრატორების მთავარი გვერდი</a>
+
+{% endblock %}
