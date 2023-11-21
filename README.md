@@ -58,6 +58,41 @@ Here is a link about django translation:
     https://testdriven.io/blog/multiple-languages-in-django/
 
 
+> [!WARNING]
+> The local server will not run, as the instance of the database is not created yet.
+> To initiate database and create user:
+> - Create database and user with permissions:
+>   - Log into an interactive Postgres session with command:
+>       - sudo -u postgres psql
+>   - In the postgres session create database, user and add permissions:
+>       - CREATE DATABASE classroom_ge;
+>       - CREATE USER example_archili WITH PASSWORD example_archilis_password;
+>       - ALTER ROLE example_archili SET client_encoding TO 'utf8';
+>       - ALTER ROLE example_archili SET default_transaction_isolation TO 'read committed';
+>       - ALTER ROLE example_archili SET timezone TO 'UTC';
+>       - GRANT ALL PRIVILEGES ON DATABASE classroom_ge TO example_archili;
+>   - Quit postgress session
+>       - \q
+> - Change these lines in the project settings file (classroom_ge/settings.py)
+>       DATABASES = {
+>           'default': {
+>               'ENGINE': 'django.db.backends.postgresql',
+>               'NAME': 'classroom_ge',
+>               'USER': DATABASE_PARAMS['USER'],
+>               'PASSWORD': DATABASE_PARAMS['PASSWORD'],
+>               'HOST': DATABASE_PARAMS['HOST'],
+>               'PORT': DATABASE_PARAMS['PORT'],
+>           }
+>       }
+> - Add file 'my_constants.py' in classroom_ge (same folder, where settings.py is located) and add following script
+>       DATABASE_PARAMS = {
+>           'USER': 'example_archili',
+>           'PASSWORD': 'example_archilis_password',
+>           'PORT': 5432,
+>           'HOST': 'localhost',
+>       }
+>
+> After these, 'python manage.py runserver' should work!
 
 
 ## Routine
