@@ -1,0 +1,1 @@
+Directory to store static files for Administrator page(s)

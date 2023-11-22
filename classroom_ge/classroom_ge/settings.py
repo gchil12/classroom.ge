@@ -140,6 +140,12 @@ LOCALE_PATHS = [
 STATIC_URL = "assets/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
 
+STATICFILES_DIRS = [
+    ('moderator', os.path.join(BASE_DIR, 'static_files', 'app_administrator')),
+    ('student', os.path.join(BASE_DIR, 'static_files', 'app_student')),
+    ('teacher', os.path.join(BASE_DIR, 'static_files', 'app_teacher'))
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
