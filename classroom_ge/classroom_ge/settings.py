@@ -143,7 +143,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'assets/')
 STATICFILES_DIRS = [
     ('moderator', os.path.join(BASE_DIR, 'static_files', 'app_administrator')),
     ('student', os.path.join(BASE_DIR, 'static_files', 'app_student')),
-    ('teacher', os.path.join(BASE_DIR, 'static_files', 'app_teacher'))
+    ('teacher', os.path.join(BASE_DIR, 'static_files', 'app_teacher')),
+    ('base', os.path.join(BASE_DIR, 'static_files', 'base')),
 ]
 
 # Default primary key field type

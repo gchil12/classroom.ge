@@ -136,6 +136,32 @@ Here is a link about django translation:
     python classroom_ge/manage.py runserver
     ```
 
+### Working with static files
+1) Add static files in the corresponding folder: BASE_DIR/static_files/{app_name}/
+> [!NOTE]
+> {app_name} can be:
+> - "base": for general website (everything until the user logs in)
+> - "app_administrator": for administrator page
+> - "app_student": for student page
+> - "app_teacher": for teacher page
+2) To link to specific static file (eg. 'BASE_DIR/static_files/{app_name}/subfolder/file.file_extention'), in the html file specify link as:
+    ```
+    "{% static 'base/subfolder/file.file_extention' %}"
+    ```
+    if app_name is 'base'
+    ```
+    "{% static 'moderator/subfolder/file.file_extention' %}"
+    ```
+    if app_name is 'app_administrator'
+    ```
+    "{% static 'student/subfolder/file.file_extention' %}"
+    ```
+    if app_name is 'app_student'
+    ```
+    "{% static 'teacher/subfolder/file.file_extention' %}"
+    ```
+    if app_name is 'app_teacher'
+
 
 ### Update texts
 1) Define translation texts:

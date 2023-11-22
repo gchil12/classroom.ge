@@ -1,0 +1,1 @@
+Directory to store static files for Base page(s)
