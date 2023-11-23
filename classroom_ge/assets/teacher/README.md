@@ -1,0 +1,1 @@
+Directory to store static files for Teacher page(s)

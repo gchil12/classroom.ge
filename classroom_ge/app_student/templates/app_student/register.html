@@ -1,8 +1,45 @@
-{% load i18n %}
-{% load static %}
+{% extends 'base/main.html' %} {% load i18n %} {% load static %} {% block content %}
 
-{% block content %}
-
-    სტუდენტი - რეგისტრაცია/მეილის კონფირმაციის მესიჯი
+<center>
+	<div class="card" style="max-width: 32rem">
+		<div class="card-body">
+			<form role="form" class="text-start">
+				<div class="input-group input-group-outline my-3">
+					<label class="form-label">სახელი</label>
+					<input type="name" class="form-control" />
+				</div>
+				<div class="input-group input-group-outline my-3">
+					<label class="form-label">გვარი</label>
+					<input type="name" class="form-control" />
+				</div>
+                <div class="input-group input-group-outline my-3">
+					<label class="form-label">დაბადების დღე</label>
+					<input type="text" value="" class="form-control" />
+				</div>
+				<div class="input-group input-group-outline my-3">
+					<label class="form-label">სკოლა</label>
+					<input type="text" class="form-control" />
+				</div>
+                <div class="input-group input-group-outline my-3">
+					<label class="form-label">ქალაქი</label>
+					<input type="text" class="form-control" />
+				</div>
+				<div class="input-group input-group-outline my-3">
+					<label class="form-label">ელ-ფოსტა</label>
+					<input type="email" class="form-control" />
+				</div>
+				<div class="input-group input-group-outline mb-3">
+					<label class="form-label">პაროლი</label>
+					<input type="password" class="form-control" />
+				</div>
+				<div class="text-center">
+					<button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2">
+						რეგისტრაცია
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</center>
 
 {% endblock %}
