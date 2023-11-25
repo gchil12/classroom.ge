@@ -3,6 +3,13 @@
 ## Nov 25, 2023
 ### 1/2 Recaptcha
 requirements.txt file was updated. Install the required packages to use reCaptcha.
+Additionally, add private and public keys for reCaptcha in 'classroom_ge/my_constants.py':
+```
+captcha_public_key = 'str_private_key_obtained_from_google'
+captcha_private_key = 'str_private_key_obtained_from_google'
+```
+Make sure to add '127.0.0.1' and 'localhost' in the 'Domains' when you register reCaptcha (https://www.google.com/recaptcha/about/)
+
 
 
 ### 2/2 Major changes in Database
