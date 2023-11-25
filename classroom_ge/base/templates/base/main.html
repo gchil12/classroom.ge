@@ -89,46 +89,49 @@
 							<span class="nav-link-text ms-1">მთავარი</span>
 						</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link text-white" id="nav-classes" href="#">
-							<div
-								class="text-white text-center me-2 d-flex align-items-center justify-content-center"
-							>
-								<i class="material-icons opacity-10">groups</i>
-							</div>
-							<span class="nav-link-text ms-1">კლასები</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-white" id="nav-quizzes" href="#">
-							<div
-								class="text-white text-center me-2 d-flex align-items-center justify-content-center"
-							>
-								<i class="material-icons opacity-10">receipt_long</i>
-							</div>
-							<span class="nav-link-text ms-1">ქვიზები</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-white" id="nav-exercises" href="#">
-							<div
-								class="text-white text-center me-2 d-flex align-items-center justify-content-center"
-							>
-								<i class="material-icons opacity-10">table_view</i>
-							</div>
-							<span class="nav-link-text ms-1">სავარჯიშოები</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-white" id="nav-notifications" href="#">
-							<div
-								class="text-white text-center me-2 d-flex align-items-center justify-content-center"
-							>
-								<i class="material-icons opacity-10">notifications</i>
-							</div>
-							<span class="nav-link-text ms-1">შეტყობინებები</span>
-						</a>
-					</li>
+					{% if request.user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-link text-white" id="nav-classes" href="#">
+								<div
+									class="text-white text-center me-2 d-flex align-items-center justify-content-center"
+								>
+									<i class="material-icons opacity-10">groups</i>
+								</div>
+								<span class="nav-link-text ms-1">კლასები</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-white" id="nav-quizzes" href="#">
+								<div
+									class="text-white text-center me-2 d-flex align-items-center justify-content-center"
+								>
+									<i class="material-icons opacity-10">receipt_long</i>
+								</div>
+								<span class="nav-link-text ms-1">ქვიზები</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-white" id="nav-exercises" href="#">
+								<div
+									class="text-white text-center me-2 d-flex align-items-center justify-content-center"
+								>
+									<i class="material-icons opacity-10">table_view</i>
+								</div>
+								<span class="nav-link-text ms-1">სავარჯიშოები</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-white" id="nav-notifications" href="#">
+								<div
+									class="text-white text-center me-2 d-flex align-items-center justify-content-center"
+								>
+									<i class="material-icons opacity-10">notifications</i>
+								</div>
+								<span class="nav-link-text ms-1">შეტყობინებები</span>
+							</a>
+						</li>
+					{% endif %}
+
 					<li class="nav-item mt-3">
 						<h6
 							class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8"
@@ -136,46 +139,59 @@
 							ანგარიში
 						</h6>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link text-white" id="nav-profile" href="{% url 'url-student-student-homepage' %}">
-							<div
-								class="text-white text-center me-2 d-flex align-items-center justify-content-center"
-							>
-								<i class="material-icons opacity-10">person</i>
-							</div>
-							<span class="nav-link-text ms-1">პროფილი</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-white" id="nav-registration" href="{% url 'url-student-register' %}">
-							<div
-								class="text-white text-center me-2 d-flex align-items-center justify-content-center"
-							>
-								<i class="material-icons opacity-10">assignment</i>
-							</div>
-							<span class="nav-link-text ms-1">რეგისტრაცია</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-white" id="nav-login" href="{% url 'url-student-login' %}">
-							<div
-								class="text-white text-center me-2 d-flex align-items-center justify-content-center"
-							>
-								<i class="material-icons opacity-10">login</i>
-							</div>
-							<span class="nav-link-text ms-1">ავტორიზაცია</span>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-white" id="nav-logout" href="#">
-							<div
-								class="text-white text-center me-2 d-flex align-items-center justify-content-center"
-							>
-								<i class="material-icons opacity-10">logout</i>
-							</div>
-							<span class="nav-link-text ms-1">გასვლა</span>
-						</a>
-					</li>
+					{% if not request.user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-link text-white" id="nav-registration" href="{% url 'url-student-register' %}">
+								<div
+									class="text-white text-center me-2 d-flex align-items-center justify-content-center"
+								>
+									<i class="material-icons opacity-10">assignment</i>
+								</div>
+								<span class="nav-link-text ms-1">რეგისტრაცია</span>
+							</a>
+						</li>
+					
+						<li class="nav-item">
+							<a class="nav-link text-white" id="nav-login" href="{% url 'url-student-login' %}">
+								<div
+									class="text-white text-center me-2 d-flex align-items-center justify-content-center"
+								>
+									<i class="material-icons opacity-10">login</i>
+								</div>
+								<span class="nav-link-text ms-1">ავტორიზაცია</span>
+							</a>
+						</li>
+					{% endif %}
+					
+					{% if request.user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-link text-white" id="nav-profile" href="{% url 'url-student-student-homepage' %}">
+								<div
+									class="text-white text-center me-2 d-flex align-items-center justify-content-center"
+								>
+									<i class="material-icons opacity-10">person</i>
+								</div>
+								<span class="nav-link-text ms-1">პროფილი</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<form method="post" action="{% url 'url-student-logout' %}">
+								{% csrf_token %}
+								<div class="nav-link text-white" id="nav-logout">
+									<div
+										class="text-white text-center me-2 d-flex align-items-center justify-content-center"
+									>
+										<i class="material-icons opacity-10">logout</i>
+									</div>
+									<button type="submit" style="background: none; border: none; color: white; cursor: pointer;">
+										გასვლა
+									</button>
+									<!-- <span class="nav-link-text ms-1">გასვლა</span> -->
+								</div>
+							</form>
+							
+						</li>
+					{% endif %}
 				</ul>
 			</div>
 			<!-- <div class="sidenav-footer position-absolute w-100 bottom-1 ">
@@ -210,7 +226,7 @@
 			>
 				<div class="container-fluid py-1 px-3">
 					<nav aria-label="breadcrumb">
-						<h6 class="font-weight-bolder mb-0">მთავარი გვერდი</h6>
+						<h6 class="font-weight-bolder mb-0"><a href="{% url 'url-base-home' %}">მთავარი გვერდი</a></h6>
 					</nav>
 					<div
 						class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4"
@@ -219,7 +235,7 @@
 						<div class="ms-md-auto pe-md-3 d-flex align-items-center">
 							<div class="input-group input-group-outline">
 								<label class="form-label">ძიება...</label>
-								<input type="text" class="form-control" />
+								<input name="seach_field" type="text" class="form-control" />
 							</div>
 						</div>
 						<ul class="navbar-nav justify-content-end">

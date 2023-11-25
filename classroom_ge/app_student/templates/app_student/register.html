@@ -1,45 +1,226 @@
 {% extends 'base/main.html' %} {% load i18n %} {% load static %} {% block content %}
 
+<!-- Add this in the head of your HTML file -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<style>
+	.errorlist{
+		color: red;
+		font-size: 12px;
+	}
+</style>
+
 <center>
+	{% if submitted and isvalid %}
+		<h4 style="color: green; text-align: center;">
+			{% trans 'message_first_step_of_registration_done' %}
+		</h4>
+	{% endif %}
 	<div class="card" style="max-width: 32rem">
 		<div class="card-body">
-			<form role="form" class="text-start">
-				<div class="input-group input-group-outline my-3">
-					<label class="form-label">სახელი</label>
-					<input type="name" class="form-control" />
+			<form role="form" class="text-start" action="{% url 'url-student-register' %}" method="post">
+				{% csrf_token %}
+				
+				<div>
+					{% if form.username.errors|length > 0 %}
+						<ul class="errorlist">
+							{% for error in form.username.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
 				</div>
-				<div class="input-group input-group-outline my-3">
-					<label class="form-label">გვარი</label>
-					<input type="name" class="form-control" />
+				<div class="input-group input-group-outline my-3 {% if submitted and not isvalid%} is-filled{% endif %}">
+					<label for="{{form.username.id_for_label}}" class="form-label">
+						{{ form.username.label }}
+					</label>
+					{{ form.username }}
 				</div>
-                <div class="input-group input-group-outline my-3">
-					<label class="form-label">დაბადების დღე</label>
-					<input type="text" value="" class="form-control" />
+
+				<div>
+					{% if form.name.errors|length > 0 %}
+						<ul class="errorlist">
+							{% for error in form.name.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
 				</div>
-				<div class="input-group input-group-outline my-3">
-					<label class="form-label">სკოლა</label>
-					<input type="text" class="form-control" />
+				<div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+					<label for="{{form.name.id_for_label}}" class="form-label">
+						{{ form.name.label }}
+					</label>
+					{{ form.name }}
 				</div>
-                <div class="input-group input-group-outline my-3">
-					<label class="form-label">ქალაქი</label>
-					<input type="text" class="form-control" />
+				
+				<div>
+					{% if form.surname.errors|length > 0 %}
+						<ul class="errorlist">
+							{% for error in form.surname.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
 				</div>
-				<div class="input-group input-group-outline my-3">
-					<label class="form-label">ელ-ფოსტა</label>
-					<input type="email" class="form-control" />
+				<div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+					<label for="{{form.surname.id_for_label}}" class="form-label">
+						{{ form.surname.label }}
+					</label>
+					{{ form.surname }}
 				</div>
-				<div class="input-group input-group-outline mb-3">
-					<label class="form-label">პაროლი</label>
-					<input type="password" class="form-control" />
+				
+				<div>
+					{% if form.date_of_birth.errors|length > 0 %}
+						<ul class="errorlist">
+							{% for error in form.date_of_birth.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
 				</div>
+                <div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+					<label for="{{form.date_of_birth.id_for_label}}" class="form-label">
+						{{ form.date_of_birth.label }}
+					</label>
+					{{ form.date_of_birth }}
+				</div>
+				
+				<div>
+					{% if form.school.errors|length > 0 %}
+						<ul class="errorlist">
+							{% for error in form.school.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</div>
+				<div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+					<label for="{{form.school.id_for_label}}" class="form-label">
+						{{ form.school.label }}
+					</label>
+					{{ form.school }}
+				</div>
+				
+				<div>
+					{% if form.city.errors|length > 0 %}
+						<ul class="errorlist">
+							{% for error in form.city.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</div>
+				<div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+					<label for="{{form.city.id_for_label}}" class="form-label">
+						{{ form.city.label }}
+					</label>
+					{{ form.city }}
+				</div>
+				
+				<div>
+					{% if form.email.errors|length > 0 %}
+						<ul class="errorlist">
+							{% for error in form.email.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</div>
+				<div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+					<label for="{{form.email.id_for_label}}" class="form-label">
+						{{ form.email.label }}
+					</label>
+					{{ form.email }}
+				</div>
+				
+				<div>
+					{% if form.email_conf.errors|length > 0 %}
+						<ul class="errorlist">
+							{% for error in form.email_conf.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</div>
+				<div class="input-group input-group-outline mb-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+					<label for="{{form.email.id_for_label}}" class="form-label">
+						{{ form.email_conf.label }}
+					</label>
+					{{ form.email_conf }}
+				</div>
+				
+				<div>
+					{% if form.password.errors|length > 0 %}
+						<ul class="errorlist">
+							{% for error in form.password.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</div>
+				<div class="input-group input-group-outline mb-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+					<label for="{{form.password.id_for_label}}" class="form-label">
+						{{ form.password.label }}
+					</label>
+					{{ form.password }}
+				</div>
+
+				<div>
+					{% if form.password_conf.errors|length > 0 %}
+						<ul class="errorlist">
+							{% for error in form.password_conf.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</div>
+				<div class="input-group input-group-outline mb-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+					<label for="{{form.password_conf.id_for_label}}" class="form-label">
+						{{ form.password_conf.label }}
+					</label>
+					{{ form.password_conf }}
+				</div>
+
+				<div>
+					{% if form.captcha.errors|length > 0 %}
+						<ul class="errorlist">
+							{% for error in form.captcha.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</div>
+				<div style="text-align: center; display: flex; justify-content: center; align-items: center; margin-bottom: 10px;">
+					{{ form.captcha }}
+				</div>
+				
 				<div class="text-center">
-					<button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2">
+					<input type="submit" class="btn btn-outline-danger" value="{% trans 'registration' %}">
+					<!-- <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2">
 						რეგისტრაცია
-					</button>
+					</button> -->
 				</div>
 			</form>
 		</div>
 	</div>
 </center>
+
+<script>
+    flatpickr("#georgianDate", {
+        dateFormat: "Y-m-d",
+        locale: {
+            firstDayOfWeek: 1, // Monday
+            weekdays: {
+                shorthand: ["კვ", "ორ", "სმ", "ოთ", "ხთ", "პა", "შა"],
+                longhand: ["კვირა", "ორშაბათი", "სამშაბათი", "ოთხშაბათი", "ხუთშაბათი", "პარასკევი", "შაბათი"]
+            },
+            months: {
+                shorthand: ["იან", "თებ", "მარ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"],
+                longhand: ["იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი", "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი"]
+            },
+        },
+    });
+</script>
 
 {% endblock %}

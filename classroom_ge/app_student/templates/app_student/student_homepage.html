@@ -18,10 +18,10 @@
       <div class="col-auto my-auto">
         <div class="h-100">
           <h5 class="mb-1">
-            ბავშვი მამისშვილი
+            {{ request.user.name }} {{ request.user.surname }}
           </h5>
           <p class="mb-0 font-weight-normal text-sm">
-            VIIა კლასი, 123-ე სკოლა
+            {{ request.user.school }}
           </p>
         </div>
       </div>

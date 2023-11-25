@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
-from .my_constants import DATABASE_PARAMS
+from .my_constants import DATABASE_PARAMS, captcha_public_key, captcha_private_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'app_student.apps.AppStudentConfig',
     'app_teacher.apps.AppTeacherConfig',
     'app_administrator.apps.AppAdministratorConfig',
+
+    'captcha',
 ]
+
+AUTH_USER_MODEL = 'base.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -151,3 +155,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Gootle reCaptcha
+RECAPTCHA_PUBLIC_KEY = captcha_public_key
+RECAPTCHA_PRIVATE_KEY = captcha_private_key

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-21 22:22+0000\n"
+"POT-Creation-Date: 2023-11-25 15:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,187 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-#: base/html/home.html:6
-msgid "base_homepage_welcome_text"
-msgstr "მოგესალმებით! ეს არის classroom.ge-ს მთავარი გვერდი"
 
-#: classroom_ge/settings.py:129
+#: classroom_ge/app_student/forms.py:18
+msgid "confirm_email"
+msgstr "გაიმეორეთ ელ-ფოსტა"
+
+#: classroom_ge/app_student/forms.py:24 classroom_ge/app_student/forms.py:35
+#: classroom_ge/app_student/forms.py:40 classroom_ge/app_student/forms.py:62
+#: classroom_ge/app_student/forms.py:65 classroom_ge/app_student/forms.py:68
+#: classroom_ge/app_student/forms.py:71 classroom_ge/app_student/forms.py:74
+#: classroom_ge/app_student/forms.py:77 classroom_ge/app_student/forms.py:80
+#: classroom_ge/app_student/forms.py:83
+msgid "this_field_is_required"
+msgstr "აღნიშნული ველის შევსება აუცილებელია"
+
+#: classroom_ge/app_student/forms.py:29
+msgid "confirm_password"
+msgstr "გაიმეორეთ პაროლი"
+
+#: classroom_ge/app_student/forms.py:50 classroom_ge/base/models.py:12
+msgid "username"
+msgstr "მომხმარებლის სახელი"
+
+#: classroom_ge/app_student/forms.py:51 classroom_ge/base/models.py:13
+msgid "name"
+msgstr "სახელი"
+
+#: classroom_ge/app_student/forms.py:52 classroom_ge/base/models.py:14
+msgid "surname"
+msgstr "გვარი"
+
+#: classroom_ge/app_student/forms.py:53 classroom_ge/base/models.py:15
+msgid "date_of_birth"
+msgstr "დაბადების თარიღი"
+
+#: classroom_ge/app_student/forms.py:54 classroom_ge/base/models.py:16
+msgid "school"
+msgstr "სკოლა"
+
+#: classroom_ge/app_student/forms.py:55 classroom_ge/base/models.py:17
+msgid "city"
+msgstr "ქალაქი"
+
+#: classroom_ge/app_student/forms.py:56
+#: classroom_ge/app_student/templates/app_student/login.html:18
+#: classroom_ge/base/models.py:25
+msgid "email"
+msgstr "ელ-ფოსტა"
+
+#: classroom_ge/app_student/forms.py:57
+#: classroom_ge/app_student/templates/app_student/login.html:22
+msgid "password"
+msgstr "პაროლი"
+
+#: classroom_ge/app_student/forms.py:113
+msgid "chosen_date_in_future"
+msgstr "თარიღი არასწორია"
+
+#: classroom_ge/app_student/forms.py:123 classroom_ge/app_student/forms.py:129
+#: classroom_ge/base/models.py:29
+msgid "invalid_email"
+msgstr "შეამოწმეთ ელ-ფოსტის სისწორე"
+
+#: classroom_ge/app_student/forms.py:133
+msgid "emails_do_not_match"
+msgstr "ელ-ფოსტები არ ემთხვევა ერთმანეთს"
+
+#: classroom_ge/app_student/templates/app_student/login.html:32
+msgid "login"
+msgstr "შესვლა"
+
+#: classroom_ge/app_student/templates/app_student/login.html:35
+msgid "dont_have_account_questionmark"
+msgstr "არ ხართ დარეგისტრირებული?"
+
+#: classroom_ge/app_student/templates/app_student/login.html:39
+#: classroom_ge/app_student/templates/app_student/register.html:206
+msgid "registration"
+msgstr "რეგისტრაცია"
+
+#: classroom_ge/app_student/templates/app_student/register.html:24
+#: classroom_ge/app_student/views.py:87
+msgid "message_first_step_of_registration_done"
+msgstr ""
+"თქვენ წარმატებით დარეგისტრირდით! შეამოწმეთ ელ-ფოსტა და გაიარეთ იმეილის "
+"ვერიფიკაცია, რათა შეძლოთ ისარგებლოთ ჩვენი სერვისებით."
+
+#: classroom_ge/app_student/views.py:27 classroom_ge/app_student/views.py:39
+msgid "username_or_password_does_not_exist"
+msgstr "მომხმარებლის სახელი ან პაროლი არასწორია"
+
+#: classroom_ge/app_student/views.py:30
+msgid "email_is_not_verified_yet"
+msgstr "ელ-ფოსტა არ არის ვერიფიცირებული"
+
+#: classroom_ge/base/admin.py:9
+msgid "Personal info"
+msgstr "პირადი ინფორმაცია"
+
+#: classroom_ge/base/admin.py:10
+msgid "WEB Groups"
+msgstr "WEB Groups"
+
+#: classroom_ge/base/admin.py:11
+msgid "Permissions"
+msgstr "მომხმარებლის უფლებები"
+
+#: classroom_ge/base/admin.py:12
+msgid "Important dates"
+msgstr "მნიშვნელოვანი თარიღები"
+
+#: classroom_ge/base/models.py:12
+msgid "user_already_registered"
+msgstr "აღნიშნული სახელით მომხმარებელი უკვე არსებობს"
+
+#: classroom_ge/base/models.py:19
+msgid "is_student"
+msgstr "სტუდენტის სტატუსი"
+
+#: classroom_ge/base/models.py:20
+msgid "is_teacher"
+msgstr "მასწავლებლის სტატუსი"
+
+#: classroom_ge/base/models.py:21
+msgid "is_moderator"
+msgstr "მოდერატორის სტატუსი"
+
+#: classroom_ge/base/models.py:22
+msgid "is_administrator"
+msgstr "ადმინისტრატორის სტატუსი"
+
+#: classroom_ge/base/models.py:31
+msgid "email_already_registered"
+msgstr "აღნიშნული ელ-ფოსტა უკვე დარეგისტრირებულია"
+
+#: classroom_ge/base/models.py:39
+msgid "User"
+msgstr "მომხმარებელი"
+
+#: classroom_ge/base/models.py:40
+msgid "Users"
+msgstr "მომხმარებლები"
+
+#: classroom_ge/classroom_ge/settings.py:133
 msgid "Georgian"
 msgstr "ქართული"
 
-#: classroom_ge/settings.py:130
-msgid "English"
-msgstr "ინგლისური"
+#: classroom_ge/src/validators.py:13
+msgid "password_only_contains_these_characters"
+msgstr ""
+"პაროლი შეიძლება შეიცავდეს მხოლოდ ლათინურ ასოებს (a-z,A-Z), ციფრებს (0-9) და "
+"შემდეგ სიმბოლოებს ~!@#$%^&*()_-+={[}]:;<,>.?"
+
+#: classroom_ge/src/validators.py:17
+msgid "password_at_lest_eight_chars"
+msgstr "პაროლი უნდა შეიცავდეს არანაკლებ 8 სიმბოლოს"
+
+#: classroom_ge/src/validators.py:20
+msgid "password_not_more_than_50_chars"
+msgstr "პაროლი უნდა შეიცავდეს არაუმეტეს 50 სიმბოლოს"
+
+#: classroom_ge/src/validators.py:23
+msgid "password_at_lest_one_digit"
+msgstr "პაროლი უნდა შეიცავდეს ერთ ციფრს (0-9) მაინც"
+
+#: classroom_ge/src/validators.py:26
+msgid "password_at_lest_one_uppercase"
+msgstr "პაროლი უნდა შეიცავდეს ერთ დიდ ლათინურ სიმბოლოს მაინც (A-Z)"
+
+#: classroom_ge/src/validators.py:29
+msgid "password_at_lest_one_lowercase"
+msgstr "პაროლი უნდა შეიცავდეს ერთ პატარა ლათინურ სიმბოლოს მაინც (a-z)"
+
+#: classroom_ge/src/validators.py:32
+msgid "password_at_lest_one_special"
+msgstr ""
+"პაროლი უნდა შეიცავდეს ერთ სპეციალურ სიმბოლოს მაინც: ~!@#$%^&*()_-+={[}]:;<,"
+">.?"
+
+#: classroom_ge/src/validators.py:35
+msgid "passwords_do_not_match"
+msgstr "პაროლები არ ემთხვევა ერთმანეთს"
+
+#~ msgid "English"
+#~ msgstr "ინგლისური"
