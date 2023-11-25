@@ -1,6 +1,11 @@
 # Changes to make Django project work again
 
 ## Nov 25, 2023
+### 1/2 Recaptcha
+requirements.txt file was updated. Install the required packages to use reCaptcha.
+
+
+### 2/2 Major changes in Database
 As the authentification procedure was changed (custom User table was created), simple migration is not possilbe. As the database does not include anything special yet, the simplest way is to drop (delete) database and recreate it with new **custom** user table. Hereby I will write how to do it:
 
 1) Firstly, we need to open interactive postgres session. In the terminal type:
