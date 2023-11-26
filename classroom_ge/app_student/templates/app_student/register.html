@@ -19,6 +19,10 @@
 	{% endif %}
 	<div class="card" style="max-width: 32rem">
 		<div class="card-body">
+			<div class="btn-group" role="group" aria-label="Basic example" style="width: 100%;">
+				<button type="button" class="btn btn-primary">მოსწავლე</button>
+				<a type="button" class="btn btn-outline-primary" href={% url 'url-teacher-register' %}>მასწავლებელი</a>
+			  </div>
 			<form role="form" class="text-start" action="{% url 'url-student-register' %}" method="post">
 				{% csrf_token %}
 				
@@ -196,10 +200,7 @@
 				</div>
 				
 				<div class="text-center">
-					<input type="submit" class="btn btn-outline-danger" value="{% trans 'registration' %}">
-					<!-- <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2">
-						რეგისტრაცია
-					</button> -->
+					<input type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2" value="{% trans 'registration' %}">
 				</div>
 			</form>
 		</div>
@@ -223,4 +224,9 @@
     });
 </script>
 
+{% endblock %}
+
+
+{% block breadcrumb %}
+	<h6 class="font-weight-bolder mb-0">რეგისტრაცია</h6>
 {% endblock %}

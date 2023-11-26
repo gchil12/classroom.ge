@@ -226,7 +226,7 @@
 			>
 				<div class="container-fluid py-1 px-3">
 					<nav aria-label="breadcrumb">
-						<h6 class="font-weight-bolder mb-0"><a href="{% url 'url-base-home' %}">მთავარი გვერდი</a></h6>
+						{% block breadcrumb %} {% endblock %}
 					</nav>
 					<div
 						class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4"
