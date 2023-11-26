@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User
+from .models import User, Message, Subject
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
@@ -28,3 +28,5 @@ class CustomUserAdmin(BaseUserAdmin):
 
 # Register your models here.
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(Message)
+admin.site.register(Subject)

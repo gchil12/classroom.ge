@@ -4,6 +4,7 @@ from django.core import validators
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext
+import datetime
 
 # Create your models here.
 class User(AbstractUser):
@@ -40,3 +41,21 @@ class User(AbstractUser):
     class Meta:
         verbose_name = _("User")
         verbose_name_plural = _("Users")
+
+
+
+class Subject(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    name = models.CharField(verbose_name=_('name'),max_length=200, blank=False, null=False, unique=True, error_messages={'unique':_('subject_already_registered')})
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Message(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    severity = models.IntegerField(default=0)
+    description = models.CharField(verbose_name=_('description'),max_length=200, blank=True, null=True)
+    has_read = models.BooleanField(verbose_name=_('has_read'), default=False)
+    date_created = models.DateField(verbose_name=_('date_created'), auto_now_add=True, blank=True)
