@@ -1,4 +1,7 @@
-{% extends 'base/main.html' %} {% load i18n %} {% load static %} {% block content %}
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+{% block content %}
 
 {% if messages %}
 <ul class="messages" style="color: red;">
@@ -11,9 +14,8 @@
 <center>
     <div class="card" style="max-width: 32rem;">
 <div class="card-body">
-	<form role="form" class="text-start" method="post" action="{% url 'url-student-login' %}">
+	<form role="form" class="text-start" method="post" action="{% url 'app_base:login' %}">
 		{% csrf_token %}
-
 		<div class="input-group input-group-outline my-3">
 			<label class="form-label">{% trans 'email' %}</label>
 			<input name="username" type="text" class="form-control" autocomplete="on" {% if username is not None %} placeholder="{{username}}" {% endif %} required />
@@ -34,7 +36,7 @@
 		<p class="mt-4 text-sm text-center">
 			{% trans 'dont_have_account_questionmark' %}
 			<a
-				href="{% url 'url-student-register' %}"
+				href="{% url 'app_base:register' %}"
 				class="text-primary text-gradient font-weight-bold"
 				>{% trans 'registration' %}</a
 			>

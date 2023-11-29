@@ -1,15 +1,7 @@
-{% extends 'base/main.html' %} {% load i18n %} {% load static %} {% block content %}
-
-<!-- Add this in the head of your HTML file -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-<style>
-	.errorlist{
-		color: red;
-		font-size: 12px;
-	}
-</style>
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+{% block content %}
 
 <center>
 	{% if submitted and isvalid %}
@@ -19,12 +11,14 @@
 	{% endif %}
 	<div class="card" style="max-width: 32rem">
 		<div class="card-body">
-			<div class="btn-group" role="group" aria-label="Basic example" style="width: 100%;">
-				<button type="button" class="btn btn-primary">მოსწავლე</button>
-				<a type="button" class="btn btn-outline-primary" href={% url 'url-teacher-register' %}>მასწავლებელი</a>
-			  </div>
-			<form role="form" class="text-start" action="{% url 'url-student-register' %}" method="post">
+			<form role="form" class="text-start" action="{% url 'app_base:register' %}" method="post">
 				{% csrf_token %}
+				<div class="btn-group" role="group" aria-label="Basic example" style="width: 100%;">
+					<label for="{{form.user_type_student.id_for_label}}" id="studentLabel" class="btn toggle_field" onclick="selectUserType('student')">მოსწავლე</label>
+					<input hidden type="radio" id="{{form.user_type_student.id_for_label}}" name="{{form.user_type_student.name}}">
+					<input hidden type="radio" id="{{form.user_type_teacher.id_for_label}}" name="{{form.user_type_teacher.name}}">	
+					<label for="{{form.user_type_teacher.id_for_label}}" id="teacherLabel" class="btn toggle_field" onclick="selectUserType('teacher')">მასწავლებელი</label>
+				</div>
 				
 				<div>
 					{% if form.username.errors|length > 0 %}
@@ -207,23 +201,58 @@
 	</div>
 </center>
 
+<!-- For GEO calendar picker -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    flatpickr("#georgianDate", {
-        dateFormat: "Y-m-d",
-        locale: {
-            firstDayOfWeek: 1, // Monday
-            weekdays: {
-                shorthand: ["კვ", "ორ", "სმ", "ოთ", "ხთ", "პა", "შა"],
-                longhand: ["კვირა", "ორშაბათი", "სამშაბათი", "ოთხშაბათი", "ხუთშაბათი", "პარასკევი", "შაბათი"]
-            },
-            months: {
-                shorthand: ["იან", "თებ", "მარ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"],
-                longhand: ["იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი", "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი"]
-            },
-        },
-    });
+	// Login and Logout: change between student and teacher
+	function selectUserType(userType) {
+		if (userType === 'student') {
+			document.getElementById('studentLabel').classList.add('btn-primary')
+			document.getElementById('studentLabel').classList.remove('btn-outline-primary')
+			document.getElementById('teacherLabel').classList.add('btn-outline-primary')
+			document.getElementById('teacherLabel').classList.remove('btn-primary')
+			
+			document.getElementById('{{form.user_type_student.id_for_label}}').checked = true;
+			document.getElementById('{{form.user_type_teacher.id_for_label}}').checked = false;
+		} else if (userType === 'teacher') {
+			document.getElementById('teacherLabel').classList.add('btn-primary')
+			document.getElementById('teacherLabel').classList.remove('btn-outline-primary')
+			document.getElementById('studentLabel').classList.add('btn-outline-primary')
+			document.getElementById('studentLabel').classList.remove('btn-primary')
+
+			document.getElementById('{{form.user_type_student.id_for_label}}').checked = false;
+			document.getElementById('{{form.user_type_teacher.id_for_label}}').checked = true;
+		}
+	}
+
+	// GEO calendar picker
+	flatpickr("#georgianDate", {
+		dateFormat: "Y-m-d",
+		locale: {
+			firstDayOfWeek: 1, // Monday
+			weekdays: {
+				shorthand: ["კვ", "ორ", "სმ", "ოთ", "ხთ", "პა", "შა"],
+				longhand: ["კვირა", "ორშაბათი", "სამშაბათი", "ოთხშაბათი", "ხუთშაბათი", "პარასკევი", "შაბათი"]
+			},
+			months: {
+				shorthand: ["იან", "თებ", "მარ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"],
+				longhand: ["იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი", "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი"]
+			},
+		},
+	});
 </script>
 
+
+{% if form.user_type_student.value %}
+<script>
+	selectUserType('student')
+</script>
+{% else %}
+<script>
+	selectUserType('teacher')
+</script>
+{% endif %}
 {% endblock %}
 
 

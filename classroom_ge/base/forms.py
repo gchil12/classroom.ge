@@ -13,6 +13,9 @@ from captcha.widgets import ReCaptchaV2Checkbox
 class RegistrationForm(ModelForm):
     required_css_class = 'required'
 
+    user_type_student = forms.BooleanField(required=False, initial=True)
+    user_type_teacher = forms.BooleanField(required=False, initial=False)
+
     email_conf = forms.CharField(
         max_length  =   200,
         label       =   _('confirm_email',),
@@ -85,7 +88,9 @@ class RegistrationForm(ModelForm):
         }
 
         widgets = {
-            'date_of_birth': forms.DateInput(attrs={'type': 'date', 'id': 'georgianDate'}),
+            'date_of_birth': forms.DateInput(
+                attrs={'type': 'date', 'id': 'georgianDate'}
+            ),
             'password': forms.PasswordInput(),
         }
         
@@ -94,6 +99,7 @@ class RegistrationForm(ModelForm):
         super(RegistrationForm, self).__init__(*args, **kwargs)
 
         self.fields['date_of_birth'].initial = None
+        
 
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
@@ -101,7 +107,7 @@ class RegistrationForm(ModelForm):
 
 
     def clean(self):
-        cleaned_data = super().clean()
+        cleaned_data = super(RegistrationForm, self).clean()
         email = cleaned_data.get("email")
         email_conf = cleaned_data.get("email_conf")
         
@@ -109,6 +115,11 @@ class RegistrationForm(ModelForm):
         password_conf = cleaned_data.get("password_conf")
 
         date_of_birth = cleaned_data.get("date_of_birth")
+
+        user_type_student = cleaned_data.get('user_type_student')
+        user_type_teacher = cleaned_data.get('user_type_teacher')
+
+
         if date.today() <= date_of_birth:
             self.add_error("date_of_birth", _('chosen_date_in_future'))
         
@@ -131,3 +142,8 @@ class RegistrationForm(ModelForm):
             
         if email != email_conf:
             self.add_error("email", _('emails_do_not_match'))
+
+        if user_type_student == None or user_type_teacher == None or not (user_type_student or user_type_teacher):
+            self.add_error("username", _('unknown_error_refresh'))
+
+        

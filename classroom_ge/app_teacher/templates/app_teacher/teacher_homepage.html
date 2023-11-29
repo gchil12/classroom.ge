@@ -1,3 +1,4 @@
+{% extends 'base/main.html' %}
 {% load i18n %}
 {% load static %}
 
@@ -6,6 +7,6 @@
     მასწავლებელი - მასწავლებლის მთავარი გვერდი (ავტორიზაციის შემდგომ)
 
     <br>
-    <a href="{% url 'url-teacher-classroom' %}">კლასის დეტალური ინფორმაცია</a>
+    <a href="{% url 'app_teacher:classroom' %}">კლასის დეტალური ინფორმაცია</a>
 
 {% endblock %}

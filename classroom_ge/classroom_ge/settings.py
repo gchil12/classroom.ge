@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'app_teacher.apps.AppTeacherConfig',
     'app_administrator.apps.AppAdministratorConfig',
 
+    # 'django_extensions',
     'captcha',
 ]
 
