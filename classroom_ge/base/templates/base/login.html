@@ -1,15 +1,8 @@
 {% extends 'base/main.html' %}
 {% load i18n %}
 {% load static %}
-{% block content %}
 
-{% if messages %}
-<ul class="messages" style="color: red;">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+{% block content %}
 
 <center>
     <div class="card" style="max-width: 32rem;">

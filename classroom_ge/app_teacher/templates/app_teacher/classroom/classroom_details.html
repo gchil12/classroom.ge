@@ -1,0 +1,42 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Add some basic styling for better presentation */
+    table {
+        border-collapse: collapse;
+        width: 300px;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+</style>
+
+    <a href="{% url 'app_teacher:home' %}">მთავარ გვერდზე დაბრუნება</a>
+
+    <h3>მასწავლებელი - კლასის დეტალები</h3>
+
+    <br>
+
+    <table>
+        <tr>
+            <th>კლასის სახელი</th>
+            <td>{{ classroom.name }}</td>
+        </tr>
+        <tr>
+            <th>საგანი</th>
+            <td>{{ classroom.subject }}</td>
+        </tr>
+        <tr>
+            <th>აღწერა</th>
+            <td>{{ classroom.description }}</td>
+        </tr>
+    </table>
+
+
+{% endblock %}

@@ -12,4 +12,4 @@ class CreateNewClassroomForm(ModelForm):
     class Meta:
         model  = Classroom
 
-        fields = ['name']
+        fields = ['name', 'subject', 'description']

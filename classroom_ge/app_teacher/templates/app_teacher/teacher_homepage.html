@@ -4,9 +4,88 @@
 
 {% block content %}
 
-    მასწავლებელი - მასწავლებლის მთავარი გვერდი (ავტორიზაციის შემდგომ)
+<style>
+table{
+    border:4px solid black;
+}
 
-    <br>
-    <a href="{% url 'app_teacher:classroom' %}">კლასის დეტალური ინფორმაცია</a>
+th{
+    border:2px solid black;
+    text-align: center;
+}
+
+td{
+    border:1px solid black;
+    text-align: center;
+}
+</style>
+
+<h3>მასწავლებლის მთავარი გვერდი: {{request.user.username}}</h3>
+
+<br>
+<div style="width: fit-content; background-color: aquamarine;">
+    <a href="{% url 'app_teacher:new-classroom' %}">ახალი საკლასო ოთახის შექმნა</a>
+</div>
+
+<br>
+
+<table style="width:100%">
+    <tr>
+        <th colspan="4">
+            საკლასო ოთახები
+        </th>
+    </tr>
+    <tr>
+        <th>შემქმნელი</th>
+        <th>სახელი</th>
+        <th>თემა</th>
+        <th>აღწერა</th>
+        <th>დაარქივება</th>
+        <th>წაშლა</th>
+    </tr>
+    {% for classroom in classrooms %}
+        {% if classroom.is_archived == False %}
+            <tr>
+                <td>{{ classroom.owner.name }} {{ classroom.owner.surname }}</td>
+                <td style="background-color: aquamarine;"><a href="{% url 'app_teacher:classroom-detail' uuid=classroom.uuid %}">{{ classroom.name }}</a></td>
+                <td>{{ classroom.subject }}</td>
+                <td>{{ classroom.description }}</td>
+                <td><a href="{% url 'app_teacher:classroom-archive' uuid=classroom.uuid %}">დაარქივება</a></td>
+                <td><a href="{% url 'app_teacher:classroom-delete' uuid=classroom.uuid %}">წაშლა</a></td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
+<br>
+
+<table style="width:100%">
+    <tr>
+        <th colspan="4">
+            დაარქივებული საკლასო ოთახები
+        </th>
+    </tr>
+    <tr>
+        <th>შემქმნელი</th>
+        <th>სახელი</th>
+        <th>თემა</th>
+        <th>აღწერა</th>
+        <th>ამოაარქივება</th>
+        <th>წაშლა</th>
+    </tr>
+    {% for classroom in classrooms %}
+        {% if classroom.is_archived == True  %}
+            <tr>
+                <td>{{ classroom.owner.name }} {{ classroom.owner.surname }}</td>
+                <td style="background-color: aquamarine;"><a href="{% url 'app_teacher:classroom-detail' uuid=classroom.uuid %}">{{ classroom.name }}</a></td>
+                <td>{{ classroom.subject }}</td>
+                <td>{{ classroom.description }}</td>
+                <td><a href="{% url 'app_teacher:classroom-archive' uuid=classroom.uuid %}">ამოაარქივება</a></td>
+                <td><a href="{% url 'app_teacher:classroom-delete' uuid=classroom.uuid %}" onclick="return confirmDelete();">წაშლა</a></td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
 
 {% endblock %}

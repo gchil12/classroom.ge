@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-25 15:15+0000\n"
+"POT-Creation-Date: 2023-12-01 23:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,95 +18,97 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: classroom_ge/app_student/forms.py:18
-msgid "confirm_email"
+#: classroom_ge/app_teacher/models.py:11
+msgid "owner"
 msgstr ""
 
-#: classroom_ge/app_student/forms.py:24 classroom_ge/app_student/forms.py:35
-#: classroom_ge/app_student/forms.py:40 classroom_ge/app_student/forms.py:62
-#: classroom_ge/app_student/forms.py:65 classroom_ge/app_student/forms.py:68
-#: classroom_ge/app_student/forms.py:71 classroom_ge/app_student/forms.py:74
-#: classroom_ge/app_student/forms.py:77 classroom_ge/app_student/forms.py:80
-#: classroom_ge/app_student/forms.py:83
-msgid "this_field_is_required"
-msgstr ""
-
-#: classroom_ge/app_student/forms.py:29
-msgid "confirm_password"
-msgstr ""
-
-#: classroom_ge/app_student/forms.py:50 classroom_ge/base/models.py:12
-msgid "username"
-msgstr ""
-
-#: classroom_ge/app_student/forms.py:51 classroom_ge/base/models.py:13
+#: classroom_ge/app_teacher/models.py:12 classroom_ge/app_teacher/models.py:24
+#: classroom_ge/app_teacher/models.py:33 classroom_ge/app_teacher/models.py:43
+#: classroom_ge/app_teacher/models.py:49 classroom_ge/base/forms.py:54
+#: classroom_ge/base/models.py:14 classroom_ge/base/models.py:49
 msgid "name"
 msgstr ""
 
-#: classroom_ge/app_student/forms.py:52 classroom_ge/base/models.py:14
-msgid "surname"
+#: classroom_ge/app_teacher/models.py:13
+msgid "subject"
 msgstr ""
 
-#: classroom_ge/app_student/forms.py:53 classroom_ge/base/models.py:15
-msgid "date_of_birth"
+#: classroom_ge/app_teacher/models.py:14 classroom_ge/app_teacher/models.py:25
+#: classroom_ge/app_teacher/models.py:34 classroom_ge/base/models.py:59
+msgid "description"
 msgstr ""
 
-#: classroom_ge/app_student/forms.py:54 classroom_ge/base/models.py:16
-msgid "school"
+#: classroom_ge/app_teacher/models.py:16 classroom_ge/app_teacher/models.py:26
+#: classroom_ge/app_teacher/models.py:36 classroom_ge/base/models.py:61
+msgid "date_created"
 msgstr ""
 
-#: classroom_ge/app_student/forms.py:55 classroom_ge/base/models.py:17
-msgid "city"
+#: classroom_ge/app_teacher/models.py:17
+msgid "is_archived"
 msgstr ""
 
-#: classroom_ge/app_student/forms.py:56
-#: classroom_ge/app_student/templates/app_student/login.html:18
-#: classroom_ge/base/models.py:25
-msgid "email"
+#: classroom_ge/app_teacher/models.py:23
+msgid "classroom"
 msgstr ""
 
-#: classroom_ge/app_student/forms.py:57
-#: classroom_ge/app_student/templates/app_student/login.html:22
-msgid "password"
+#: classroom_ge/app_teacher/models.py:32
+msgid "lesson"
 msgstr ""
 
-#: classroom_ge/app_student/forms.py:113
-msgid "chosen_date_in_future"
+#: classroom_ge/app_teacher/models.py:35
+msgid "is_graded"
 msgstr ""
 
-#: classroom_ge/app_student/forms.py:123 classroom_ge/app_student/forms.py:129
-#: classroom_ge/base/models.py:29
-msgid "invalid_email"
+#: classroom_ge/app_teacher/models.py:42
+msgid "test"
 msgstr ""
 
-#: classroom_ge/app_student/forms.py:133
-msgid "emails_do_not_match"
+#: classroom_ge/app_teacher/models.py:57
+msgid "test_variant"
 msgstr ""
 
-#: classroom_ge/app_student/templates/app_student/login.html:32
-msgid "login"
+#: classroom_ge/app_teacher/models.py:58
+msgid "question"
 msgstr ""
 
-#: classroom_ge/app_student/templates/app_student/login.html:35
-msgid "dont_have_account_questionmark"
+#: classroom_ge/app_teacher/models.py:60
+msgid "max_point"
 msgstr ""
 
-#: classroom_ge/app_student/templates/app_student/login.html:39
-#: classroom_ge/app_student/templates/app_student/register.html:206
-msgid "registration"
+#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_classroom_deletion.html:8
+msgid "are_you_shure_to_delete_classroom_with_name"
 msgstr ""
 
-#: classroom_ge/app_student/templates/app_student/register.html:24
-#: classroom_ge/app_student/views.py:87
-msgid "message_first_step_of_registration_done"
+#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_classroom_deletion.html:10
+msgid "write_"
 msgstr ""
 
-#: classroom_ge/app_student/views.py:27 classroom_ge/app_student/views.py:39
-msgid "username_or_password_does_not_exist"
+#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_classroom_deletion.html:14
+msgid "delete"
 msgstr ""
 
-#: classroom_ge/app_student/views.py:30
-msgid "email_is_not_verified_yet"
+#: classroom_ge/app_teacher/views.py:61
+msgid "new_class_created"
+msgstr ""
+
+#: classroom_ge/app_teacher/views.py:64
+msgid "invalid_input"
+msgstr ""
+
+#: classroom_ge/app_teacher/views.py:81
+msgid "error:deleting_classroom"
+msgstr ""
+
+#: classroom_ge/app_teacher/views.py:83
+msgid "classroom_deleted"
+msgstr ""
+
+#: classroom_ge/app_teacher/views.py:104
+msgid "classroom_archived"
+msgstr ""
+
+#: classroom_ge/app_teacher/views.py:106
+msgid "classroom_unarchived"
 msgstr ""
 
 #: classroom_ge/base/admin.py:9
@@ -125,39 +127,140 @@ msgstr ""
 msgid "Important dates"
 msgstr ""
 
-#: classroom_ge/base/models.py:12
+#: classroom_ge/base/forms.py:21
+msgid "confirm_email"
+msgstr ""
+
+#: classroom_ge/base/forms.py:27 classroom_ge/base/forms.py:38
+#: classroom_ge/base/forms.py:43 classroom_ge/base/forms.py:65
+#: classroom_ge/base/forms.py:68 classroom_ge/base/forms.py:71
+#: classroom_ge/base/forms.py:74 classroom_ge/base/forms.py:77
+#: classroom_ge/base/forms.py:80 classroom_ge/base/forms.py:83
+#: classroom_ge/base/forms.py:86
+msgid "this_field_is_required"
+msgstr ""
+
+#: classroom_ge/base/forms.py:32
+msgid "confirm_password"
+msgstr ""
+
+#: classroom_ge/base/forms.py:53 classroom_ge/base/models.py:13
+msgid "username"
+msgstr ""
+
+#: classroom_ge/base/forms.py:55 classroom_ge/base/models.py:15
+msgid "surname"
+msgstr ""
+
+#: classroom_ge/base/forms.py:56 classroom_ge/base/models.py:16
+msgid "date_of_birth"
+msgstr ""
+
+#: classroom_ge/base/forms.py:57 classroom_ge/base/models.py:17
+msgid "school"
+msgstr ""
+
+#: classroom_ge/base/forms.py:58 classroom_ge/base/models.py:18
+msgid "city"
+msgstr ""
+
+#: classroom_ge/base/forms.py:59 classroom_ge/base/models.py:28
+#: classroom_ge/base/templates/base/login.html:13
+msgid "email"
+msgstr ""
+
+#: classroom_ge/base/forms.py:60 classroom_ge/base/templates/base/login.html:17
+msgid "password"
+msgstr ""
+
+#: classroom_ge/base/forms.py:124
+msgid "chosen_date_in_future"
+msgstr ""
+
+#: classroom_ge/base/forms.py:134 classroom_ge/base/forms.py:140
+#: classroom_ge/base/models.py:32
+msgid "invalid_email"
+msgstr ""
+
+#: classroom_ge/base/forms.py:144
+msgid "emails_do_not_match"
+msgstr ""
+
+#: classroom_ge/base/forms.py:147
+msgid "unknown_error_refresh"
+msgstr ""
+
+#: classroom_ge/base/models.py:13
 msgid "user_already_registered"
 msgstr ""
 
-#: classroom_ge/base/models.py:19
-msgid "is_student"
-msgstr ""
-
 #: classroom_ge/base/models.py:20
-msgid "is_teacher"
-msgstr ""
-
-#: classroom_ge/base/models.py:21
-msgid "is_moderator"
+msgid "email_verified"
 msgstr ""
 
 #: classroom_ge/base/models.py:22
+msgid "is_student"
+msgstr ""
+
+#: classroom_ge/base/models.py:23
+msgid "is_teacher"
+msgstr ""
+
+#: classroom_ge/base/models.py:24
+msgid "is_moderator"
+msgstr ""
+
+#: classroom_ge/base/models.py:25
 msgid "is_administrator"
 msgstr ""
 
-#: classroom_ge/base/models.py:31
+#: classroom_ge/base/models.py:34
 msgid "email_already_registered"
 msgstr ""
 
-#: classroom_ge/base/models.py:39
+#: classroom_ge/base/models.py:42
 msgid "User"
 msgstr ""
 
-#: classroom_ge/base/models.py:40
+#: classroom_ge/base/models.py:43
 msgid "Users"
 msgstr ""
 
-#: classroom_ge/classroom_ge/settings.py:133
+#: classroom_ge/base/models.py:49
+msgid "subject_already_registered"
+msgstr ""
+
+#: classroom_ge/base/models.py:60
+msgid "has_read"
+msgstr ""
+
+#: classroom_ge/base/templates/base/login.html:27
+msgid "login"
+msgstr ""
+
+#: classroom_ge/base/templates/base/login.html:30
+msgid "dont_have_account_questionmark"
+msgstr ""
+
+#: classroom_ge/base/templates/base/login.html:34
+#: classroom_ge/base/templates/base/register.html:197
+msgid "registration"
+msgstr ""
+
+#: classroom_ge/base/templates/base/register.html:9
+#: classroom_ge/base/views.py:60
+msgid "message_first_step_of_registration_done"
+msgstr ""
+
+#: classroom_ge/base/views.py:80 classroom_ge/base/views.py:94
+msgid "username_or_password_does_not_exist"
+msgstr ""
+
+#: classroom_ge/base/views.py:87
+msgid "email_is_not_verified_yet"
+msgstr ""
+
+#: classroom_ge/classroom_ge/settings.py:134
 msgid "Georgian"
 msgstr ""
 

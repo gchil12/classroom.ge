@@ -4,6 +4,17 @@
 
 {% block content %}
 
-{{ form }}
+<div class="card" style="max-width: 32rem">
+    <div class="card-body">
+        <form role="form" class="text-start" action="{% url 'app_teacher:new-classroom' %}" method="post">
+            {% csrf_token %}
 
+            {{ form }}
+
+            <div class="text-center">
+                <input type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2" value="შექმნა">
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
