@@ -90,7 +90,7 @@ Here is a link about django translation:
 >   - In the postgres session create database, user and add permissions:
 >       ```
 >       CREATE DATABASE classroom_ge;
->       CREATE USER example_archili WITH PASSWORD example_archilis_password;
+>       CREATE USER example_archili WITH PASSWORD 'example_archilis_password';
 >       ALTER ROLE example_archili SET client_encoding TO 'utf8';
 >       ALTER ROLE example_archili SET default_transaction_isolation TO 'read committed';
 >       ALTER ROLE example_archili SET timezone TO 'UTC';
