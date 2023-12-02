@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .forms import CreateNewClassroomForm
+from .forms import CreateNewClassroomForm, CreateNewLessonForm
 from django.utils.translation import gettext_lazy as _
-from .models import Classroom
+from .models import Classroom, Lesson
 from django.contrib import messages
 
 # Create your views here.
@@ -24,9 +25,11 @@ def classroom(request, uuid):
         return redirect('app_base:home')
     
     classroom = get_object_or_404(Classroom, uuid=uuid)
+    lessons = Lesson.objects.filter(classroom=classroom)
 
     context = {
-        'classroom': classroom
+        'classroom': classroom,
+        'lessons': lessons,
     }
 
     return render(request, 'app_teacher/classroom/classroom_details.html', context)
@@ -78,7 +81,7 @@ def delete_classroom(request, uuid):
     if request.method == 'POST':
         if classroom.owner != request.user:
             pass
-            messages.error(request, _('error:deleting_classroom'))
+            messages.error(request, _('error_unauthorized_access'))
         else:
             messages.success(request, _('classroom_deleted'))
             classroom.delete()
@@ -96,6 +99,7 @@ def archive_classroom(request, uuid):
     classroom = get_object_or_404(Classroom, uuid=uuid)
 
     if classroom.owner != request.user:
+        messages.error(request, _('error_unauthorized_access'))
         pass
     else:
         classroom.is_archived = not classroom.is_archived
@@ -108,3 +112,68 @@ def archive_classroom(request, uuid):
         classroom.save()
 
     return redirect('app_teacher:home')
+
+
+@login_required(login_url='app_base:login')
+def new_lesson(request, classroom_uuid):
+    if not request.user.is_teacher:
+        return redirect('app_base:home')
+    
+    classroom = get_object_or_404(Classroom, uuid=classroom_uuid)
+
+    if classroom.owner != request.user:
+        messages.error(request, _('error_unauthorized_access'))
+        return redirect('app_teacher:home')
+
+    form = CreateNewLessonForm()
+    
+    context = {
+        'form': form,
+        'isvalid': False,
+        'submitted': False,
+        'classroom': classroom,
+    }
+
+    if request.method == 'POST':
+        form = CreateNewLessonForm(request.POST)
+        context['form'] = form
+        context['submitted'] = True
+        
+        if form.is_valid():
+            lesson = form.save(commit=False)
+            
+            lesson.classroom = classroom
+
+            lesson.save()
+            
+            messages.success(request, _('new_lesson'))
+
+            redirect_url = reverse('app_teacher:classroom-detail', kwargs={'uuid': classroom_uuid})
+            return redirect(redirect_url)
+        else:
+            messages.error(request, _('invalid_input'))
+            context['isvalid'] = False
+
+    return render(request, 'app_teacher/classroom/new_lesson_page.html', context)
+    
+
+@login_required(login_url='app_base:login')
+def delete_lesson(request, uuid):
+    if not request.user.is_teacher:
+        return redirect('app_base:home')
+    
+    lesson = get_object_or_404(Lesson, uuid=uuid)
+    classroom_uuid = lesson.classroom.uuid
+
+    if request.method == 'POST':
+        if lesson.classroom.owner != request.user:
+            pass
+            messages.error(request, _('error_unauthorized_access'))
+        else:
+            messages.success(request, _('classroom_deleted'))
+            lesson.delete()
+
+        redirect_url = reverse('app_teacher:classroom-detail', kwargs={'uuid': classroom_uuid})
+        return redirect(redirect_url)
+    else:
+        return render(request, 'app_teacher/classroom/confirm_lesson_deletion.html', {'lesson': lesson})

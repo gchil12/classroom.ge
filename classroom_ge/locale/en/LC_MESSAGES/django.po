@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-01 23:17+0000\n"
+"POT-Creation-Date: 2023-12-02 00:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,36 +79,42 @@ msgstr ""
 msgid "are_you_shure_to_delete_classroom_with_name"
 msgstr ""
 
-#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_classroom_deletion.html:10
-msgid "write_"
-msgstr ""
-
-#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_classroom_deletion.html:14
+#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_classroom_deletion.html:13
+#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_lesson_deletion.html:13
 msgid "delete"
 msgstr ""
 
-#: classroom_ge/app_teacher/views.py:61
-msgid "new_class_created"
+#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_lesson_deletion.html:8
+msgid "are_you_shure_to_delete_lesson_with_name"
 msgstr ""
 
 #: classroom_ge/app_teacher/views.py:64
+msgid "new_class_created"
+msgstr ""
+
+#: classroom_ge/app_teacher/views.py:67 classroom_ge/app_teacher/views.py:154
 msgid "invalid_input"
 msgstr ""
 
-#: classroom_ge/app_teacher/views.py:81
-msgid "error:deleting_classroom"
+#: classroom_ge/app_teacher/views.py:84 classroom_ge/app_teacher/views.py:102
+#: classroom_ge/app_teacher/views.py:125 classroom_ge/app_teacher/views.py:171
+msgid "error_unauthorized_access"
 msgstr ""
 
-#: classroom_ge/app_teacher/views.py:83
+#: classroom_ge/app_teacher/views.py:86 classroom_ge/app_teacher/views.py:173
 msgid "classroom_deleted"
 msgstr ""
 
-#: classroom_ge/app_teacher/views.py:104
+#: classroom_ge/app_teacher/views.py:108
 msgid "classroom_archived"
 msgstr ""
 
-#: classroom_ge/app_teacher/views.py:106
+#: classroom_ge/app_teacher/views.py:110
 msgid "classroom_unarchived"
+msgstr ""
+
+#: classroom_ge/app_teacher/views.py:149
+msgid "new_lesson"
 msgstr ""
 
 #: classroom_ge/base/admin.py:9

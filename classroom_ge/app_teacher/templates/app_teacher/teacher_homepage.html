@@ -4,32 +4,16 @@
 
 {% block content %}
 
-<style>
-table{
-    border:4px solid black;
-}
-
-th{
-    border:2px solid black;
-    text-align: center;
-}
-
-td{
-    border:1px solid black;
-    text-align: center;
-}
-</style>
-
 <h3>მასწავლებლის მთავარი გვერდი: {{request.user.username}}</h3>
 
 <br>
 <div style="width: fit-content; background-color: aquamarine;">
-    <a href="{% url 'app_teacher:new-classroom' %}">ახალი საკლასო ოთახის შექმნა</a>
+    <a href="{% url 'app_teacher:create-new-classroom' %}">ახალი საკლასო ოთახის შექმნა</a>
 </div>
 
 <br>
 
-<table style="width:100%">
+<table style="width:100%" class="list_table">
     <tr>
         <th colspan="4">
             საკლასო ოთახები
@@ -59,7 +43,7 @@ td{
 
 <br>
 
-<table style="width:100%">
+<table style="width:100%" class="list_table">
     <tr>
         <th colspan="4">
             დაარქივებული საკლასო ოთახები

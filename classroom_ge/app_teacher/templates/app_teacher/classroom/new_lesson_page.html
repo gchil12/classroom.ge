@@ -6,7 +6,7 @@
 
 <div class="card" style="max-width: 32rem">
     <div class="card-body">
-        <form role="form" class="text-start" action="{% url 'app_teacher:create-new-classroom' %}" method="post">
+        <form role="form" class="text-start" action="{% url 'app_teacher:create-new-lesson' classroom_uuid=classroom.uuid %}" method="post">
             {% csrf_token %}
 
             {{ form }}

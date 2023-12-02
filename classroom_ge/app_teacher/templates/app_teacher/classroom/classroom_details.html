@@ -17,26 +17,57 @@
     }
 </style>
 
-    <a href="{% url 'app_teacher:home' %}">მთავარ გვერდზე დაბრუნება</a>
+<a href="{% url 'app_teacher:home' %}">მთავარ გვერდზე დაბრუნება</a>
 
-    <h3>მასწავლებელი - კლასის დეტალები</h3>
+<h3>მასწავლებელი - კლასის დეტალები</h3>
 
-    <br>
+<br>
 
-    <table>
+<table>
+    <tr>
+        <th>კლასის სახელი</th>
+        <td>{{ classroom.name }}</td>
+    </tr>
+    <tr>
+        <th>საგანი</th>
+        <td>{{ classroom.subject }}</td>
+    </tr>
+    <tr>
+        <th>აღწერა</th>
+        <td>{{ classroom.description }}</td>
+    </tr>
+</table>
+
+
+<br>
+
+<div style="width: fit-content; background-color: aquamarine;">
+    <a href="{% url 'app_teacher:create-new-lesson' classroom_uuid=classroom.uuid %}">ახალი გაკვეთილის შექმნა</a>
+</div>
+
+<br>
+
+<table style="width:100%" class="list_table" id="list_table">
+    <tr>
+        <th colspan="4">
+            გაკვეთილები
+        </th>
+    </tr>
+    <tr>
+        <th>საკლასო ოთახი</th>
+        <th>სახელი</th>
+        <th>აღწერა</th>
+        <th>წაშლა</th>
+    </tr>
+    {% for lesson in lessons %}
         <tr>
-            <th>კლასის სახელი</th>
-            <td>{{ classroom.name }}</td>
+            <td>{{ lesson.classroom.name }}</td>
+            <td>{{ lesson.name }}</td>
+            <td>{{ lesson.description }}</td>
+            <td><a href="{% url 'app_teacher:lesson-delete' uuid=lesson.uuid %}">წაშლა</a></td>
         </tr>
-        <tr>
-            <th>საგანი</th>
-            <td>{{ classroom.subject }}</td>
-        </tr>
-        <tr>
-            <th>აღწერა</th>
-            <td>{{ classroom.description }}</td>
-        </tr>
-    </table>
+    {% endfor %}
+</table>
 
 
 {% endblock %}
