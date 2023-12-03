@@ -146,4 +146,3 @@ class RegistrationForm(ModelForm):
         if user_type_student == None or user_type_teacher == None or not (user_type_student or user_type_teacher):
             self.add_error("username", _('unknown_error_refresh'))
 
-        

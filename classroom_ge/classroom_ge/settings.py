@@ -12,7 +12,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
-from .my_constants import DATABASE_PARAMS, captcha_public_key, captcha_private_key
+from .my_constants import (
+    DATABASE_PARAMS,
+    captcha_public_key,
+    captcha_private_key,
+    email_host_,
+    email_host_password_,
+    email_port_
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +34,7 @@ SECRET_KEY = 'django-insecure-=90%yi!^8bq*rv_gq#421g21(rhj-87fbpcp^s!!=7lr-6w2@8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['167.99.132.254']
+ALLOWED_HOSTS = ['167.99.132.254', '127.0.0.1']
 
 
 # Application definition
@@ -95,7 +102,10 @@ DATABASES = {
         'PASSWORD': DATABASE_PARAMS['PASSWORD'],
         'HOST': DATABASE_PARAMS['HOST'],
         'PORT': DATABASE_PARAMS['PORT'],
-    }
+    },
+    'TEST': {
+        'NAME': 'test_classroom_database',
+    },
 }
 
 
@@ -160,3 +170,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Gootle reCaptcha
 RECAPTCHA_PUBLIC_KEY = captcha_public_key
 RECAPTCHA_PRIVATE_KEY = captcha_private_key
+
+# For sending emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = email_port_
+EMAIL_HOST_USER = email_host_
+EMAIL_HOST_PASSWORD = email_host_password_
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+PASSWORD_RESET_TIMEOUT = 14400 # Tokens live for 4 hours

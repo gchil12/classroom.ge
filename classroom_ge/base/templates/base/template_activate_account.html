@@ -1,0 +1,9 @@
+{% load i18n %}
+{% autoescape off %}
+
+{% trans 'hello' %} {{ name }} {{ surname }}
+
+{% trans 'follow_link_for_email_verification' %}:
+http://{{ domain }}{% url 'app_base:activate' uidb64=uidb64 token=token %}
+
+{% endautoescape %}

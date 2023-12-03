@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-02 00:23+0000\n"
+"POT-Creation-Date: 2023-12-03 02:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,6 +85,10 @@ msgstr "დარწმუნებული ხართ, რომ გსუ�
 #: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_lesson_deletion.html:13
 msgid "delete"
 msgstr "წაშლა"
+
+#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_classroom_deletion.html:17
+msgid "cancel"
+msgstr ""
 
 #: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_lesson_deletion.html:8
 #, fuzzy
@@ -258,21 +262,33 @@ msgid "registration"
 msgstr "რეგისტრაცია"
 
 #: classroom_ge/base/templates/base/register.html:9
-#: classroom_ge/base/views.py:60
+#: classroom_ge/base/views.py:68
 msgid "message_first_step_of_registration_done"
 msgstr ""
 "თქვენ წარმატებით დარეგისტრირდით! შეამოწმეთ ელ-ფოსტა და გაიარეთ იმეილის "
 "ვერიფიკაცია, რათა შეძლოთ ისარგებლოთ ჩვენი სერვისებით."
 
-#: classroom_ge/base/views.py:80 classroom_ge/base/views.py:94
+#: classroom_ge/base/templates/base/template_activate_account.html:4
+msgid "hello"
+msgstr "გამარჯობათ"
+
+#: classroom_ge/base/templates/base/template_activate_account.html:6
+msgid "follow_link_for_email_verification"
+msgstr "გთხოვთ გადახვიდეთ შემდეგ ბმულზე ანგარიშის ვალიდაციისთვის"
+
+#: classroom_ge/base/views.py:89 classroom_ge/base/views.py:103
 msgid "username_or_password_does_not_exist"
 msgstr "მომხმარებლის სახელი ან პაროლი არასწორია"
 
-#: classroom_ge/base/views.py:87
+#: classroom_ge/base/views.py:96
 msgid "email_is_not_verified_yet"
 msgstr "ელ-ფოსტა არ არის ვერიფიცირებული"
 
-#: classroom_ge/classroom_ge/settings.py:134
+#: classroom_ge/base/views.py:115
+msgid "activate_account"
+msgstr "ანგარიშის აქტივაცია"
+
+#: classroom_ge/classroom_ge/settings.py:144
 msgid "Georgian"
 msgstr "ქართული"
 
@@ -311,4 +327,3 @@ msgstr ""
 #: classroom_ge/src/validators.py:35
 msgid "passwords_do_not_match"
 msgstr "პაროლები არ ემთხვევა ერთმანეთს"
-

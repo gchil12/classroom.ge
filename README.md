@@ -68,7 +68,14 @@
 
 
 ### Support for multiple languages
-On linux everything should be already there. On Windows (and maybe Mac OS, have no idea),
+On linux gettext should be already there. If not:
+```
+sudo apt-get update -y
+sudo apt-get install -y gettext
+```
+Source: https://zoomadmin.com/HowToInstall/UbuntuPackage/gettext
+
+On Windows (and maybe Mac OS, have no idea),
 you should install it by yourself, because Microsoft employees really want me to learn
 anger management:
 1) Download and install following binary (static):
@@ -94,6 +101,7 @@ Here is a link about django translation:
 >       ALTER ROLE example_archili SET client_encoding TO 'utf8';
 >       ALTER ROLE example_archili SET default_transaction_isolation TO 'read committed';
 >       ALTER ROLE example_archili SET timezone TO 'UTC';
+>       ALTER USER your_username WITH CREATEDB;
 >       GRANT ALL PRIVILEGES ON DATABASE classroom_ge TO example_archili;
 >       ```
 >   - Quit postgress session
@@ -135,7 +143,10 @@ Here is a link about django translation:
     ```
     python classroom_ge/manage.py runserver
     ```
-
+3) Run customly written tests:
+    ```
+    python classroom_ge/manage.py test base app_student app_teacher app_administrator
+    ```
 ### Working with static files
 1) Add static files in the corresponding folder: BASE_DIR/static_files/{app_name}/
 > [!NOTE]

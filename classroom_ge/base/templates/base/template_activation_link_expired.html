@@ -1,0 +1,16 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+{% trans 'activation_link_expired' %}
+<br>
+<div class="card" style="max-width: 32rem;">
+    <form role="form" class="text-start" method="post" action="{% url 'app_base:send_email_verification' uidb64=uuid %}">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-outline-danger" value="{% trans 'resend_activation_code' %}">
+    </form>
+</div>
+
+{% endblock %}

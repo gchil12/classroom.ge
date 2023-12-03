@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -5,6 +6,13 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from .forms import RegistrationForm
 from .models import User
+
+from django.core.mail import EmailMessage
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_str
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
 
 
 # Create your views here.
@@ -58,7 +66,8 @@ def register(request):
             context['form'] = RegistrationForm()
             
             messages.info(request, _('message_first_step_of_registration_done'))
-            return redirect('app_base:home')
+            send_email_after_registration(request, urlsafe_base64_encode(force_bytes(user.uuid)))
+            return redirect('app_base:login')
         else:
             context['isvalid'] = False
             
@@ -96,6 +105,53 @@ def loginUser(request):
     return render(request, 'base/login.html')
 
 
+@login_required(login_url='app_base:login')
 def logoutUser(request):
     logout(request)
+    return redirect('app_base:home')
+
+
+def send_email_after_registration(request, uidb64):
+    uuid = force_str(urlsafe_base64_decode(uidb64))
+    user = User.objects.get(uuid = uuid)
+    
+    email_subject = 'Classroom.ge: ' + _('activate_account')
+    message = render_to_string('base/template_activate_account.html', {
+        'name': user.name,
+        'surname': user.surname,
+        'uidb64': urlsafe_base64_encode(force_bytes(user.uuid)),
+        'domain': get_current_site(request).domain,
+        'protocol': 'https' if request.is_secure() else 'http', # TODO
+        'token': account_activation_token.make_token(user)
+    })
+
+    email = EmailMessage(email_subject, message, to=[user.email])
+
+    if email.send():
+        messages.success(request, 'Email Varification Sent')
+        print('here')
+
+    if request.method == 'POST':
+        return redirect('app_base:login')
+
+
+def activate_account(request, uidb64, token):
+    try:
+        uuid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(uuid = uuid)
+    except:
+        user = None
+
+    if user is not None:
+        if account_activation_token.check_token(user, token):
+            user.email_verified = True
+            user.save()
+
+            messages.success(request, _('email_activation_was_successfull'))
+            return redirect('app_base:login')
+        else:
+            return render(request, 'base/template_activation_link_expired.html', {'uuid': urlsafe_base64_encode(force_bytes(user.uuid))})
+    else:
+        messages.error(request, _('something_went_wrong'))
+
     return redirect('app_base:home')
