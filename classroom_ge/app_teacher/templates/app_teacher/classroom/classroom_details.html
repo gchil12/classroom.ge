@@ -3,27 +3,13 @@
 {% load static %}
 
 {% block content %}
-<style>
-    /* Add some basic styling for better presentation */
-    table {
-        border-collapse: collapse;
-        width: 300px;
-    }
-
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-</style>
-
 <a href="{% url 'app_teacher:home' %}">მთავარ გვერდზე დაბრუნება</a>
 
 <h3>მასწავლებელი - კლასის დეტალები</h3>
 
 <br>
 
-<table>
+<table class="list_table">
     <tr>
         <th>კლასის სახელი</th>
         <td>{{ classroom.name }}</td>
@@ -35,6 +21,12 @@
     <tr>
         <th>აღწერა</th>
         <td>{{ classroom.description }}</td>
+    </tr>
+    <tr>
+        <th>მოწვევის ლინკი</th>
+        <td>
+            <input type="text" value="{{ domain }}{% url 'app_student:subscribe-classroom' classroom_uuid=classroom.uuid %}" id="classroom-link">
+        </td>
     </tr>
 </table>
 

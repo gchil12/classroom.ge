@@ -209,5 +209,5 @@ Here is a link about django translation:
 - Translation
     - https://docs.djangoproject.com/en/4.2/topics/i18n/translation/
     - https://testdriven.io/blog/multiple-languages-in-django/
-
-
+- Email Varification
+    - https://www.youtube.com/watch?v=wB1qOExDsYY

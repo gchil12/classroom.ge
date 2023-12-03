@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 from .forms import CreateNewClassroomForm, CreateNewLessonForm
 from django.utils.translation import gettext_lazy as _
 from .models import Classroom, Lesson
@@ -27,9 +28,12 @@ def classroom(request, uuid):
     classroom = get_object_or_404(Classroom, uuid=uuid)
     lessons = Lesson.objects.filter(classroom=classroom)
 
+    domain = get_current_site(request).domain
+    
     context = {
         'classroom': classroom,
         'lessons': lessons,
+        'domain': domain
     }
 
     return render(request, 'app_teacher/classroom/classroom_details.html', context)
@@ -177,3 +181,6 @@ def delete_lesson(request, uuid):
         return redirect(redirect_url)
     else:
         return render(request, 'app_teacher/classroom/confirm_lesson_deletion.html', {'lesson': lesson})
+
+
+################# Adding Students to Classrooms #################

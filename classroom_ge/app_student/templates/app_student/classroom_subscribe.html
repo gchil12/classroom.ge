@@ -1,0 +1,37 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+<h2>Subscribe to Classroom Page</h2>
+<br>
+<table class="list_table">
+    <tr>
+        <th>მასწავლებელი</th>
+        <td>{{ classroom.owner.name }} {{ classroom.owner.surname }}</td>
+    </tr>
+    <tr>
+        <th>კლასის სახელი</th>
+        <td>{{ classroom.name }}</td>
+    </tr>
+    <tr>
+        <th>საგანი</th>
+        <td>{{ classroom.subject }}</td>
+    </tr>
+    <tr>
+        <th>აღწერა</th>
+        <td>{{ classroom.description }}</td>
+    </tr>
+</table>
+
+<br>
+
+<div style="max-width: 32rem">
+    <form action="{% url 'app_student:subscribe-classroom' classroom_uuid=classroom.uuid %}" method="post">
+        {% csrf_token %}
+        <input id="subscribe" type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2" value="{% trans 'subscribe' %}">
+    </form>
+</div>
+
+{% endblock %}

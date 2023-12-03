@@ -111,6 +111,9 @@ def logoutUser(request):
     return redirect('app_base:home')
 
 
+
+################# Account Activation #################
+
 def send_email_after_registration(request, uidb64):
     uuid = force_str(urlsafe_base64_decode(uidb64))
     user = User.objects.get(uuid = uuid)
