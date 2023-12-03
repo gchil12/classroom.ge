@@ -147,6 +147,13 @@ Here is a link about django translation:
     ```
     python classroom_ge/manage.py test base app_student app_teacher app_administrator
     ```
+4) Restart Server:
+    ```
+    sudo systemctl daemon-reload
+    sudo systemctl restart classroom_ge
+    sudo nginx -t && sudo systemctl restart nginx
+    ```
+
 ### Working with static files
 1) Add static files in the corresponding folder: BASE_DIR/static_files/{app_name}/
 > [!NOTE]
