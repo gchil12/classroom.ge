@@ -12,7 +12,12 @@ def student_homepage(request):
     if not request.user.is_student:
         return redirect('app_base:home')
     
-    return render(request, 'app_student/student_homepage.html')
+    student_to_classrooms = StudentToClassroom.objects.filter(student=request.user)
+
+    context = {
+        'student_to_classrooms': student_to_classrooms,
+    }
+    return render(request, 'app_student/student_homepage.html', context)
     
 
 @login_required(login_url='app_base:login')

@@ -5,6 +5,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from .forms import CreateNewClassroomForm, CreateNewLessonForm
 from django.utils.translation import gettext_lazy as _
 from .models import Classroom, Lesson
+from app_student.models import StudentToClassroom
 from django.contrib import messages
 
 # Create your views here.
@@ -28,12 +29,15 @@ def classroom(request, uuid):
     classroom = get_object_or_404(Classroom, uuid=uuid)
     lessons = Lesson.objects.filter(classroom=classroom)
 
+    student_to_classrooms = StudentToClassroom.objects.filter(classroom=classroom)
+
     domain = get_current_site(request).domain
     
     context = {
         'classroom': classroom,
         'lessons': lessons,
-        'domain': domain
+        'domain': domain,
+        'student_to_classrooms': student_to_classrooms,
     }
 
     return render(request, 'app_teacher/classroom/classroom_details.html', context)

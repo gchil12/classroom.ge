@@ -30,6 +30,24 @@
     </tr>
 </table>
 
+<br>
+
+<table class="list_table">
+    <tr collspan="2">
+        <th>მოსწავლეები</th>
+    </tr>
+    <tr>
+        <th>სახელი</th>
+        <th>გვარი</th>
+    </tr>
+    {% for student_to_classroom in student_to_classrooms %}
+        <tr>
+            <td>{{ student_to_classroom.student.name }}</td>
+            <td>{{ student_to_classroom.student.surname }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
 
 <br>
 
