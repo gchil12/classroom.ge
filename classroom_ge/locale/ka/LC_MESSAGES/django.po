@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-03 02:14+0000\n"
+"POT-Creation-Date: 2023-12-03 03:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -276,6 +276,14 @@ msgstr "გამარჯობათ"
 msgid "follow_link_for_email_verification"
 msgstr "გთხოვთ გადახვიდეთ შემდეგ ბმულზე ანგარიშის ვალიდაციისთვის"
 
+#: classroom_ge/base/templates/base/template_activation_link_expired.html:7
+msgid "activation_link_expired"
+msgstr "აქტივაციის ლინკის ვადა ამოიწურა"
+
+#: classroom_ge/base/templates/base/template_activation_link_expired.html:12
+msgid "resend_activation_code"
+msgstr "აქტივაციის ლინკის ხელახლა გამოგზავნა"
+
 #: classroom_ge/base/views.py:89 classroom_ge/base/views.py:103
 msgid "username_or_password_does_not_exist"
 msgstr "მომხმარებლის სახელი ან პაროლი არასწორია"
@@ -284,9 +292,17 @@ msgstr "მომხმარებლის სახელი ან პარ
 msgid "email_is_not_verified_yet"
 msgstr "ელ-ფოსტა არ არის ვერიფიცირებული"
 
-#: classroom_ge/base/views.py:115
+#: classroom_ge/base/views.py:118
 msgid "activate_account"
 msgstr "ანგარიშის აქტივაცია"
+
+#: classroom_ge/base/views.py:150
+msgid "email_activation_was_successfull"
+msgstr "ელექტრონული ფოსტის აქტივაცია წარმატებით განხორციელდა!"
+
+#: classroom_ge/base/views.py:155
+msgid "something_went_wrong"
+msgstr "უცნობი შეცდომა. განმეორების შემთხვევაში გთხოვთ დაგვიკავშირდეთ"
 
 #: classroom_ge/classroom_ge/settings.py:144
 msgid "Georgian"

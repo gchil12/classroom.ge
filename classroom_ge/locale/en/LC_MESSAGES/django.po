@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-03 02:14+0000\n"
+"POT-Creation-Date: 2023-12-03 03:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -270,6 +270,14 @@ msgstr ""
 msgid "follow_link_for_email_verification"
 msgstr ""
 
+#: classroom_ge/base/templates/base/template_activation_link_expired.html:7
+msgid "activation_link_expired"
+msgstr ""
+
+#: classroom_ge/base/templates/base/template_activation_link_expired.html:12
+msgid "resend_activation_code"
+msgstr ""
+
 #: classroom_ge/base/views.py:89 classroom_ge/base/views.py:103
 msgid "username_or_password_does_not_exist"
 msgstr ""
@@ -278,8 +286,16 @@ msgstr ""
 msgid "email_is_not_verified_yet"
 msgstr ""
 
-#: classroom_ge/base/views.py:115
+#: classroom_ge/base/views.py:118
 msgid "activate_account"
+msgstr ""
+
+#: classroom_ge/base/views.py:150
+msgid "email_activation_was_successfull"
+msgstr ""
+
+#: classroom_ge/base/views.py:155
+msgid "something_went_wrong"
 msgstr ""
 
 #: classroom_ge/classroom_ge/settings.py:144
