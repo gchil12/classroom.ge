@@ -10,8 +10,8 @@
 	<form role="form" class="text-start" method="post" action="{% url 'app_base:login' %}">
 		{% csrf_token %}
 		<div class="input-group input-group-outline my-3">
-			<label class="form-label">{% trans 'username' %}</label>
-			<input name="username" type="text" class="form-control" autocomplete="on" {% if username is not None %} placeholder="{{username}}" {% endif %} required />
+			<label class="form-label">{% trans 'email' %}</label>
+			<input name="email" type="text" class="form-control" autocomplete="on" {% if email is not None %} placeholder="{{email}}" {% endif %} required />
 		</div>
 		<div class="input-group input-group-outline mb-3">
 			<label class="form-label">{% trans 'password' %}</label>

@@ -21,22 +21,6 @@
 				</div>
 				
 				<div>
-					{% if form.username.errors|length > 0 %}
-						<ul class="errorlist">
-							{% for error in form.username.errors %}
-								<li>{{ error }}</li>
-							{% endfor %}
-						</ul>
-					{% endif %}
-				</div>
-				<div class="input-group input-group-outline my-3 {% if submitted and not isvalid%} is-filled{% endif %}">
-					<label for="{{form.username.id_for_label}}" class="form-label">
-						{{ form.username.label }}
-					</label>
-					{{ form.username }}
-				</div>
-
-				<div>
 					{% if form.name.errors|length > 0 %}
 						<ul class="errorlist">
 							{% for error in form.name.errors %}

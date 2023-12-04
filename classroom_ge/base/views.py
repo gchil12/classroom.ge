@@ -48,7 +48,6 @@ def register(request):
         
         if form.is_valid():
             user = User.objects.create_user(
-                username = request.POST.get('username'),
                 email = request.POST.get('email'),
                 password = request.POST.get('password'),
                 name = request.POST.get('name'),
@@ -80,16 +79,16 @@ def loginUser(request):
         return redirect_to_homepage(request)
     
     if request.method == 'POST':
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(email=email)
         except:
-            messages.error(request, _('username_or_password_does_not_exist'))
+            messages.error(request, _('email_or_password_does_not_exist'))
             return render(request, 'base/login.html')
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
         
         if user is not None:
             if not user.email_verified:
@@ -100,7 +99,7 @@ def loginUser(request):
                 return redirect_to_homepage(request)
                 
         else:
-            messages.error(request, _('username_or_password_does_not_exist'))
+            messages.error(request, _('email_or_password_does_not_exist'))
     
     return render(request, 'base/login.html')
 

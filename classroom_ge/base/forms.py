@@ -47,10 +47,9 @@ class RegistrationForm(ModelForm):
     class Meta:
         model  = User
 
-        fields = ['username', 'name', 'surname', 'date_of_birth', 'school', 'city', 'email', 'password']
+        fields = ['name', 'surname', 'date_of_birth', 'school', 'city', 'email', 'password']
 
         labels = {
-            'username':         _('username'),
             'name':             _('name'),
             'surname':          _('surname'),
             'date_of_birth':    _('date_of_birth'),
@@ -61,9 +60,6 @@ class RegistrationForm(ModelForm):
         }
 
         error_messages = {
-            'username': {
-                'required': _('this_field_is_required'),
-            },
             'name': {
                 'required': _('this_field_is_required'),
             },
@@ -99,6 +95,8 @@ class RegistrationForm(ModelForm):
         super(RegistrationForm, self).__init__(*args, **kwargs)
 
         self.fields['date_of_birth'].initial = None
+        self.fields['school'].initial = None
+        self.fields['city'].initial = None
         
 
         for visible in self.visible_fields():
@@ -120,7 +118,7 @@ class RegistrationForm(ModelForm):
         user_type_teacher = cleaned_data.get('user_type_teacher')
 
 
-        if date.today() <= date_of_birth:
+        if date_of_birth is not None and date.today() <= date_of_birth:
             self.add_error("date_of_birth", _('chosen_date_in_future'))
         
         errors = password_validator(password, password_conf)
@@ -144,5 +142,5 @@ class RegistrationForm(ModelForm):
             self.add_error("email", _('emails_do_not_match'))
 
         if user_type_student == None or user_type_teacher == None or not (user_type_student or user_type_teacher):
-            self.add_error("username", _('unknown_error_refresh'))
+            self.add_error("email", _('unknown_error_refresh'))
 

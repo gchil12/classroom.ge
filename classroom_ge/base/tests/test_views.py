@@ -5,16 +5,15 @@ from base.models import User
 
 class TestViews(TestCase):
     def setUp(self) -> None:
-        self.username = 'testuser'
+        self.email = 'testemail@gmail.com'
         self.password = 'testpassword'
         self.user = User.objects.create_user(
-            username=self.username,
             password=self.password,
             name='name',
             surname='surname',
             date_of_birth='1995-05-23',
             is_student=True,
-            email='testemail@gmail.com',
+            email=self.email,
             school='school',
             city='city',
         )
@@ -48,7 +47,7 @@ class TestViews(TestCase):
 
 
     def test_logout_POST(self):
-        self.client.login(username=self.username, password=self.password)
+        self.client.login(email=self.email, password=self.password)
 
         response = self.client.get(self.logout_url)
         
