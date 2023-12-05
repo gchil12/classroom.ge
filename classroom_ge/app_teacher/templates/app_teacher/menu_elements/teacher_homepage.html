@@ -35,6 +35,7 @@
     <tr>
         <th>სახელი</th>
         <th>საგანი</th>
+        <th>საფეხური</th>
         <th>მოსწავლეების რაოდენობა</th>
         <th>შემდეგი გაკვეთილის სახელ, დრო, თარიღი</th>
         <th>რანგი</th>
@@ -45,6 +46,11 @@
             <tr>
                 <td style="background-color: aquamarine;"><a href="{% url 'app_teacher:classroom-detail' uuid=classroom.uuid %}">{{ classroom.name }}</a></td>
                 <td>{{ classroom.subject }}</td>
+                <td>
+                    {% for classroom_to_levels in classroom.classroomtolevels_set.all %}
+                        {{ classroom_to_levels.level.level }}
+                    {% endfor %}
+                </td>
                 <td>{{ classroom.num_students }}</td>
                 <th>გაკვეთილი:TODO</th>
                 <th>რანგი:TODO</th>

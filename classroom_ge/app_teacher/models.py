@@ -22,9 +22,6 @@ class Level(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
     level = models.CharField(blank=False, null=False, unique=True, default='-')
 
-    def __str__(self) -> str:
-        return f"Level {self.level}"
-
 
 class ClassroomToLevels(models.Model):
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=False, blank=False, verbose_name=_('owner'))

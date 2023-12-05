@@ -26,6 +26,7 @@ def teacher_homepage(request):
     return render(request, 'app_teacher/menu_elements/teacher_homepage.html', context)
 
 
+############### Classrooms #################
 
 @login_required(login_url='app_base:login')
 def classrooms(request):
@@ -47,6 +48,11 @@ def classroom_details(request, uuid):
         return redirect('app_base:home')
     
     classroom = get_object_or_404(Classroom, uuid=uuid)
+
+    if classroom.owner != request.user:
+        messages.error(request, _('error_unauthorized_access'))
+        return redirect('app_teacher:home')
+
     lessons = Lesson.objects.filter(classroom=classroom)
 
     student_to_classrooms = StudentToClassroom.objects.filter(classroom=classroom)
@@ -120,13 +126,15 @@ def delete_classroom(request, uuid):
     
     classroom = get_object_or_404(Classroom, uuid=uuid)
 
-    if request.method == 'POST':
-        if classroom.owner != request.user:
-            pass
-            messages.error(request, _('error_unauthorized_access'))
-        else:
-            messages.success(request, _('classroom_deleted'))
-            classroom.delete()
+    
+    if classroom.owner != request.user:
+        messages.error(request, _('error_unauthorized_access'))
+        return redirect('app_teacher:home')
+    
+
+    if request.method == 'POST':        
+        messages.success(request, _('classroom_deleted'))
+        classroom.delete()
 
         return redirect('app_teacher:home')
     else:
@@ -142,7 +150,6 @@ def archive_classroom(request, uuid):
 
     if classroom.owner != request.user:
         messages.error(request, _('error_unauthorized_access'))
-        pass
     else:
         classroom.is_archived = not classroom.is_archived
 
@@ -155,6 +162,8 @@ def archive_classroom(request, uuid):
 
     return redirect('app_teacher:home')
 
+
+############### Lessons #################
 
 @login_required(login_url='app_base:login')
 def new_lesson(request, classroom_uuid):
@@ -207,18 +216,18 @@ def delete_lesson(request, uuid):
     lesson = get_object_or_404(Lesson, uuid=uuid)
     classroom_uuid = lesson.classroom.uuid
 
+
+    if lesson.classroom.owner != request.user:
+        messages.error(request, _('error_unauthorized_access'))
+        return redirect('app_teacher:home')
+    
+
     if request.method == 'POST':
-        if lesson.classroom.owner != request.user:
-            pass
-            messages.error(request, _('error_unauthorized_access'))
-        else:
-            messages.success(request, _('classroom_deleted'))
-            lesson.delete()
+        messages.success(request, _('classroom_deleted'))
+        lesson.delete()
 
         redirect_url = reverse('app_teacher:classroom-detail', kwargs={'uuid': classroom_uuid})
         return redirect(redirect_url)
     else:
         return render(request, 'app_teacher/classroom/confirm_lesson_deletion.html', {'lesson': lesson})
 
-
-################# Adding Students to Classrooms #################

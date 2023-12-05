@@ -8,7 +8,7 @@ class CreateNewClassroomForm(ModelForm):
 
     try:
         levels = forms.ChoiceField(
-            choices=[('', _('None'))] + [(cur_level.level, cur_level) for cur_level in  Level.objects.all()],
+            choices=[('', _('None'))] + [(cur_level.level, cur_level.level) for cur_level in Level.objects.all()],
             label       =   _('class_level',),
             required=False,
         )
