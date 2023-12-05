@@ -14,6 +14,10 @@ import os
 from pathlib import Path
 from .my_constants import (
     DATABASE_PARAMS,
+    allowed_hosts,
+    django_debug,
+    django_dev,
+    django_secret_key,
     captcha_public_key,
     captcha_private_key,
     email_host_,
@@ -29,12 +33,30 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=90%yi!^8bq*rv_gq#421g21(rhj-87fbpcp^s!!=7lr-6w2@8'
+SECRET_KEY = django_secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = django_debug
 
-ALLOWED_HOSTS = ['167.99.132.254', '127.0.0.1']
+ALLOWED_HOSTS = allowed_hosts
+
+# SSH
+if not django_dev:
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_PRELOAD = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    DEVELOPMENT_MODE = False
+else:
+    SECURE_SSL_REDIRECT = False
+    SECURE_HSTS_PRELOAD = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+    DEVELOPMENT_MODE = True
+# Application definition
+
 
 
 # Application definition
