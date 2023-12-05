@@ -6,11 +6,14 @@ from django.utils.translation import gettext_lazy as _
 class CreateNewClassroomForm(ModelForm):
     required_css_class = 'required'
 
-    levels = forms.ChoiceField(
-        choices=[('', _('None'))] + [(cur_level.level, cur_level) for cur_level in  Level.objects.all()],
-        label       =   _('class_level',),
-        required=False,
-    )
+    try:
+        levels = forms.ChoiceField(
+            choices=[('', _('None'))] + [(cur_level.level, cur_level) for cur_level in  Level.objects.all()],
+            label       =   _('class_level',),
+            required=False,
+        )
+    except:
+        levels = []
 
     def __init__(self, *args, **kwargs):
         super(CreateNewClassroomForm, self).__init__(*args, **kwargs)
