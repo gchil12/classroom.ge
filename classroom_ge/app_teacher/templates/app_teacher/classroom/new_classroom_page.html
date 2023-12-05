@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load static %}
 
+
 {% block content %}
 
 <div class="card" style="max-width: 32rem">
@@ -9,8 +10,88 @@
         <form role="form" class="text-start" action="{% url 'app_teacher:create-new-classroom' %}" method="post">
             {% csrf_token %}
 
-            {{ form }}
+            <div>
+                {% if form.name.errors|length > 0 %}
+                    <ul class="errorlist">
+                        {% for error in form.name.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+                <label for="{{form.name.id_for_label}}" class="form-label">
+                    {{ form.name.label }}
+                </label>
+                {{ form.name }}
+            </div>
 
+            <div>
+                {% if form.subject.errors|length > 0 %}
+                    <ul class="errorlist">
+                        {% for error in form.subject.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+                <label for="{{form.subject.id_for_label}}" style="margin-top: auto; margin-right: 1em;">
+                    {{ form.subject.label }}
+                </label>
+                {{ form.subject }}
+            </div>
+            
+            <div>
+                {% if form.description.errors|length > 0 %}
+                    <ul class="errorlist">
+                        {% for error in form.description.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+                <label for="{{form.description.id_for_label}}" class="form-label">
+                    {{ form.description.label }}
+                </label>
+                {{ form.description }}
+            </div>
+
+            <div>
+                {% if form.online_meeting_link.errors|length > 0 %}
+                    <ul class="errorlist">
+                        {% for error in form.online_meeting_link.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+                <label for="{{form.online_meeting_link.id_for_label}}" class="form-label">
+                    {{ form.online_meeting_link.label }}
+                </label>
+                {{ form.online_meeting_link }}
+            </div>
+
+            <div>
+                {% if form.levels.errors|length > 0 %}
+                    <ul class="errorlist">
+                        {% for error in form.levels.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="input-group input-group-outline my-3">
+                <label for="{{form.levels.id_for_label}}" style="margin-top: auto; margin-right: 1em;">
+                    {{ form.levels.label }}
+                </label>
+                {{ form.levels }}
+            </div>
+            
+
+            
             <div class="text-center">
                 <input type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2" value="შექმნა">
             </div>

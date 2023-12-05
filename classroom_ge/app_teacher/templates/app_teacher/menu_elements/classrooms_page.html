@@ -1,0 +1,48 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+<div style="width: fit-content; background-color: aquamarine;">
+    <a href="{% url 'app_teacher:create-new-classroom' %}">ახალი საკლასო ოთახის შექმნა</a>
+</div>
+<table style="width:100%" class="list_table">
+    <tr>
+        <th colspan="4">
+            საკლასო ოთახები
+        </th>
+    </tr>
+    <tr>
+        <th>სახელი</th>
+        <th>საგანი</th>
+        <th>საფეხური</th>
+        <th>მოსწავლეების რაოდენობა</th>
+        <th>შემდეგი გაკვეთილის სახელ, დრო, თარიღი</th>
+        <th>რანგი</th>
+        <th>გაკვეთილის შექმნა</th>
+    </tr>
+    {% for classroom in classrooms %}
+        {% if classroom.is_archived == False %}
+            <tr>
+                <td style="background-color: aquamarine;"><a href="{% url 'app_teacher:classroom-detail' uuid=classroom.uuid %}">{{ classroom.name }}</a></td>
+                <td>{{ classroom.subject }}</td>
+                <th> 
+                    {% for classroom_to_levels in classroom.classroomtolevels_set.all %}
+                        {{ classroom_to_levels.level.level }}
+                    {% endfor %}
+                </th>
+                <td>{{ classroom.num_students }}</td>
+                <th>გაკვეთილი:TODO</th>
+                <th>რანგი:TODO</th>
+                <th>
+                    <div style="width: fit-content; background-color: aquamarine;">
+                        <a href="{% url 'app_teacher:create-new-lesson' classroom_uuid=classroom.uuid %}">ახალი გაკვეთილის შექმნა</a>
+                    </div>
+                </th>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
+{% endblock %}

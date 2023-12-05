@@ -40,6 +40,8 @@ ALLOWED_HOSTS = ['167.99.132.254', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -184,3 +186,5 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 PASSWORD_RESET_TIMEOUT = 14400 # Tokens live for 4 hours
+
+FIXTURE_DIRS =  os.path.join(BASE_DIR, 'fixtures/') 

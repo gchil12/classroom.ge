@@ -77,6 +77,7 @@ class Subject(models.Model):
         return self.name
 
 
+# TODO: Implement Messates
 class Message(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)

@@ -4,7 +4,10 @@ from . import views
 
 urlpatterns = [
     path('home/', views.teacher_homepage, name='home'),
-    path('classroom/<uuid:uuid>/', views.classroom, name='classroom-detail'),
+    path('classrooms/', views.classrooms, name='classrooms'),
+
+
+    path('classroom/<uuid:uuid>/', views.classroom_details, name='classroom-detail'),
     path('archive_classroom/<uuid:uuid>/', views.archive_classroom, name='classroom-archive'),
     path('delete_classroom/<uuid:uuid>/', views.delete_classroom, name='classroom-delete'),
     path('create_classroom/', views.newClassroom, name='create-new-classroom'),

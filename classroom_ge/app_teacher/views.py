@@ -4,9 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from .forms import CreateNewClassroomForm, CreateNewLessonForm
 from django.utils.translation import gettext_lazy as _
-from .models import Classroom, Lesson
+from .models import Classroom, Lesson, Level, ClassroomToLevels
 from app_student.models import StudentToClassroom
 from django.contrib import messages
+from django.db.models import Count, Q
 
 # Create your views here.
 @login_required(login_url='app_base:login')
@@ -14,15 +15,34 @@ def teacher_homepage(request):
     if not request.user.is_teacher:
         return redirect('app_base:home')
     
-    classrooms = Classroom.objects.filter(owner=request.user)
+    # classrooms = Classroom.objects.filter(owner=request.user)
+    classrooms_with_levels = Classroom.objects.annotate(
+        num_levels=Count('classroomtolevels__level'),
+        num_students=Count('studenttoclassroom__student', filter=Q(studenttoclassroom__student__is_student=True))
+    ).filter(owner=request.user)
 
-    context = {'classrooms': classrooms,}
+    context = {'classrooms': classrooms_with_levels,}
     
-    return render(request, 'app_teacher/teacher_homepage.html', context)
+    return render(request, 'app_teacher/menu_elements/teacher_homepage.html', context)
+
 
 
 @login_required(login_url='app_base:login')
-def classroom(request, uuid):
+def classrooms(request):
+    if not request.user.is_teacher:
+        return redirect('app_base:home')
+    
+    # classrooms_with_levels = Classroom.objects.prefetch_related('classroomtolevels_set__level').all()
+    classrooms_with_levels = Classroom.objects.annotate(
+        num_levels=Count('classroomtolevels__level'),
+        num_students=Count('studenttoclassroom__student', filter=Q(studenttoclassroom__student__is_student=True))
+    ).filter(owner=request.user)
+    
+    return render(request, 'app_teacher/menu_elements/classrooms_page.html', {'classrooms': classrooms_with_levels})
+
+
+@login_required(login_url='app_base:login')
+def classroom_details(request, uuid):
     if not request.user.is_teacher:
         return redirect('app_base:home')
     
@@ -68,9 +88,23 @@ def newClassroom(request):
 
             classroom.save()
             
+            level = Level.objects.filter(level=form.cleaned_data['levels']).first()
+            print(level)
+            
+            try:
+                classroom_to_level = ClassroomToLevels.objects.create(
+                    classroom=classroom,
+                    level = level,
+                )
+                classroom_to_level.save()
+            except:
+                # Pair Exists or user did not chose anything
+                pass
+
             
             messages.success(request, _('new_class_created'))
-            return redirect('app_teacher:home')
+            redirect_url = reverse('app_teacher:classroom-detail', kwargs={'uuid': classroom.uuid})
+            return redirect(redirect_url)
         else:
             messages.error(request, _('invalid_input'))
             context['isvalid'] = False
@@ -155,7 +189,7 @@ def new_lesson(request, classroom_uuid):
             lesson.save()
             
             messages.success(request, _('new_lesson'))
-
+            
             redirect_url = reverse('app_teacher:classroom-detail', kwargs={'uuid': classroom_uuid})
             return redirect(redirect_url)
         else:

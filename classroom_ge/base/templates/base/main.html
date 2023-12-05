@@ -88,7 +88,7 @@
 			<div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link text-white" id="nav-main" href="{% url 'app_base:home' %}">
+						<a class="nav-link text-white" id="nav-main" {% if request.user.is_student %} href="{% url 'app_student:home' %}" {% elif request.user.is_teacher %} href="{% url 'app_teacher:home' %}" {% endif %}>
 							<div
 								class="text-white text-center me-2 d-flex align-items-center justify-content-center"
 							>
@@ -99,7 +99,7 @@
 					</li>
 					{% if request.user.is_authenticated %}
 						<li class="nav-item">
-							<a class="nav-link text-white" id="nav-classes" href="#">
+							<a class="nav-link text-white" id="nav-classes" {% if request.user.is_student %} href="#" {% elif request.user.is_teacher %} href="{% url 'app_teacher:classrooms' %}" {% endif %}>
 								<div
 									class="text-white text-center me-2 d-flex align-items-center justify-content-center"
 								>
@@ -173,7 +173,7 @@
 					
 					{% if request.user.is_authenticated %}
 						<li class="nav-item">
-							<a class="nav-link text-white" id="nav-profile" {% if request.user.is_student %} href="{% url 'app_student:home' %}" {% elif request.user.is_teacher %} href="{% url 'app_teacher:home' %}" {% endif %}>
+							<a class="nav-link text-white" id="nav-profile" href="#">
 								<div
 									class="text-white text-center me-2 d-flex align-items-center justify-content-center"
 								>

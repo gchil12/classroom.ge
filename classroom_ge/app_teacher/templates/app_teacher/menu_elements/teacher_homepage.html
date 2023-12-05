@@ -4,15 +4,28 @@
 
 {% block content %}
 
-<h3>მასწავლებლის მთავარი გვერდი: {{request.user.email}}</h3>
+<h3>მასწავლებლის მთავარი გვერდი: {{request.user.email}} - {{ request.user.name }} - {{ request.user.surname }}</h3>
 
 <br>
+
+<table style="width:100%" class="list_table">
+    <tr>
+        <th colspan="4">
+            შემდეგი გაკვეთილები
+        </th>
+    </tr>
+    <tr>
+        <td>TODO</td>
+    </tr>
+</table>
+
+
+<br>
+
+
 <div style="width: fit-content; background-color: aquamarine;">
     <a href="{% url 'app_teacher:create-new-classroom' %}">ახალი საკლასო ოთახის შექმნა</a>
 </div>
-
-<br>
-
 <table style="width:100%" class="list_table">
     <tr>
         <th colspan="4">
@@ -20,22 +33,26 @@
         </th>
     </tr>
     <tr>
-        <th>შემქმნელი</th>
         <th>სახელი</th>
-        <th>თემა</th>
-        <th>აღწერა</th>
-        <th>დაარქივება</th>
-        <th>წაშლა</th>
+        <th>საგანი</th>
+        <th>მოსწავლეების რაოდენობა</th>
+        <th>შემდეგი გაკვეთილის სახელ, დრო, თარიღი</th>
+        <th>რანგი</th>
+        <th>გაკვეთილის შექმნა</th>
     </tr>
     {% for classroom in classrooms %}
         {% if classroom.is_archived == False %}
             <tr>
-                <td>{{ classroom.owner.name }} {{ classroom.owner.surname }}</td>
                 <td style="background-color: aquamarine;"><a href="{% url 'app_teacher:classroom-detail' uuid=classroom.uuid %}">{{ classroom.name }}</a></td>
                 <td>{{ classroom.subject }}</td>
-                <td>{{ classroom.description }}</td>
-                <td><a href="{% url 'app_teacher:classroom-archive' uuid=classroom.uuid %}">დაარქივება</a></td>
-                <td><a href="{% url 'app_teacher:classroom-delete' uuid=classroom.uuid %}">წაშლა</a></td>
+                <td>{{ classroom.num_students }}</td>
+                <th>გაკვეთილი:TODO</th>
+                <th>რანგი:TODO</th>
+                <th>
+                    <div style="width: fit-content; background-color: aquamarine;">
+                        <a href="{% url 'app_teacher:create-new-lesson' classroom_uuid=classroom.uuid %}">ახალი გაკვეთილის შექმნა</a>
+                    </div>
+                </th>
             </tr>
         {% endif %}
     {% endfor %}
@@ -43,6 +60,11 @@
 
 <br>
 
+
+
+
+
+{% comment %}
 <table style="width:100%" class="list_table">
     <tr>
         <th colspan="4">
@@ -70,6 +92,6 @@
         {% endif %}
     {% endfor %}
 </table>
-
+{% endcomment %}
 
 {% endblock %}

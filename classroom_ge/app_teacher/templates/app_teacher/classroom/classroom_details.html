@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-<a href="{% url 'app_teacher:home' %}">მთავარ გვერდზე დაბრუნება</a>
+<a href="{% url 'app_teacher:classrooms' %}" style="background-color: aquamarine;">კლასების სია</a>
 
 <h3>მასწავლებელი - კლასის დეტალები</h3>
 
@@ -23,11 +23,25 @@
         <td>{{ classroom.description }}</td>
     </tr>
     <tr>
+        <th>შეხვედრის ლინკი</th>
+        <th>{{ classroom.online_meeting_link }}</th>
+    </tr>
+    <tr>
         <th>მოწვევის ლინკი</th>
         <td>
             <input type="text" value="{{ domain }}{% url 'app_student:subscribe-classroom' classroom_uuid=classroom.uuid %}" id="classroom-link">
         </td>
     </tr>
+    {% comment %}
+    <tr collspan="2">
+        <td>
+            <a href="{% url 'app_teacher:classroom-archive' uuid=classroom.uuid %}">ამოაარქივება</a>
+        </td>
+    </tr>
+    {% endcomment %}
+    <td colspan="2" style="background-color: red;">
+        <a href="{% url 'app_teacher:classroom-delete' uuid=classroom.uuid %}" style="color: black;" onclick="return confirmDelete();">წაშლა</a>
+    </td>
 </table>
 
 <br>
@@ -39,11 +53,13 @@
     <tr>
         <th>სახელი</th>
         <th>გვარი</th>
+        <th>საშუალო ქულა</th>
     </tr>
     {% for student_to_classroom in student_to_classrooms %}
         <tr>
             <td>{{ student_to_classroom.student.name }}</td>
             <td>{{ student_to_classroom.student.surname }}</td>
+            <td>TODO</td>
         </tr>
     {% endfor %}
 </table>
@@ -79,5 +95,14 @@
     {% endfor %}
 </table>
 
+<br>
+
+<table style="width:100%" class="list_table" id="list_table">
+    <tr>
+        <th colspan="4">
+            საუკეთესო მოსწავლეები
+        </th>
+    </tr>
+</table>
 
 {% endblock %}

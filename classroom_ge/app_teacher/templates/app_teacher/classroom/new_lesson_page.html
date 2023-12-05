@@ -3,13 +3,94 @@
 {% load static %}
 
 {% block content %}
-
 <div class="card" style="max-width: 32rem">
     <div class="card-body">
         <form role="form" class="text-start" action="{% url 'app_teacher:create-new-lesson' classroom_uuid=classroom.uuid %}" method="post">
             {% csrf_token %}
 
-            {{ form }}
+            <div>
+                {% if form.name.errors|length > 0 %}
+                    <ul class="errorlist">
+                        {% for error in form.name.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+                <label for="{{form.name.id_for_label}}" class="form-label">
+                    {{ form.name.label }}
+                </label>
+                {{ form.name }}
+            </div>
+            
+            <div>
+                {% if form.description.errors|length > 0 %}
+                    <ul class="errorlist">
+                        {% for error in form.description.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+                <label for="{{form.description.id_for_label}}" class="form-label">
+                    {{ form.description.label }}
+                </label>
+                {{ form.description }}
+            </div>
+            
+            <div>
+                {% if form.lesson_date.errors|length > 0 %}
+                    <ul class="errorlist">
+                        {% for error in form.lesson_date.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+                <label for="{{form.lesson_date.id_for_label}}" class="form-label">
+                    {{ form.lesson_date.label }}
+                </label>
+                {{ form.lesson_date }}
+            </div>
+
+
+         
+
+            <div>
+                {% if form.lesson_start_time.errors|length > 0 %}
+                    <ul class="errorlist">
+                        {% for error in form.lesson_start_time.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+                <label for="{{form.lesson_start_time.id_for_label}}" class="form-label">
+                    {{ form.lesson_start_time.label }}
+                </label>
+                {{ form.lesson_start_time }}
+            </div>
+
+
+            <div>
+                {% if form.lesson_end_time.errors|length > 0 %}
+                    <ul class="errorlist">
+                        {% for error in form.lesson_end_time.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
+                <label for="{{form.lesson_end_time.id_for_label}}" class="form-label">
+                    {{ form.lesson_end_time.label }}
+                </label>
+                {{ form.lesson_end_time }}
+            </div>
 
             <div class="text-center">
                 <input type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2" value="შექმნა">
@@ -17,4 +98,26 @@
         </form>
     </div>
 </div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    // GEO calendar picker
+	flatpickr("#georgianDate", {
+		dateFormat: "Y-m-d",
+		locale: {
+			firstDayOfWeek: 1, // Monday
+			weekdays: {
+				shorthand: ["კვ", "ორ", "სმ", "ოთ", "ხთ", "პა", "შა"],
+				longhand: ["კვირა", "ორშაბათი", "სამშაბათი", "ოთხშაბათი", "ხუთშაბათი", "პარასკევი", "შაბათი"]
+			},
+			months: {
+				shorthand: ["იან", "თებ", "მარ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"],
+				longhand: ["იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი", "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი"]
+			},
+		},
+	});
+</script>
+
 {% endblock %}
