@@ -7,7 +7,8 @@ from django.utils.translation import gettext_lazy as _
 from .models import Classroom, Lesson, Level, ClassroomToLevels
 from app_student.models import StudentToClassroom
 from django.contrib import messages
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Min, F, Subquery, OuterRef
+from django.utils import timezone
 
 # Create your views here.
 @login_required(login_url='app_base:login')
@@ -15,13 +16,40 @@ def teacher_homepage(request):
     if not request.user.is_teacher:
         return redirect('app_base:home')
     
-    # classrooms = Classroom.objects.filter(owner=request.user)
-    classrooms_with_levels = Classroom.objects.annotate(
+    now = timezone.now()
+    # Subquery for closest lessons in Classrooms (for closest_lessons)
+    closest_lesson_subquery = Lesson.objects.filter(
+        Q(lesson_date__gt=now.date()) | (Q(lesson_date=now.date()) & Q(lesson_start_time__gte=now.time())),
+        classroom=OuterRef('pk'),
+        classroom__owner=request.user,
+    ).order_by('lesson_date', 'lesson_start_time').values('lesson_start_time', 'name', 'lesson_date')[:5]
+
+
+    classrooms_extended_table = Classroom.objects.annotate(
         num_levels=Count('classroomtolevels__level'),
-        num_students=Count('studenttoclassroom__student', filter=Q(studenttoclassroom__student__is_student=True))
+        num_students=Count('studenttoclassroom__student', filter=Q(studenttoclassroom__student__is_student=True)),
+        closest_lesson_start_time=Subquery(closest_lesson_subquery[:1].values('lesson_start_time')),
+        closest_lesson_name=Subquery(closest_lesson_subquery[:1].values('name')),
+        closest_lesson_date=Subquery(closest_lesson_subquery[:1].values('lesson_date')),
     ).filter(owner=request.user)
 
-    context = {'classrooms': classrooms_with_levels,}
+    
+    user_classrooms = request.user.classroom_set.all()
+
+    all_lessons = []
+    for classroom in user_classrooms:
+        lessons = classroom.lesson_set.filter(
+            Q(lesson_date__gt=now.date()) | (Q(lesson_date=now.date()) & Q(lesson_start_time__gte=now.time()))
+        )
+        all_lessons.extend(lessons)
+
+    # Sort all lessons by date and time
+    closest_lessons = sorted(all_lessons, key=lambda lesson: (lesson.lesson_date, lesson.lesson_start_time))[:5]
+
+    context = {
+        'classrooms': classrooms_extended_table,
+        'closest_lessons': closest_lessons,
+    }
     
     return render(request, 'app_teacher/menu_elements/teacher_homepage.html', context)
 
@@ -34,12 +62,20 @@ def classrooms(request):
         return redirect('app_base:home')
     
     # classrooms_with_levels = Classroom.objects.prefetch_related('classroomtolevels_set__level').all()
-    classrooms_with_levels = Classroom.objects.annotate(
+    closest_lesson_subquery = Lesson.objects.filter(
+        classroom=OuterRef('pk'),
+        lesson_start_time__gte=timezone.now()  # Add condition for lessons in the future
+    ).order_by('lesson_date', 'lesson_start_time').values('lesson_start_time', 'name', 'lesson_date')[:1]
+
+    classrooms_extended_table = Classroom.objects.annotate(
         num_levels=Count('classroomtolevels__level'),
-        num_students=Count('studenttoclassroom__student', filter=Q(studenttoclassroom__student__is_student=True))
+        num_students=Count('studenttoclassroom__student', filter=Q(studenttoclassroom__student__is_student=True)),
+        closest_lesson_start_time=Subquery(closest_lesson_subquery.values('lesson_start_time')),
+        closest_lesson_name=Subquery(closest_lesson_subquery.values('name')),
+        closest_lesson_date=Subquery(closest_lesson_subquery.values('lesson_date')),
     ).filter(owner=request.user)
-    
-    return render(request, 'app_teacher/menu_elements/classrooms_page.html', {'classrooms': classrooms_with_levels})
+
+    return render(request, 'app_teacher/menu_elements/classrooms_page.html', {'classrooms': classrooms_extended_table})
 
 
 @login_required(login_url='app_base:login')

@@ -33,7 +33,11 @@
                     {% endfor %}
                 </th>
                 <td>{{ classroom.num_students }}</td>
-                <th>გაკვეთილი:TODO</th>
+                {% if classroom.closest_lesson_name%}
+                    <th>{{ classroom.closest_lesson_name }} - {{ classroom.closest_lesson_date }} - {{ classroom.closest_lesson_start_time }} </th>
+                {% else %}
+                    <th>გაკვეთილები არ არის დაგეგმილი</th>
+                {% endif %}
                 <th>რანგი:TODO</th>
                 <th>
                     <div style="width: fit-content; background-color: aquamarine;">

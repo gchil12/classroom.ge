@@ -76,7 +76,7 @@ INSTALLED_APPS = [
     'app_teacher.apps.AppTeacherConfig',
     'app_administrator.apps.AppAdministratorConfig',
 
-    # 'django_extensions',
+    'django_extensions',
     'captcha',
 ]
 
@@ -102,7 +102,7 @@ ROOT_URLCONF = 'classroom_ge.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

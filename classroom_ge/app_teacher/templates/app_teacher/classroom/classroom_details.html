@@ -82,6 +82,7 @@
     <tr>
         <th>საკლასო ოთახი</th>
         <th>სახელი</th>
+        <th>თარიღი და საათი</th>
         <th>აღწერა</th>
         <th>წაშლა</th>
     </tr>
@@ -89,6 +90,7 @@
         <tr>
             <td>{{ lesson.classroom.name }}</td>
             <td>{{ lesson.name }}</td>
+            <td>{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}</td>
             <td>{{ lesson.description }}</td>
             <td><a href="{% url 'app_teacher:lesson-delete' uuid=lesson.uuid %}">წაშლა</a></td>
         </tr>

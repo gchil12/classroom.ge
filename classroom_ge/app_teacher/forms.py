@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from .models import Classroom, Lesson, Level
 from django.utils.translation import gettext_lazy as _
+from django.forms.widgets import SelectDateWidget
 
 class CreateNewClassroomForm(ModelForm):
     required_css_class = 'required'
@@ -35,8 +36,10 @@ class CreateNewLessonForm(ModelForm):
         super(CreateNewLessonForm, self).__init__(*args, **kwargs)
 
         self.fields['lesson_date'].initial = None
-        self.fields['lesson_start_time'].initial = ''
-        self.fields['lesson_end_time'].initial = ''
+
+        self.fields['lesson_start_time'].widget = forms.TimeInput(attrs={'type': 'time'})
+        self.fields['lesson_end_time'].widget = forms.TimeInput(attrs={'type': 'time'})
+        
 
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
@@ -51,6 +54,5 @@ class CreateNewLessonForm(ModelForm):
             'lesson_date': forms.DateInput(
                 attrs={'type': 'date', 'id': 'georgianDate'}
             ),
-            'lesson_start_time': forms.TimeInput(attrs={'type': 'time'}, ),
-            'lesson_end_time': forms.TimeInput(attrs={'type': 'time'}),
+            'lesson_start_time': forms.TimeInput(format='%H:%M'),
         }

@@ -15,8 +15,28 @@
         </th>
     </tr>
     <tr>
-        <td>TODO</td>
+        <th>კლასის სახელი</th>
+        <th>საგანი</th>
+        <th>საფეხური</th>
+        <th>გაკვეთილის სახელი</th>
+        
+        <th>თარიღი, დრო</th>
     </tr>
+    {% for closest_lesson in closest_lessons %}
+        <tr>
+            <td>{{ closest_lesson.classroom.name }}</td>
+            <td>{{ closest_lesson.classroom.subject }}</td>
+            <td>
+                {% for classroom_to_levels in classroom.classroomtolevels_set.all %}
+                    {{ classroom_to_levels.level.level }}
+                {% endfor %}
+            </td>
+            <td>{{ closest_lesson.name }}</td>
+            <td>{{ closest_lesson.lesson_date }}</td>
+            <td>{{ closest_lesson.closest_lesson_start_time }}</td>
+            
+        </tr>
+    {% endfor %}
 </table>
 
 
@@ -37,7 +57,7 @@
         <th>საგანი</th>
         <th>საფეხური</th>
         <th>მოსწავლეების რაოდენობა</th>
-        <th>შემდეგი გაკვეთილის სახელ, დრო, თარიღი</th>
+        <th>შემდეგი გაკვეთილის სახელი, თარიღი, დრო</th>
         <th>რანგი</th>
         <th>გაკვეთილის შექმნა</th>
     </tr>
@@ -52,7 +72,11 @@
                     {% endfor %}
                 </td>
                 <td>{{ classroom.num_students }}</td>
-                <th>გაკვეთილი:TODO</th>
+                {% if classroom.closest_lesson_name%}
+                    <th>{{ classroom.closest_lesson_name }} - {{ classroom.closest_lesson_date }} - {{ classroom.closest_lesson_start_time }} </th>
+                {% else %}
+                    <th>გაკვეთილები არ არის დაგეგმილი</th>
+                {% endif %}
                 <th>რანგი:TODO</th>
                 <th>
                     <div style="width: fit-content; background-color: aquamarine;">

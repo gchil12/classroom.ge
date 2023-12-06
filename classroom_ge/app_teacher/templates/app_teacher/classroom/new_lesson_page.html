@@ -69,7 +69,7 @@
                 {% endif %}
             </div>
             <div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
-                <label for="{{form.lesson_start_time.id_for_label}}" class="form-label">
+                <label for="{{form.lesson_start_time.id_for_label}}" style="margin-top: auto; margin-right: 1em;">
                     {{ form.lesson_start_time.label }}
                 </label>
                 {{ form.lesson_start_time }}
@@ -86,7 +86,7 @@
                 {% endif %}
             </div>
             <div class="input-group input-group-outline my-3 {% if submitted and not isvalid %} is-filled{% endif %}">
-                <label for="{{form.lesson_end_time.id_for_label}}" class="form-label">
+                <label for="{{form.lesson_end_time.id_for_label}}" style="margin-top: auto; margin-right: 1em;">
                     {{ form.lesson_end_time.label }}
                 </label>
                 {{ form.lesson_end_time }}
