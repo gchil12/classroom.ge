@@ -5,10 +5,10 @@ from .models import (
     Level,
     ClassroomToLevels,
     Lesson,
-    Test,
-    TestVariant,
-    Questions,
-    TestQuestion
+    # Test,
+    # TestVariant,
+    # Questions,
+    # TestQuestion
 )
 
 
@@ -21,7 +21,7 @@ admin.site.register(Classroom)
 admin.site.register(Level, LevelAdmin)
 admin.site.register(ClassroomToLevels)
 admin.site.register(Lesson)
-admin.site.register(Test)
-admin.site.register(TestVariant)
-admin.site.register(Questions)
-admin.site.register(TestQuestion)
+# admin.site.register(Test)
+# admin.site.register(TestVariant)
+# admin.site.register(Questions)
+# admin.site.register(TestQuestion)

@@ -1,0 +1,992 @@
+[
+    {
+      "topic": "ALGEBRA-1.1",
+      "title_ka": "სიმრავლეები",
+      "title_en": "Sets"
+    },
+    {
+      "topic": "ALGEBRA-1.2",
+      "title_ka": "ოპერაციები სიმრავლეებზე",
+      "title_en": "Operations on sets"
+    },
+    {
+      "topic": "ALGEBRA-1.3",
+      "title_ka": "ვენის დიაგრამები",
+      "title_en": "Venn diagrams"
+    },
+    {
+      "topic": "ALGEBRA-2.1",
+      "title_ka": "ნატურალური რიცხვები",
+      "title_en": "Natural numbers"
+    },
+    {
+      "topic": "ALGEBRA-2.2",
+      "title_ka": "მარტივი და შედგენილი რიცხვები",
+      "title_en": "Prime and composite numbers"
+    },
+    {
+      "topic": "ALGEBRA-2.3",
+      "title_ka": "გამყოფი და ჯერადი",
+      "title_en": "Divisors and multiples (GCD, LCM)"
+    },
+    {
+      "topic": "ALGEBRA-2.4",
+      "title_ka": "გაყოფადობის ნიშნები",
+      "title_en": "DIvision rules for 2, 3, 5, 6, 7, 9"
+    },
+    {
+      "topic": "ALGEBRA-2.5",
+      "title_ka": "ნაშთები",
+      "title_en": "Remainders"
+    },
+    {
+      "topic": "ALGEBRA-3.1",
+      "title_ka": "მთელი რიცხვები",
+      "title_en": "Whole numbers"
+    },
+    {
+      "topic": "ALGEBRA-4.1",
+      "title_ka": "რაციონალური რიცხვები",
+      "title_en": "Rational numbers"
+    },
+    {
+      "topic": "ALGEBRA-4.2",
+      "title_ka": "წილადები და ათწილადები",
+      "title_en": "Fractions and decimal numbers"
+    },
+    {
+      "topic": "ALGEBRA-5.1",
+      "title_ka": "ირაციონალური რიცხვები",
+      "title_en": "Irrational numbers"
+    },
+    {
+      "topic": "ALGEBRA-5.2",
+      "title_ka": "ნამდვილი რიცხვები",
+      "title_en": "Real numbers"
+    },
+    {
+      "topic": "ALGEBRA-6.1",
+      "title_ka": "რიცხვითი ღერძი",
+      "title_en": "Number line"
+    },
+    {
+      "topic": "ALGEBRA-7.1",
+      "title_ka": "რიცხვითი შუალედები",
+      "title_en": "Number intervals"
+    },
+    {
+      "topic": "ALGEBRA-8.1",
+      "title_ka": "რიცხვის მოდული",
+      "title_en": "Modulus of a number"
+    },
+    {
+      "topic": "ALGEBRA-9.1",
+      "title_ka": "ნატურალური რიცხვების წარმოდგენა სხვადასხვა პოზიციურ სისტემაში",
+      "title_en": "Number systems (binary vs decimal)"
+    },
+    {
+      "topic": "ALGEBRA-10.1",
+      "title_ka": "პროპორცია",
+      "title_en": "Proportion"
+    },
+    {
+      "topic": "ALGEBRA-11.1",
+      "title_ka": "რიცხვის პროცენტი და ნაწილი",
+      "title_en": "Percent and part"
+    },
+    {
+      "topic": "ALGEBRA-12.1",
+      "title_ka": "რამდენიმე რიცხვის არითმეტიკული საშუალო",
+      "title_en": "Arithmetic mean"
+    },
+    {
+      "topic": "ALGEBRA-13.1",
+      "title_ka": "ხარისხი ნატურალური და მთელი მაჩვენებლით",
+      "title_en": "Natural and whole exponents"
+    },
+    {
+      "topic": "ALGEBRA-14.1",
+      "title_ka": "ერთწევრი და მრავალწევრი",
+      "title_en": "Monomials and polynomials"
+    },
+    {
+      "topic": "ALGEBRA-15.1",
+      "title_ka": "შემოკლებული გამრავლების ფორმულები",
+      "title_en": "Formulas for squared/cubed sums/differences, etc."
+    },
+    {
+      "topic": "ALGEBRA-16.1",
+      "title_ka": "მრავალწევრის დაშლა მამრავლებად",
+      "title_en": "Expanding polynomials"
+    },
+    {
+      "topic": "ALGEBRA-17.1",
+      "title_ka": "რაციონალური გამოსახულება",
+      "title_en": "Rational expression"
+    },
+    {
+      "topic": "ALGEBRA-19.1",
+      "title_ka": "რაციონალურმაჩვენებლიანი ხარისხი",
+      "title_en": "Rational exponents"
+    },
+    {
+      "topic": "ALGEBRA-20.1",
+      "title_ka": "ალგებრული გამოსახულება",
+      "title_en": "Algebraic expression"
+    },
+    {
+      "topic": "ALGEBRA-21.1",
+      "title_ka": "რიცხვის ლოგარითმი",
+      "title_en": "Logarithm"
+    },
+    {
+      "topic": "ALGEBRA-22.1",
+      "title_ka": "მართკუთხა კოორდინატთა სისტემა სიბრტყეზე და სივრცეში",
+      "title_en": "Orthonormal coordinate system"
+    },
+    {
+      "topic": "ALGEBRA-23.1",
+      "title_ka": "ფუნქცია",
+      "title_en": "Function"
+    },
+    {
+      "topic": "ALGEBRA-23.2",
+      "title_ka": "ფუნქციის გრაფიკი",
+      "title_en": "Plots of a function"
+    },
+    {
+      "topic": "ALGEBRA-23.3",
+      "title_ka": "ფუნქციათა კომპოზიცია",
+      "title_en": "Function composition"
+    },
+    {
+      "topic": "ALGEBRA-24.1",
+      "title_ka": "კუთხის გრადუსული და რადიანული ზომა",
+      "title_en": "Angle in degrees and radians"
+    },
+    {
+      "topic": "ALGEBRA-25.1",
+      "title_ka": "ტრიგონომეტრიული ფუნქციები: სინუსი, კოსინუსი, ტანგენსი",
+      "title_en": "Trigonometric functions: sine, cosine, tangent"
+    },
+    {
+      "topic": "ALGEBRA-26.1",
+      "title_ka": "განტოლება",
+      "title_en": "Equation"
+    },
+    {
+      "topic": "ALGEBRA-26.2",
+      "title_ka": "განტოლებათა სისტემა",
+      "title_en": "Equation systems"
+    },
+    {
+      "topic": "ALGEBRA-27.1",
+      "title_ka": "ერთუცნობიანი წრფივი განტოლებები",
+      "title_en": "Single-variable linear equation"
+    },
+    {
+      "topic": "ALGEBRA-28.1",
+      "title_ka": "ერთუცნობიანი კვადრატული განტოლებები",
+      "title_en": "Single-variable quadratic equation"
+    },
+    {
+      "topic": "ALGEBRA-29.1",
+      "title_ka": "კვადრატული სამწევრი",
+      "title_en": "Factoring quadratic equation"
+    },
+    {
+      "topic": "ALGEBRA-30.1",
+      "title_ka": "ორუცნობიანი ალგებრულ განტოლებათა სისტემები",
+      "title_en": "Algebraic systems with two variables"
+    },
+    {
+      "topic": "ALGEBRA-31.1",
+      "title_ka": "ამოცანები განტოლებისა და განტოლებათა სისტემის შედგენაზე",
+      "title_en": "Describing a problem with an equation or a system of equations"
+    },
+    {
+      "topic": "ALGEBRA-32.1",
+      "title_ka": "რიცხვითი უტოლობები",
+      "title_en": "Properties of inequalities"
+    },
+    {
+      "topic": "ALGEBRA-33.1",
+      "title_ka": "უტოლობა",
+      "title_en": "Inequalities"
+    },
+    {
+      "topic": "ALGEBRA-33.2",
+      "title_ka": "უტოლობათა სისტემა",
+      "title_en": "System of inequalities as set operations"
+    },
+    {
+      "topic": "ALGEBRA-34.1",
+      "title_ka": "ერთუცნობიანი უტოლობები",
+      "title_en": "Single-variable inequalities"
+    },
+    {
+      "topic": "ALGEBRA-34.2",
+      "title_ka": "უტოლობათა სისტემები",
+      "title_en": "System of inequalities"
+    },
+    {
+      "topic": "ALGEBRA-35.1",
+      "title_ka": "წრფივი ფუნქციები და მათი გრაფიკები",
+      "title_en": "Linear function and its plots"
+    },
+    {
+      "topic": "ALGEBRA-35.2",
+      "title_ka": "კვადრატული ფუნქციები და მათი გრაფიკები",
+      "title_en": "Quadratic function and its plots"
+    },
+    {
+      "topic": "ALGEBRA-35.3",
+      "title_ka": "ხარისხოვანი ფუნქციები და მათი გრაფიკები",
+      "title_en": "Exponential (x^a) function and its plots"
+    },
+    {
+      "topic": "ALGEBRA-35.4",
+      "title_ka": "მაჩვენებლიანი ფუნქციები და მათი გრაფიკები",
+      "title_en": "Exponential (a^x) function and its plots"
+    },
+    {
+      "topic": "ALGEBRA-35.5",
+      "title_ka": "ლოგარითმული ფუნქციები და მათი გრაფიკები",
+      "title_en": "Logarithmic function and its plots"
+    },
+    {
+      "topic": "ALGEBRA-35.6",
+      "title_ka": "ტრიგონომეტრიული ფუნქციები და მათი გრაფიკები",
+      "title_en": "Trigonometric function and its plots"
+    },
+    {
+      "topic": "ALGEBRA-36.1",
+      "title_ka": "ირაციონალური განტოლებები",
+      "title_en": "Irrational equations"
+    },
+    {
+      "topic": "ALGEBRA-37.1",
+      "title_ka": "მაჩვენებლიანი განტოლებები",
+      "title_en": "Exponential equations"
+    },
+    {
+      "topic": "ALGEBRA-37.2",
+      "title_ka": "მაჩვენებლიანი უტოლობები",
+      "title_en": "Exponential inequalities"
+    },
+    {
+      "topic": "ALGEBRA-38.1",
+      "title_ka": "ლოგარითმული განტოლებები",
+      "title_en": "Logarithmic equations"
+    },
+    {
+      "topic": "ALGEBRA-38.2",
+      "title_ka": "ლოგარითმული უტოლობები",
+      "title_en": "Logarithmic inequalities"
+    },
+    {
+      "topic": "ALGEBRA-39.1",
+      "title_ka": "ტრიგონომეტრიული განტოლებები",
+      "title_en": "Trigonometric equations"
+    },
+    {
+      "topic": "ALGEBRA-40.1",
+      "title_ka": "რიცხვითი მიმდევრობა",
+      "title_en": "Series"
+    },
+    {
+      "topic": "ALGEBRA-41.1",
+      "title_ka": "არითმეტიკული პროგრესია",
+      "title_en": "Arithmetic progression"
+    },
+    {
+      "topic": "ALGEBRA-42.1",
+      "title_ka": "გეომეტრიული პროგრესია",
+      "title_en": "Geometric progression"
+    },
+    {
+      "topic": "ALGEBRA-43.1",
+      "title_ka": "გადანაცვლებათა რიცხვი",
+      "title_en": "Permuation number"
+    },
+    {
+      "topic": "ALGEBRA-43.2",
+      "title_ka": "ჯუფთებათა რიცხვი",
+      "title_en": "Combination number [with repetition]"
+    },
+    {
+      "topic": "ALGEBRA-43.3",
+      "title_ka": "წყობათა რიცხვი",
+      "title_en": "Combination number [without repetition]"
+    },
+    {
+      "topic": "GEO2D-1.1",
+      "title_ka": "წერტილი, წრფე, სხივი, მონაკვეთი, ტეხილი",
+      "title_en": "Point, Line, Ray, Segment, Open polygon"
+    },
+    {
+      "topic": "GEO2D-2.1",
+      "title_ka": "მონაკვეთის სიგრძე",
+      "title_en": "Length of a segment"
+    },
+    {
+      "topic": "GEO2D-2.2",
+      "title_ka": "ტეხილის სიგრძე",
+      "title_en": "Length of an open polygon"
+    },
+    {
+      "topic": "GEO2D-3.1",
+      "title_ka": "კუთხე",
+      "title_en": "Angle"
+    },
+    {
+      "topic": "GEO2D-3.2",
+      "title_ka": "კუთხის გრადუსული ზომა",
+      "title_en": "Angle in degrees"
+    },
+    {
+      "topic": "GEO2D-3.3",
+      "title_ka": "მართი, მახვილი, ბლაგვი და გაშლილი კუთხეები",
+      "title_en": "Right, Acute, and Wide angles"
+    },
+    {
+      "topic": "GEO2D-4.1",
+      "title_ka": "კუთხის ბისექტრისა",
+      "title_en": "Bisector of an angle"
+    },
+    {
+      "topic": "GEO2D-5.1",
+      "title_ka": "მონაკვეთის შუამართობი",
+      "title_en": "Perpendicular bisector"
+    },
+    {
+      "topic": "GEO2D-6.1",
+      "title_ka": "მოსაზღვრე და ვერტიკალური კუთხეები",
+      "title_en": "Adjacent and Opposite angles"
+    },
+    {
+      "topic": "GEO2D-7.1",
+      "title_ka": "წრფეთა პარალელობა",
+      "title_en": "Parallel lines"
+    },
+    {
+      "topic": "GEO2D-7.2",
+      "title_ka": "ორი წრფის მესამე წრფით გაკვეთისას მიღებული კუთხეები",
+      "title_en": "Angles generated from cutting two lines with a third line"
+    },
+    {
+      "topic": "GEO2D-8.1",
+      "title_ka": "კუთხე ორ წრფეს შორის",
+      "title_en": "Angle between two lines"
+    },
+    {
+      "topic": "GEO2D-8.2",
+      "title_ka": "წრფეთა მართობულობა",
+      "title_en": "Orthogonal lines"
+    },
+    {
+      "topic": "GEO2D-8.3",
+      "title_ka": "მართობი, დახრილი და გეგმილი",
+      "title_en": "Normals and projected line segments"
+    },
+    {
+      "topic": "GEO2D-8.4",
+      "title_ka": "მანძილი წერტილიდან წრფემდე",
+      "title_en": "Distance from a line to a point"
+    },
+    {
+      "topic": "GEO2D-9.1",
+      "title_ka": "მრავალკუთხედის ელემენტები: გვერდი, წვერო, კუთხე, დიაგონალი",
+      "title_en": "Polygons and their elements: side, vertex, angle, diagonal"
+    },
+    {
+      "topic": "GEO2D-9.2",
+      "title_ka": "მრავალკუთხედის პერიმეტრი",
+      "title_en": "Polygon perimeter"
+    },
+    {
+      "topic": "GEO2D-10.1",
+      "title_ka": "ამოზნექილი მრავალკუთხედი",
+      "title_en": "Convex polygon"
+    },
+    {
+      "topic": "GEO2D-11.1",
+      "title_ka": "სამკუთხედის ელემენტები: გვერდი, კუთხე, წვერო, მედიანა, ბისექტრისა, სიმაღლე",
+      "title_en": "Triangle elements: side, angle, vertex, median, bisector, height"
+    },
+    {
+      "topic": "GEO2D-12.1",
+      "title_ka": "სამკუთხედის კუთხეები",
+      "title_en": "Triangle angles"
+    },
+    {
+      "topic": "GEO2D-13.1",
+      "title_ka": "სამკუთხედების ტოლობა",
+      "title_en": "Equal triangles"
+    },
+    {
+      "topic": "GEO2D-14.1",
+      "title_ka": "სამკუთხედების უტოლობა",
+      "title_en": "Non-equal triangles (dunno what this is about)"
+    },
+    {
+      "topic": "GEO2D-15.1",
+      "title_ka": "დამოკიდებულებანი სამკუთხედის გვერდებსა და კუთხეებს შორის",
+      "title_en": "Relation between sides and angles of a triangle"
+    },
+    {
+      "topic": "GEO2D-16.1",
+      "title_ka": "სამკუთხედის მედიანა",
+      "title_en": "Triangle median"
+    },
+    {
+      "topic": "GEO2D-17.1",
+      "title_ka": "სამკუთხედის ბისექტრისა",
+      "title_en": "Triangle bisector"
+    },
+    {
+      "topic": "GEO2D-18.1",
+      "title_ka": "სამკუთხედის სახეები: მართკუთხა, მახვილკუთხა, ბლაგვკუთხა, ტოლფერდა, ტოლგვერდა",
+      "title_en": "Types of triangles: right, acute, wide, isosceles, equilateral"
+    },
+    {
+      "topic": "GEO2D-19.1",
+      "title_ka": "ტოლფერდა სამკუთხედი",
+      "title_en": "Isosceles triangle"
+    },
+    {
+      "topic": "GEO2D-20.1",
+      "title_ka": "მართკუთხა სამკუთხედის ტოლობის ნიშნები",
+      "title_en": "Congruency conditions for right triangles"
+    },
+    {
+      "topic": "GEO2D-20.2",
+      "title_ka": "მართკუთხა სამკუთხედში 30 გრადუსიანი კუთხის მოპირდაპირე კათეტის თვისება",
+      "title_en": "The property of a side opposite to a 30 degree angle in a right triangle"
+    },
+    {
+      "topic": "GEO2D-20.3",
+      "title_ka": "მართკუთხა სამკუთხედში კუთხეებსა და გვერდებს შორის ტრიგონომეტრიული თანაფარდობები",
+      "title_en": "Trigonometric functions defined using a right triangle"
+    },
+    {
+      "topic": "GEO2D-20.4",
+      "title_ka": "თანაფარდობები ჰიპოტენუზაზე დაშვებულ სიმაღლეს, კათეტებს, კათეტების გეგმილებს და ჰიპოტენუზას შორის",
+      "title_en": "Relations between sides, hypothenuse, projections of sides on the hypothenuse, and height [with hypothenuse as the base]"
+    },
+    {
+      "topic": "GEO2D-21.1",
+      "title_ka": "პითაგორას თეორემა",
+      "title_en": "Pythagora's theorem"
+    },
+    {
+      "topic": "GEO2D-22.1",
+      "title_ka": "თალესის თეორემა",
+      "title_en": "Thales theorem"
+    },
+    {
+      "topic": "GEO2D-23.1",
+      "title_ka": "სამკუთხედის შუახაზი",
+      "title_en": "Midsegment of a triangle"
+    },
+    {
+      "topic": "GEO2D-24.1",
+      "title_ka": "სამკუთხედების მსგავსების ნიშნები",
+      "title_en": "Conditions for congruent triangles"
+    },
+    {
+      "topic": "GEO2D-24.2",
+      "title_ka": "მსგავსი სამკუთხედების პერიმეტრებისა და ფართობების შეფარდება",
+      "title_en": "Ratios between perimeters and areas of congruent triangles"
+    },
+    {
+      "topic": "GEO2D-25.1",
+      "title_ka": "სინუსების თეორემა",
+      "title_en": "Sine theorem"
+    },
+    {
+      "topic": "GEO2D-26.1",
+      "title_ka": "კოსინუსების თეორემა",
+      "title_en": "Cosine theorem"
+    },
+    {
+      "topic": "GEO2D-27.1",
+      "title_ka": "სამკუთხედების ამოხსნა",
+      "title_en": "Solving triangles (wtf :D)"
+    },
+    {
+      "topic": "GEO2D-28.1",
+      "title_ka": "პარალელოგრამის გვერდებისა და კუთხეების თვისებები",
+      "title_en": "Parallelogram: properties of sides and angles"
+    },
+    {
+      "topic": "GEO2D-28.2",
+      "title_ka": "პარალელოგრამის დიაგონალების თვისებები",
+      "title_en": "Parallelogram: properties of diagonals"
+    },
+    {
+      "topic": "GEO2D-29.1",
+      "title_ka": "რომბის დიაგონალების თვისებები",
+      "title_en": "Rombus: properties of diagonals"
+    },
+    {
+      "topic": "GEO2D-30.1",
+      "title_ka": "მართკუთხედის და კვადრატის დიაგონალების ტოლობა",
+      "title_en": "The equity of diagonals for rectangles and squares"
+    },
+    {
+      "topic": "GEO2D-31.1",
+      "title_ka": "ტრაპეციის ელემენტები: ფუძე, ფერდი, სიმაღლე",
+      "title_en": "Trapezoid elements: base, side, height"
+    },
+    {
+      "topic": "GEO2D-31.2",
+      "title_ka": "ტრაპეციის შუახაზის თვისებები",
+      "title_en": "Trapezoid: properties of the midsegment"
+    },
+    {
+      "topic": "GEO2D-32.1",
+      "title_ka": "ტრაპეციის კერძო სახეები",
+      "title_en": "Types of trapezoids"
+    },
+    {
+      "topic": "GEO2D-33.1",
+      "title_ka": "ტოლფერდა ტრაპეცია",
+      "title_en": "Isosceles trapezoid"
+    },
+    {
+      "topic": "GEO2D-34.1",
+      "title_ka": "ბრტყელი ფიგურის ფართობი",
+      "title_en": "Area of figures [=sum of areas of components]"
+    },
+    {
+      "topic": "GEO2D-35.1",
+      "title_ka": "კვადრატის ფართობი",
+      "title_en": "Area of a square"
+    },
+    {
+      "topic": "GEO2D-35.2",
+      "title_ka": "მართკუთხედის ფართობი",
+      "title_en": "Area of a rectangle"
+    },
+    {
+      "topic": "GEO2D-35.3",
+      "title_ka": "სამკუთხედის ფართობი",
+      "title_en": "Area of a triangle"
+    },
+    {
+      "topic": "GEO2D-35.4",
+      "title_ka": "პარალელოგრამის ფართობი",
+      "title_en": "Area of a parallelogram"
+    },
+    {
+      "topic": "GEO2D-35.5",
+      "title_ka": "ტრაპეციის ფართობი",
+      "title_en": "Area of a trapezoid"
+    },
+    {
+      "topic": "GEO2D-36.1",
+      "title_ka": "წრეწირის და წრის ელემენტები: ცენტრი, რადიუსი, დიამეტრი, ქორდა, რკალი, სექტორი, სეგმენტი",
+      "title_en": "Circle elements: center, radius, diameter, chord, arc, sector, segment"
+    },
+    {
+      "topic": "GEO2D-36.2",
+      "title_ka": "რკალის გრადუსული და რადიანული ზომა",
+      "title_en": "Size of an arc in degrees and radians"
+    },
+    {
+      "topic": "GEO2D-36.3",
+      "title_ka": "რიცხვი π",
+      "title_en": "The number π"
+    },
+    {
+      "topic": "GEO2D-36.4",
+      "title_ka": "წრეწირის და მისი რკალის სიგრძის გამოსათვლელი ფორმულები",
+      "title_en": "Calculating circumference and arc length"
+    },
+    {
+      "topic": "GEO2D-36.5",
+      "title_ka": "ქორდის მართობული დიამეტრის თვისება",
+      "title_en": "Property of a diameter normal to a chord"
+    },
+    {
+      "topic": "GEO2D-37.1",
+      "title_ka": "ცენტრალური და ჩახაზული კუთხეები",
+      "title_en": "Central and inscribed angles"
+    },
+    {
+      "topic": "GEO2D-38.1",
+      "title_ka": "წრეწირის მხების თვისება",
+      "title_en": "Circle tangent"
+    },
+    {
+      "topic": "GEO2D-38.2",
+      "title_ka": "წერტილიდან წრეწირისადმი გავლებული ორი მხები მონაკვეთის ტოლობა",
+      "title_en": "Equity of two tangents from one point [to a circle]"
+    },
+    {
+      "topic": "GEO2D-38.3",
+      "title_ka": "ურთიერთგადამკვეთი ქორდის თვისებები",
+      "title_en": "Properties of chords which intersect"
+    },
+    {
+      "topic": "GEO2D-38.4",
+      "title_ka": "წრეწირისადმი ერთი წერტილიდან გავლებული მხებისა და მკვეთის თვისებები",
+      "title_en": "Properties of tangents and secants from one point [to a circle]"
+    },
+    {
+      "topic": "GEO2D-39.1",
+      "title_ka": "სამკუთხედში ჩახაზული წრეწირი",
+      "title_en": "Circle inscribed in a triangle"
+    },
+    {
+      "topic": "GEO2D-39.2",
+      "title_ka": "სამკუთხედზე შემოხაზული წრეწირი",
+      "title_en": "Circle circumscribed over a triangle"
+    },
+    {
+      "topic": "GEO2D-40.1",
+      "title_ka": "წესიერი მრავალკუთხედები",
+      "title_en": "Equilateral polygons"
+    },
+    {
+      "topic": "GEO2D-40.2",
+      "title_ka": "წესიერ მრავალკუთხედში ჩახაზული და შემოხაზული წრეწირები",
+      "title_en": "Equilateral polygons -- inscribed and circumscribed circles"
+    },
+    {
+      "topic": "GEO2D-41.1",
+      "title_ka": "წესიერი მრავალკუთხედის ფართობი",
+      "title_en": "Area of an equilateral polygon"
+    },
+    {
+      "topic": "GEO2D-42.1",
+      "title_ka": "წრიული სექტორისა და წრის ფართობი",
+      "title_en": "Area of a sector, area of the whole circle"
+    },
+    {
+      "topic": "GEO2D-43.1",
+      "title_ka": "ცენტრალური სიმეტრია",
+      "title_en": "Central (point) symmetry"
+    },
+    {
+      "topic": "GEO2D-43.2",
+      "title_ka": "ღერძული სიმეტრია",
+      "title_en": "Mirror (axis) symmetry"
+    },
+    {
+      "topic": "GEO2D-43.3",
+      "title_ka": "პარალელური გადატანა",
+      "title_en": "Parallel translation"
+    },
+    {
+      "topic": "GEO2D-43.4",
+      "title_ka": "ჰომოთეტია",
+      "title_en": "Homothety"
+    },
+    {
+      "topic": "GEO2D-43.5",
+      "title_ka": "მობრუნება წერტილის გარშემო",
+      "title_en": "Rotation around a point"
+    },
+    {
+      "topic": "GEO3D-1.1",
+      "title_ka": "წერტილი, წრფე და სიბრტყე სივრცეში",
+      "title_en": "Point, Line, and Plane in 3D"
+    },
+    {
+      "topic": "GEO3D-2.1",
+      "title_ka": "წრფეთა ურთიერთგანლაგება სივრცეში",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-3.1",
+      "title_ka": "ორთოგონალური დაგეგმილება სიბრტყეზე",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-4.1",
+      "title_ka": "წრფისა და სიბრტყის მართობულობა",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-5.1",
+      "title_ka": "წრფისა და სიბრტყის პარალელობა",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-6.1",
+      "title_ka": "სიბრტყეთა პარალელობა",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-7.1",
+      "title_ka": "კუთხე სიბრტყეებს შორის",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-8.1",
+      "title_ka": "სიბრტყეთა მართობულობა",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-9.1",
+      "title_ka": "მონაკვეთი, მართობი და დახრილი",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-9.2",
+      "title_ka": "მანძილი წერტილიდან სიბრტყემდე",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-9.3",
+      "title_ka": "სამი მართობის თეორემა",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-10.1",
+      "title_ka": "კუთხე წრფესა და სიბრტყეს შორის",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-11.1",
+      "title_ka": "ორწახნაგა კუთხე",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-11.2",
+      "title_ka": "ორწახნაგა კუთხის ზომა",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-12.1",
+      "title_ka": "მრავალწახნაგა და მისი ელემენტები",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-13.1",
+      "title_ka": "პრიზმა და მისი ელემენტები",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-14.1",
+      "title_ka": "პრიზმის კერძო სახეები",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-14.2",
+      "title_ka": "მართი პრიზმის დიაგონალური კვეთა",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-15.1",
+      "title_ka": "პირამიდა და მისი ელემენტები",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-16.1",
+      "title_ka": "წესიერი პირამიდა",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-16.2",
+      "title_ka": "აპოთემა",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-17.1",
+      "title_ka": "ცილინდრი და მისი ელემენტები",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-18.1",
+      "title_ka": "კონუსი და მისი ელემენტები",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-18.2",
+      "title_ka": "კონუსის ღერძული კვეთა",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-19.1",
+      "title_ka": "ბირთვი, სფერო და მათი ელემენტები",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-20.1",
+      "title_ka": "ბირთვის მხები სიბრტყე",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-20.2",
+      "title_ka": "ბირთვის კვეთა სიბრტყით",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-21.1",
+      "title_ka": "სხეულის მოცულობა",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-21.2",
+      "title_ka": "გვერდითი და სრული ზედაპირის ფართობი",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-22.1",
+      "title_ka": "ფიგურების შლილები",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-23.1",
+      "title_ka": "ვექტორების შეკრება",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-23.2",
+      "title_ka": "ვექტორის სკალარზე გამრავლება",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-23.3",
+      "title_ka": "ვექტორთა სკალარული ნამრავლი",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-23.4",
+      "title_ka": "კუთხე ორ ვექტორს შორის",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-23.5",
+      "title_ka": "ვექტორის სიგრძე",
+      "title_en": ""
+    },
+    {
+      "topic": "GEO3D-23.6",
+      "title_ka": "ვექტორის კორდინატებში",
+      "title_en": ""
+    },
+    {
+      "topic": "DATA-1.1",
+      "title_ka": "დიაგრამები",
+      "title_en": "Histograms and plots"
+    },
+    {
+      "topic": "DATA-1.2",
+      "title_ka": "მასშტაბი",
+      "title_en": "Scale"
+    },
+    {
+      "topic": "DATA-1.3",
+      "title_ka": "სკალა",
+      "title_en": "Scale of the axis"
+    },
+    {
+      "topic": "DATA-2.1",
+      "title_ka": "სიხშირე, ფარდობითი სიხშირე",
+      "title_en": "Frequency, relative frequency"
+    },
+    {
+      "topic": "DATA-2.2",
+      "title_ka": "საშუალო",
+      "title_en": "Average"
+    },
+    {
+      "topic": "DATA-2.3",
+      "title_ka": "მედიანა",
+      "title_en": "Median"
+    },
+    {
+      "topic": "DATA-2.4",
+      "title_ka": "მოდა",
+      "title_en": "Mode"
+    },
+    {
+      "topic": "DATA-2.5",
+      "title_ka": "გაბნევის დიაპაზონი",
+      "title_en": "Range"
+    },
+    {
+      "topic": "DATA-2.6",
+      "title_ka": "საშუალო კვადრატული გადახრა",
+      "title_en": "Average square deviation"
+    },
+    {
+      "topic": "DATA-3.1",
+      "title_ka": "ოპერაციები ხდომილობებზე",
+      "title_en": "Operations on events"
+    },
+    {
+      "topic": "DATA-3.2",
+      "title_ka": "არათავსებადი ხდომილობები",
+      "title_en": "Non-consistent events"
+    },
+    {
+      "topic": "DATA-3.3",
+      "title_ka": "საწინააღმდეგო ხდომილობა",
+      "title_en": "Contradictory event"
+    },
+    {
+      "topic": "DATA-3.4",
+      "title_ka": "დამოუკიდებელი ხდომილობები",
+      "title_en": "Independent events"
+    },
+    {
+      "topic": "DATA-3.5",
+      "title_ka": "ხდომილობის ალბათობის გამოთვლა",
+      "title_en": "Probability of an event"
+    },
+    {
+      "topic": "DATA-3.6",
+      "title_ka": "ხდომილობათა ჯამის ალბათობის გამოთვლა",
+      "title_en": "Probability of an union of events"
+    },
+    {
+      "topic": "DATA-3.7",
+      "title_ka": "საწინააღმდეგო ხდომილობის ალბათობის გამოთვლა",
+      "title_en": "Probability of a contradictory event"
+    },
+    {
+      "topic": "DATA-3.8",
+      "title_ka": "დამოუკიდებელ ხდომილობათა ნამრავლის ალბათობის გამოთვლა",
+      "title_en": "Probability of an intersection of events"
+    },
+    {
+      "topic": "DATA-3.9",
+      "title_ka": "გეომეტრიული ალბათობა",
+      "title_en": "Geometric probability"
+    },
+    {
+      "topic": "UNITS-1.1",
+      "title_ka": "სიგრძის ერთეულები",
+      "title_en": "Length units [mm, cm, dm, m, km]"
+    },
+    {
+      "topic": "UNITS-2.1",
+      "title_ka": "ფართობის ერთეულები",
+      "title_en": "Area units [mm2, cm2, dm2, m2, km2]"
+    },
+    {
+      "topic": "UNITS-3.1",
+      "title_ka": "მოცულობის ერთეულები",
+      "title_en": "Volume units [mm3, cm3, dm3, litre, m3, km3]"
+    },
+    {
+      "topic": "UNITS-4.1",
+      "title_ka": "მასის ერთეულები",
+      "title_en": "Mass units [g, kg, Zentner, tone]"
+    },
+    {
+      "topic": "UNITS-5.1",
+      "title_ka": "დროის ერთეულები",
+      "title_en": "Time units [sec, min, hour]"
+    },
+    {
+      "topic": "UNITS-6.1",
+      "title_ka": "სიჩქარის ერთეულები",
+      "title_en": "Velocity units [m/s, m/min, km/h]"
+    }
+  ]

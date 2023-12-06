@@ -101,7 +101,8 @@ Here is a link about django translation:
 >       ALTER ROLE example_archili SET client_encoding TO 'utf8';
 >       ALTER ROLE example_archili SET default_transaction_isolation TO 'read committed';
 >       ALTER ROLE example_archili SET timezone TO 'UTC';
->       ALTER USER your_username WITH CREATEDB;
+>       ALTER USER example_archili WITH CREATEDB;
+>       ALTER DATABASE classroom_ge OWNER TO example_archili; # If Sommething weird happes. Had to do this because of permissions on Windows
 >       GRANT ALL PRIVILEGES ON DATABASE classroom_ge TO example_archili;
 >       ```
 >   - Quit postgress session

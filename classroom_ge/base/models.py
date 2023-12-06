@@ -77,11 +77,36 @@ class Subject(models.Model):
         return self.name
 
 
+class Topic(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    identifier = models.CharField(verbose_name=_('identifier'), max_length=200, blank=False, null=False, unique=True, error_messages={'unique':_('identifier_already_registered')})
+    name = models.CharField(verbose_name=_('name'), max_length=200, blank=True, error_messages={'unique':_('topic_already_registered')})
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class MultipleChoiceQuestion(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    id = models.IntegerField(blank=False, null=False, unique=True, error_messages={'unique':_('id_already_exists')}, verbose_name=_('id'))
+    text = models.CharField(verbose_name=_('text'), max_length=200, blank=False, null=False, unique=True, error_messages={'unique':_('question_text_is_already_in_database')})
+    n_choices = models.IntegerField(blank=False, null=False, verbose_name=_('number_of_choices'))
+    choices = models.CharField(verbose_name=_('multiple_choice_question_choices'), max_length=200, blank=False, null=False,)
+    correct_answer = models.IntegerField(verbose_name=_('multiple_choice_question_answer'), blank=False, null=False,)
+
+
+class MultipleChoiceQuestionToTopics(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    question = models.ForeignKey(MultipleChoiceQuestion, on_delete=models.CASCADE, null=True, verbose_name=_('question'))
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, null=True, verbose_name=_('topic'))
+
+
+
 # TODO: Implement Messates
 class Message(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     severity = models.IntegerField(default=0)
-    description = models.CharField(verbose_name=_('description'),max_length=200, blank=True, null=True)
+    description = models.CharField(verbose_name=_('description'),max_length=200, blank=True, default="")
     has_read = models.BooleanField(verbose_name=_('has_read'), default=False)
     date_created = models.DateField(verbose_name=_('date_created'), auto_now_add=True, blank=True)

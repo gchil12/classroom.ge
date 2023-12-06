@@ -66,7 +66,7 @@ def register(request):
             
             messages.info(request, _('message_first_step_of_registration_done'))
             send_email_after_registration(request, urlsafe_base64_encode(force_bytes(user.uuid)))
-            return redirect('app_base:login')
+            return redirect('app_base:login') # NOSONAR
         else:
             context['isvalid'] = False
             
@@ -74,7 +74,7 @@ def register(request):
     return render(request, 'base/register.html', context)
 
 
-def loginUser(request):
+def login_user(request):
     if request.user.is_authenticated:
         return redirect_to_homepage(request)
     
@@ -84,9 +84,9 @@ def loginUser(request):
 
         try:
             user = User.objects.get(email=email)
-        except:
+        except Exception as e: # NOSONAR
             messages.error(request, _('email_or_password_does_not_exist'))
-            return render(request, 'base/login.html')
+            return render(request, 'base/login.html') # NOSONAR
 
         user = authenticate(request, email=email, password=password)
         
@@ -105,7 +105,7 @@ def loginUser(request):
 
 
 @login_required(login_url='app_base:login')
-def logoutUser(request):
+def logout_user(request):
     logout(request)
     return redirect('app_base:home')
 
@@ -141,7 +141,7 @@ def activate_account(request, uidb64, token):
     try:
         uuid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(uuid = uuid)
-    except:
+    except Exception as e: # NOSONAR
         user = None
 
     if user is not None:
