@@ -80,15 +80,13 @@
         </th>
     </tr>
     <tr>
-        <th>საკლასო ოთახი</th>
-        <th>სახელი</th>
+        <th>გაკვეთილის სახელი</th>
         <th>თარიღი და საათი</th>
         <th>აღწერა</th>
         <th>წაშლა</th>
     </tr>
     {% for lesson in lessons %}
         <tr>
-            <td>{{ lesson.classroom.name }}</td>
             <td style="background-color: aqua;">
                 <a href="{% url 'app_teacher:lesson-detail' uuid=lesson.uuid %}">
                     {{ lesson.name }}

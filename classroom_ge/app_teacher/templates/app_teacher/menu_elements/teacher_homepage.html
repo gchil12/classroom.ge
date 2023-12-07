@@ -24,16 +24,16 @@
     </tr>
     {% for closest_lesson in closest_lessons %}
         <tr>
-            <td>{{ closest_lesson.classroom.name }}</td>
+            <td style="background-color: aqua;"><a href="{% url 'app_teacher:classroom-detail' uuid=closest_lesson.classroom.uuid %}">{{ closest_lesson.classroom.name }}</a></td>
             <td>{{ closest_lesson.classroom.subject }}</td>
             <td>
                 {% for classroom_to_levels in classroom.classroomtolevels_set.all %}
                     {{ classroom_to_levels.level.level }}
                 {% endfor %}
             </td>
-            <td>{{ closest_lesson.name }}</td>
-            <td>{{ closest_lesson.lesson_date }}</td>
-            <td>{{ closest_lesson.closest_lesson_start_time }}</td>
+            <td style="background-color: aqua;"><a href="{% url 'app_teacher:lesson-detail' uuid=closest_lesson.uuid %}">{{ closest_lesson.name }}</a></td>
+            <td>{{ closest_lesson.lesson_date }} - {{ closest_lesson.lesson_start_time }}</td>
+            
             
         </tr>
     {% endfor %}

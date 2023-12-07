@@ -36,7 +36,7 @@ class Lesson(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
 
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, verbose_name=_('classroom'))
-    name = models.CharField(max_length=200, blank=False, null=False, default=_('default_lesson_name'), unique=False, verbose_name=_('name'))
+    name = models.CharField(max_length=200, blank=False, null=False, unique=False, verbose_name=_('name'))
     description = models.CharField(max_length=200, blank=True, default="", verbose_name=_('description'))
     lesson_date = models.DateField(blank=False, null=True, verbose_name=_('lesson_date'))
     lesson_start_time = models.TimeField(blank=False, null=True, verbose_name=_('lesson_start_time'))

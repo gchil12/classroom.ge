@@ -25,6 +25,7 @@ CREATE USER example_archili WITH PASSWORD example_archilis_password;
 ALTER ROLE example_archili SET client_encoding TO 'utf8';
 ALTER ROLE example_archili SET default_transaction_isolation TO 'read committed';
 ALTER ROLE example_archili SET timezone TO 'UTC';
+ALTER USER example_archili WITH CREATEDB;
 ```
 3) Now we should get rid of the old database. If you have not created the database, skip this step.
 ```
