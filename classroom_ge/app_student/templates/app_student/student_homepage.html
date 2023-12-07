@@ -19,7 +19,11 @@
 		
 		<tr>
 			<td>{{ student_to_classroom.classroom.owner.name }} {{ student_to_classroom.classroom.owner.surname }}</td>
-			<td>{{ student_to_classroom.classroom.name }}</td>
+			<td>
+        <a href="{% url 'app_student:classroom-detail' uuid=student_to_classroom.classroom.uuid %}">
+          {{ student_to_classroom.classroom.name }}
+        </a>
+      </td>
 			<td>{{ student_to_classroom.classroom.subject }}</td>
 			<td>{{ student_to_classroom.classroom.description }}</td>
 		</tr>

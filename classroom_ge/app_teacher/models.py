@@ -3,6 +3,15 @@ import uuid
 from base.models import User, Subject, Question
 from django.utils.translation import gettext_lazy as _
 
+
+class TeacherProfile(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_picture = models.CharField(max_length=200, blank=True, default="", verbose_name=_('profile_picture'))
+    phone_number =  models.CharField(max_length=200, blank=True, default="", verbose_name=_('phone_number'))
+    
+
 # Create your models here.
 class Classroom(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
@@ -52,6 +61,7 @@ TEST_TYPE_CHOICES = [
 ]
 class Test(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, null=True, verbose_name=_('lesson'))
     name = models.CharField(verbose_name=_('name'), max_length=200, blank=True,)
     test_type = models.CharField(verbose_name=_('test_type'), max_length=20, choices=TEST_TYPE_CHOICES, default='assignment')
@@ -65,6 +75,7 @@ class Test(models.Model):
 
 class TestQuestion(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    
     test = models.ForeignKey(Test, on_delete=models.CASCADE, blank=False, null=True, verbose_name=_('test'))
     question = models.ForeignKey(Question, on_delete=models.CASCADE, blank=False, null=True, verbose_name=_('question'))
-    points = models.IntegerField(default=0, blank=True)
+    max_point = models.IntegerField(default=0, blank=True)

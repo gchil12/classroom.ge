@@ -1,0 +1,43 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+<table style="width:100%" class="list_table">
+    <tr>
+        <th colspan="4">
+            საკლასო ოთახები
+        </th>
+    </tr>
+    <tr>
+        <th>სახელი</th>
+        <th>მასწავლებელი</th>
+        <th>საგანი</th>
+        <th>გაკვეთილების რაოდენობა</th>
+        <th>დასაწერი დავალებები/ქვიზები</th>
+        <th>შემდეგი გაკვეთილის სახელ, დრო, თარიღი</th>
+        <th>შეხვერდის ლინკი</th>
+        <th>რანგი</th>
+    </tr>
+    {% for classroom in classrooms %}
+        {% if classroom.is_archived == False %}
+            <tr>
+                <td style="background-color: aquamarine;"><a href="{% url 'app_student:classroom-detail' uuid=classroom.uuid %}">{{ classroom.name }}</a></td>
+                <th>{{ classroom.owner.name }} {{ classroom.owner.surname }}</th>
+                <td>{{ classroom.subject }}</td>
+                <th>{{ classroom.n_lessons }}</th>
+                <td>TODO</td>
+                {% if classroom.closest_lesson_name%}
+                    <td>{{ classroom.closest_lesson_name }} - {{ classroom.closest_lesson_date }} - {{ classroom.closest_lesson_start_time }} </td>
+                {% else %}
+                    <td>გაკვეთილები არ არის დაგეგმილი</td>
+                {% endif %}
+                <td>{{ classroom.online_meeting_link }}</td>
+                <td>რანგი:TODO</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
+{% endblock %}

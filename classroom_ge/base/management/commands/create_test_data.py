@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand
 from base.models import User
+from app_student.models import StudentProfile
+from app_teacher.models import TeacherProfile
 
 class Command(BaseCommand):
     help = 'Initialize test data in the database'
@@ -13,7 +15,7 @@ class Command(BaseCommand):
     def create_users(self):
         for teacher_id in range(self.n_teachers):
             try:
-                self.teacher_1 = User.objects.create_user(
+                teacher = User.objects.create_user(
                     email = f'testteacher{teacher_id}@email.com',
                     password = self.passford_for_dummy_users,
                     name = f'TeacherName_{teacher_id}',
@@ -26,13 +28,22 @@ class Command(BaseCommand):
                     email_verified = True
                 )
             except Exception as e:
-                f'Error creating teacher: {e}'
+                teacher = User.objects.get(email=f'testteacher{teacher_id}@email.com')
+                print(f'Error creating teacher: {e}')
                 print(f'User testteacher{teacher_id}@email.com exists')
 
+            
+            try:
+                TeacherProfile.objects.create(
+                    user=teacher
+                )
+            except Exception as e:
+                print(f'Error creating StudentProfile: {e}')
+                
 
         for student_id in range(self.n_students):
             try:
-                User.objects.create_user(
+                student = User.objects.create_user(
                     email = f'teststudent{student_id}@email.com',
                     password = self.passford_for_dummy_users,
                     name = f'StudentName_{student_id}',
@@ -45,8 +56,16 @@ class Command(BaseCommand):
                     email_verified = True
                 )
             except Exception as e:
-                f'Error creating student: {e}'
+                student = User.objects.get(email=f'teststudent{student_id}@email.com')
+                print(f'Error creating student: {e}')
                 print(f'User teststudent{student_id}@email.com exists')
+
+            try:
+                StudentProfile.objects.create(
+                    user=student
+                )
+            except Exception as e:
+                print(f'Error creating StudentProfile: {e}')
 
 
     def handle(self, *args, **options):

@@ -1,0 +1,59 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<a href="{% url 'app_student:classrooms' %}" style="background-color: aquamarine;">კლასების სია</a>
+
+<h3>მოსწავლე - კლასის დეტალები</h3>
+
+<br>
+
+<table class="list_table">
+    <tr>
+        <th>კლასის სახელი</th>
+        <td>{{ classroom.name }}</td>
+    </tr>
+    <tr>
+        <th>საგანი</th>
+        <td>{{ classroom.subject }}</td>
+    </tr>
+    <tr>
+        <th>აღწერა</th>
+        <td>{{ classroom.description }}</td>
+    </tr>
+    <tr>
+        <th>შეხვედრის ლინკი</th>
+        <th>{{ classroom.online_meeting_link }}</th>
+    </tr>
+</table>
+
+<br>
+
+<table style="width:100%" class="list_table" id="list_table">
+    <tr>
+        <th colspan="4">
+            გაკვეთილები
+        </th>
+    </tr>
+    <tr>
+        <th>გაკვეთილის სახელი</th>
+        <th>თარიღი და საათი</th>
+        <th>აღწერა</th>
+        <th>დასაწერი სავარჯიშოები</th>
+    </tr>
+    {% for lesson in lessons %}
+        <tr>
+            <td style="background-color: aqua;">
+                
+                    {{ lesson.name }}
+                
+            </td>
+            <td>{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}</td>
+            <td>{{ lesson.description }}</td>
+            <td>TODO</td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

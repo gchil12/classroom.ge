@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from .forms import RegistrationForm
 from .models import User
+from app_student.models import StudentProfile
+from app_teacher.models import TeacherProfile
 
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
@@ -60,7 +62,18 @@ def register(request):
             )
 
             user.save()
+            print(user.is_student)
+            print(user.is_teacher)
             
+            if user.is_student:
+                StudentProfile.objects.create(
+                    user=user
+                )
+            elif user.is_teacher:
+                TeacherProfile.objects.create(
+                    user=user
+                )
+
             context['isvalid'] = True
             context['form'] = RegistrationForm()
             

@@ -69,7 +69,7 @@ def classrooms(request):
     # classrooms_with_levels = Classroom.objects.prefetch_related('classroomtolevels_set__level').all()
     closest_lesson_subquery = Lesson.objects.filter(
         classroom=OuterRef('pk'),
-        lesson_start_time__gte=timezone.now()  # Add condition for lessons in the future
+        lesson_start_time__gte=timezone.now()
     ).order_by('lesson_date', 'lesson_start_time').values('lesson_start_time', 'name', 'lesson_date')[:1]
 
     classrooms_extended_table = Classroom.objects.annotate(
@@ -346,7 +346,7 @@ def exercise_main_details(request, uuid):
     return render(request, 'app_teacher/exercises/exercise_main_details.html', context)
 
 
-
+@login_required(login_url='app_base:login')
 def create_test_questions(topic_uuid:uuid, lesson_uuid:uuid):
     topic = get_object_or_404(Topic, uuid=topic_uuid)
     lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
