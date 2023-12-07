@@ -1,7 +1,6 @@
 from django.db import models
 import uuid
-from base.models import User
-from base.models import Subject
+from base.models import User, Subject, Question
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
@@ -45,35 +44,27 @@ class Lesson(models.Model):
     date_created = models.DateField(auto_now_add=True, blank=True, verbose_name=_('date_created'))
 
 
-# class Test(models.Model):
-#     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-
-#     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, verbose_name=_('lesson'))
-#     name = models.CharField(max_length=200, blank=False, null=False, unique=False, verbose_name=_('name'))
-#     description = models.CharField(max_length=200, blank=True, verbose_name=_('description'))
-#     is_graded = models.BooleanField(default=False, verbose_name=_('is_graded'))
-#     date_created = models.DateField(auto_now_add=True, blank=True, verbose_name=_('date_created'))
-
-
-# class TestVariant(models.Model):
-#     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-
-#     test = models.ForeignKey(Test, on_delete=models.CASCADE, null=True, verbose_name=_('test'))
-#     name = models.CharField(max_length=200, blank=False, null=False, unique=False, verbose_name=_('name'))
-
-
-# class Questions(models.Model):
-#     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-
-#     name = models.CharField(max_length=200, blank=False, null=False, unique=False, verbose_name=_('name'))
-
-#     # TODO Rest
+TEST_TYPE_CHOICES = [
+    ('assignment', _('assignment')),
+    ('quiz', _('quiz')),
+    ('test', _('test')),
+    ('exam', _('exam')),
+]
+class Test(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, verbose_name=_('lesson'))
+    name = models.CharField(verbose_name=_('name'), max_length=200, blank=True,)
+    test_type = models.CharField(verbose_name=_('test_type'), max_length=20, choices=TEST_TYPE_CHOICES, default='assignment')
+    
+    questions = models.ManyToManyField(Question, through='TestQuestion', verbose_name=_('question'))
+    
+    
+    def __str__(self):
+        return self.name
 
 
-# class TestQuestion(models.Model):
-#     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-
-#     test_variant = models.ForeignKey(TestVariant, on_delete=models.CASCADE, null=True, verbose_name=_('test_variant'))
-#     question = models.ForeignKey(Questions, on_delete=models.CASCADE, null=True, verbose_name=_('question'))
-
-#     max_point = models.DecimalField(blank=False, default=0, max_digits=10, decimal_places=2, verbose_name=_('max_point'))
+class TestQuestion(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    points = models.IntegerField(default=0, null=False, blank=True)

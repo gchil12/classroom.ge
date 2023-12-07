@@ -1,0 +1,39 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    ol {list-style-type: georgian;}
+    ol > li:before {
+        content: ")";
+    }
+</style>
+
+<h3>{{ topic.name }}</h3>
+
+{% if lesson %}
+    <a href="{% url 'app_teacher:choose-lesson' topic_uuid=topic.uuid %}?classroom={{lesson.classroom.uuid}}&lesson={{lesson.uuid}}">ამოცანების დამატება გაკვეთილში: {{ lesson.name }}</a>
+{% else %}
+    <a href="{% url 'app_teacher:choose-lesson' topic_uuid=topic.uuid %}">გაკვეთილის ასარჩევად სადაც გსურთ დაამატოთ აღნიშნული დავალებები დააჭირეთ აქ</a>
+{% endif %}
+
+<div style="width: 100%;">
+    {% for question in questions %}
+    <div style="background-color: bisque; margin-top: 3px; width: 40em; margin-left: auto; margin-right: auto;">
+        <div style="width: 80%; margin: auto;">
+            {{ question.text }}
+        </div>
+        <div style="display: flex; width: 80%; margin: auto;">
+            <ol>
+            {% for choice in question.questionchoice_set.all %}
+                <li>{{ choice.text }}</li>
+            {% endfor %}
+            </ol>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

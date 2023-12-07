@@ -1,0 +1,52 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<table style="width:100%" class="list_table" id="list_table">
+    <tr>
+        <th>საკლასო ოთახი</th>
+        <th>სახელი</th>
+        <th>თარიღი</th>
+        <th>დაწყება</th>
+        <th>დასწულება</th>
+        <th>აღწერა</th>
+        <th>წაშლა</th>
+    </tr>
+    <tr>
+        <td>
+            <a href="{% url 'app_teacher:classroom-detail' uuid=lesson.classroom.uuid %}" style="background-color: aqua;">
+                {{ lesson.classroom.name }}
+            </a>
+        </td>
+        <td>{{ lesson.name }}</td>
+        <td>{{ lesson.lesson_date }}</td>
+        <td>{{ lesson.lesson_start_time }}</td>
+        <td>{{ lesson.lesson_end_time }}</td>
+        <td>{{ lesson.description }}</td>
+        <td><a href="{% url 'app_teacher:lesson-delete' uuid=lesson.uuid %}" style="background-color: aqua;">წაშლა</a></td>
+    </tr>
+</table>
+
+<br>
+
+<a href="{% url 'app_teacher:exercises-main' %}?lesson={{lesson.uuid}}" style="background-color: aqua;">დავალების დამატება</a>
+<table style="width:100%" class="list_table" id="list_table">
+    <tr>
+        <th>დავალებები</th>
+    </tr>
+    <tr>
+        <th>სახელი</th>
+        <th>დაწერა % მოსწავლემ</th>
+        <th>საშუალო ქულა</th>
+    </tr>
+    {% for test in tests %}
+        <tr>
+            <td>{{test.name}}</td>
+            <td>TODO</td>
+            <td>TODO</td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

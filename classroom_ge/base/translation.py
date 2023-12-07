@@ -1,5 +1,5 @@
 from modeltranslation.translator import TranslationOptions, register
-from .models import Subject, Topic, MultipleChoiceQuestion
+from .models import Subject, Topic, Question, QuestionChoice
 
 @register(Subject)
 class SubjectTranslationOptions(TranslationOptions):
@@ -10,7 +10,11 @@ class SubjectTranslationOptions(TranslationOptions):
 class TopicTranslationOptions(TranslationOptions):
     fields = ('name',)
 
+@register(Question)
+class QuestionTranslationOptions(TranslationOptions):
+    fields = ('text',)
 
-@register(MultipleChoiceQuestion)
-class MultipleChoiceQuestionTranslationOptions(TranslationOptions):
+
+@register(QuestionChoice)
+class QuestionChoiceTranslationOptions(TranslationOptions):
     fields = ('text',)

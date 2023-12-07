@@ -2,10 +2,10 @@ from django.test import SimpleTestCase, TestCase
 from django.urls import resolve, reverse
 from app_teacher.views import (
     teacher_homepage,
-    classroom,
+    classroom_details,
     archive_classroom,
     delete_classroom,
-    newClassroom,
+    new_classroom,
     new_lesson,
     delete_lesson,
 )
@@ -21,7 +21,7 @@ class TestUrls(SimpleTestCase):
 
     def test_classrooom_url_is_resolved(self):
         url = reverse('app_teacher:classroom-detail', kwargs={'uuid': uuid4()})
-        self.assertEquals(resolve(url).func, classroom)
+        self.assertEquals(resolve(url).func, classroom_details)
 
 
     def test_archive_classroom_url_is_resolved(self):
@@ -36,7 +36,7 @@ class TestUrls(SimpleTestCase):
 
     def test_new_classroom_url_is_resolved(self):
         url = reverse('app_teacher:create-new-classroom')
-        self.assertEquals(resolve(url).func, newClassroom)
+        self.assertEquals(resolve(url).func, new_classroom)
 
 
     def test_new_lesson_url_is_resolved(self):

@@ -89,7 +89,11 @@
     {% for lesson in lessons %}
         <tr>
             <td>{{ lesson.classroom.name }}</td>
-            <td>{{ lesson.name }}</td>
+            <td style="background-color: aqua;">
+                <a href="{% url 'app_teacher:lesson-detail' uuid=lesson.uuid %}">
+                    {{ lesson.name }}
+                </a>
+            </td>
             <td>{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}</td>
             <td>{{ lesson.description }}</td>
             <td><a href="{% url 'app_teacher:lesson-delete' uuid=lesson.uuid %}">წაშლა</a></td>

@@ -13,7 +13,7 @@ class CreateNewClassroomForm(ModelForm):
             label       =   _('class_level',),
             required=False,
         )
-    except:
+    except Exception:
         levels = []
 
     def __init__(self, *args, **kwargs):

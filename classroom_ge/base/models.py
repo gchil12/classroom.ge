@@ -33,8 +33,8 @@ class User(AbstractUser):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
 
     username = None
-    name = models.CharField(verbose_name=_('name'),max_length=200, blank=False, null=False)
-    surname = models.CharField(verbose_name=_('surname'),max_length=200, blank=False, null=False)
+    name = models.CharField(verbose_name=_('name'),max_length=200, blank=False,)
+    surname = models.CharField(verbose_name=_('surname'),max_length=200, blank=False,)
     date_of_birth = models.DateField(verbose_name=_('date_of_birth'), blank=False, default='0001-01-01')
     school = models.CharField(verbose_name=_('school'),max_length=200, blank=False, default='N/A')
     city = models.CharField(verbose_name=_('city'),max_length=200, blank=False, default='N/A')
@@ -49,7 +49,6 @@ class User(AbstractUser):
     email = models.CharField(
         _('email'),
         max_length=200,
-        null=False,
         blank=False,
         validators=[validators.EmailValidator(message=_('invalid_email'))],
         unique=True,
@@ -71,7 +70,7 @@ class User(AbstractUser):
 
 class Subject(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-    name = models.CharField(verbose_name=_('name'),max_length=200, blank=False, null=False, unique=True, error_messages={'unique':_('subject_already_registered')})
+    name = models.CharField(verbose_name=_('name'),max_length=200, blank=False, unique=True, error_messages={'unique':_('subject_already_registered')})
 
     def __str__(self) -> str:
         return self.name
@@ -79,27 +78,46 @@ class Subject(models.Model):
 
 class Topic(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-    identifier = models.CharField(verbose_name=_('identifier'), max_length=200, blank=False, null=False, unique=True, error_messages={'unique':_('identifier_already_registered')})
+    identifier = models.CharField(verbose_name=_('identifier'), max_length=200, blank=False, unique=True, error_messages={'unique':_('identifier_already_registered')})
     name = models.CharField(verbose_name=_('name'), max_length=200, blank=True, error_messages={'unique':_('topic_already_registered')})
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, verbose_name=_('subject'))
+    questions = models.ManyToManyField('Question', through='QuestionToTopic')
 
     def __str__(self) -> str:
         return self.name
 
 
-class MultipleChoiceQuestion(models.Model):
+QUESTION_TYPE_CHOICES = [
+        ('single_choice', _('single_choice')),
+        ('multiple_choice', _('multiple_choice')),
+        ('open_end', _('open_end')),
+    ]
+
+class Question(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-    id = models.IntegerField(blank=False, null=False, unique=True, error_messages={'unique':_('id_already_exists')}, verbose_name=_('id'))
-    text = models.CharField(verbose_name=_('text'), max_length=200, blank=False, null=False, unique=True, error_messages={'unique':_('question_text_is_already_in_database')})
-    n_choices = models.IntegerField(blank=False, null=False, verbose_name=_('number_of_choices'))
-    choices = models.CharField(verbose_name=_('multiple_choice_question_choices'), max_length=200, blank=False, null=False,)
-    correct_answer = models.IntegerField(verbose_name=_('multiple_choice_question_answer'), blank=False, null=False,)
+    text = models.TextField(verbose_name=_('text'), blank=False, error_messages={'unique':_('question_text_already_exists')})
+    question_type = models.CharField(verbose_name=_('question_type'), max_length=20, choices=QUESTION_TYPE_CHOICES, default='single_choice')
+    topics = models.ManyToManyField(Topic, through='QuestionToTopic')
+
+    def __str__(self):
+        return self.text
 
 
-class MultipleChoiceQuestionToTopics(models.Model):
+class QuestionToTopic(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-    question = models.ForeignKey(MultipleChoiceQuestion, on_delete=models.CASCADE, null=True, verbose_name=_('question'))
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, null=True, verbose_name=_('topic'))
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, blank=False, verbose_name=_('question'))
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, blank=False, verbose_name=_('topic'))
 
+
+
+class QuestionChoice(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, blank=False, verbose_name=_('question'))
+    text = models.CharField(max_length=255, blank=False, verbose_name=_('text'))
+    is_correct = models.BooleanField(default=False, verbose_name=_('is_correct'))
+
+    def __str__(self):
+        return self.text
 
 
 # TODO: Implement Messates

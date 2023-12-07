@@ -3,6 +3,7 @@ from base.models import User
 
 class Command(BaseCommand):
     help = 'Initialize test data in the database'
+
     passford_for_dummy_users = '1a2B345!'
     n_teachers = 5
     n_students = 10
@@ -46,3 +47,8 @@ class Command(BaseCommand):
             except Exception as e:
                 f'Error creating student: {e}'
                 print(f'User teststudent{student_id}@email.com exists')
+
+
+    def handle(self, *args, **options):
+        # Add Subject
+        self.create_users()

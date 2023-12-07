@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Message, Subject, Topic, MultipleChoiceQuestion, MultipleChoiceQuestionToTopics
+from .models import User, Message, Subject, Topic, Question, QuestionChoice, QuestionToTopic
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
@@ -26,29 +26,33 @@ class CustomUserAdmin(BaseUserAdmin):
     capitalize = False
 
 
-class CustomTopicAdmin(admin.ModelAdmin):
-    list_display = ('identifier', 'name',)
+class TopicAdmin(admin.ModelAdmin):
+    list_display = ('identifier', 'subject', 'name',)
     ordering = ('identifier',)
 
 
-class CustomMultipleChoiceQustionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'text',)
-    ordering = ('id',)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question_type', 'text')
+    ordering = ('question_type',)
 
 
-class MultipleChoiceQuestionToTopicsAdmin(admin.ModelAdmin):
-    list_display = ('topic', 'get_question_text')
+class QuestionToTopicAdmin(admin.ModelAdmin):
+    list_display = ('question', 'topic')
     ordering = ('topic',)
 
-    def get_question_text(self, obj):
-        return obj.question.text
+
+class QuestionChoiceAdmin(admin.ModelAdmin):
+    list_display = ('question', 'text', 'is_correct')
+    ordering = ('question',)
+
 
 
 # Register your models here.
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Message)
 admin.site.register(Subject)
-admin.site.register(Topic, CustomTopicAdmin)
+admin.site.register(Topic, TopicAdmin)
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(QuestionChoice, QuestionChoiceAdmin)
+admin.site.register(QuestionToTopic, QuestionToTopicAdmin)
 
-admin.site.register(MultipleChoiceQuestion, CustomMultipleChoiceQustionAdmin)
-admin.site.register(MultipleChoiceQuestionToTopics, MultipleChoiceQuestionToTopicsAdmin)

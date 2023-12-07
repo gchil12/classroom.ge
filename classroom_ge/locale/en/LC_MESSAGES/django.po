@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-05 06:05+0000\n"
+"POT-Creation-Date: 2023-12-06 23:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,351 +18,374 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: classroom_ge/app_student/models.py:10
+#: .\app_student\models.py:10
 msgid "student"
 msgstr ""
 
-#: classroom_ge/app_student/models.py:11 classroom_ge/app_teacher/models.py:42
+#: .\app_student\models.py:11 .\app_teacher\models.py:39
 msgid "classroom"
 msgstr ""
 
-#: classroom_ge/app_student/templates/app_student/classroom_subscribe.html:33
+#: .\app_student\templates\app_student\classroom_subscribe.html:33
 msgid "subscribe"
 msgstr ""
 
-#: classroom_ge/app_student/views.py:36
+#: .\app_student\views.py:36
 msgid "already_subscribed_to_classroom"
 msgstr ""
 
-#: classroom_ge/app_student/views.py:43
+#: .\app_student\views.py:43
 msgid "subscribed_to_classroom_successfully"
 msgstr ""
 
-#: classroom_ge/app_teacher/forms.py:10
+#: .\app_teacher\forms.py:12
 msgid "None"
 msgstr ""
 
-#: classroom_ge/app_teacher/forms.py:11
+#: .\app_teacher\forms.py:13
 msgid "class_level"
 msgstr ""
 
-#: classroom_ge/app_teacher/models.py:11 classroom_ge/app_teacher/models.py:30
-#: classroom_ge/app_teacher/models.py:31
+#: .\app_teacher\models.py:11 .\app_teacher\models.py:27
+#: .\app_teacher\models.py:28
 msgid "owner"
 msgstr ""
 
-#: classroom_ge/app_teacher/models.py:12 classroom_ge/app_teacher/models.py:43
-#: classroom_ge/app_teacher/models.py:55 classroom_ge/app_teacher/models.py:65
-#: classroom_ge/app_teacher/models.py:71 classroom_ge/base/forms.py:53
-#: classroom_ge/base/models.py:36 classroom_ge/base/models.py:74
+#: .\app_teacher\models.py:12 .\app_teacher\models.py:40 .\base\forms.py:53
+#: .\base\models.py:36 .\base\models.py:74 .\base\models.py:83
 msgid "name"
 msgstr ""
 
-#: classroom_ge/app_teacher/models.py:13
+#: .\app_teacher\models.py:13 .\base\models.py:84
 msgid "subject"
 msgstr ""
 
-#: classroom_ge/app_teacher/models.py:14 classroom_ge/app_teacher/models.py:44
-#: classroom_ge/app_teacher/models.py:56 classroom_ge/base/models.py:85
+#: .\app_teacher\models.py:14 .\app_teacher\models.py:41 .\base\models.py:113
 msgid "description"
 msgstr ""
 
-#: classroom_ge/app_teacher/models.py:15
+#: .\app_teacher\models.py:15
 msgid "online_meeging_link"
 msgstr ""
 
-#: classroom_ge/app_teacher/models.py:17 classroom_ge/app_teacher/models.py:48
-#: classroom_ge/app_teacher/models.py:58 classroom_ge/base/models.py:87
+#: .\app_teacher\models.py:17 .\app_teacher\models.py:45 .\base\models.py:115
 msgid "date_created"
 msgstr ""
 
-#: classroom_ge/app_teacher/models.py:18
+#: .\app_teacher\models.py:18
 msgid "is_archived"
 msgstr ""
 
-#: classroom_ge/app_teacher/models.py:45
+#: .\app_teacher\models.py:42
 msgid "lesson_date"
 msgstr ""
 
-#: classroom_ge/app_teacher/models.py:46
+#: .\app_teacher\models.py:43
 msgid "lesson_start_time"
 msgstr ""
 
-#: classroom_ge/app_teacher/models.py:47
+#: .\app_teacher\models.py:44
 msgid "lesson_end_time"
 msgstr ""
 
-#: classroom_ge/app_teacher/models.py:54
-msgid "lesson"
-msgstr ""
-
-#: classroom_ge/app_teacher/models.py:57
-msgid "is_graded"
-msgstr ""
-
-#: classroom_ge/app_teacher/models.py:64
-msgid "test"
-msgstr ""
-
-#: classroom_ge/app_teacher/models.py:79
-msgid "test_variant"
-msgstr ""
-
-#: classroom_ge/app_teacher/models.py:80
-msgid "question"
-msgstr ""
-
-#: classroom_ge/app_teacher/models.py:82
-msgid "max_point"
-msgstr ""
-
-#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_classroom_deletion.html:8
+#: .\app_teacher\templates\app_teacher\classroom\confirm_classroom_deletion.html:8
 msgid "are_you_shure_to_delete_classroom_with_name"
 msgstr ""
 
-#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_classroom_deletion.html:13
-#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_lesson_deletion.html:13
+#: .\app_teacher\templates\app_teacher\classroom\confirm_classroom_deletion.html:13
+#: .\app_teacher\templates\app_teacher\classroom\confirm_lesson_deletion.html:13
 msgid "delete"
 msgstr ""
 
-#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_classroom_deletion.html:17
-#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_lesson_deletion.html:17
+#: .\app_teacher\templates\app_teacher\classroom\confirm_classroom_deletion.html:17
+#: .\app_teacher\templates\app_teacher\classroom\confirm_lesson_deletion.html:17
 msgid "cancel"
 msgstr ""
 
-#: classroom_ge/app_teacher/templates/app_teacher/classroom/confirm_lesson_deletion.html:8
+#: .\app_teacher\templates\app_teacher\classroom\confirm_lesson_deletion.html:8
 msgid "are_you_shure_to_delete_lesson_with_name"
 msgstr ""
 
-#: classroom_ge/app_teacher/views.py:105
-msgid "new_class_created"
-msgstr ""
-
-#: classroom_ge/app_teacher/views.py:109 classroom_ge/app_teacher/views.py:196
-msgid "invalid_input"
-msgstr ""
-
-#: classroom_ge/app_teacher/views.py:126 classroom_ge/app_teacher/views.py:144
-#: classroom_ge/app_teacher/views.py:167 classroom_ge/app_teacher/views.py:213
+#: .\app_teacher\views.py:91 .\app_teacher\views.py:169
+#: .\app_teacher\views.py:190 .\app_teacher\views.py:214
+#: .\app_teacher\views.py:259
 msgid "error_unauthorized_access"
 msgstr ""
 
-#: classroom_ge/app_teacher/views.py:128 classroom_ge/app_teacher/views.py:215
+#: .\app_teacher\views.py:149
+msgid "new_class_created"
+msgstr ""
+
+#: .\app_teacher\views.py:153 .\app_teacher\views.py:243
+msgid "invalid_input"
+msgstr ""
+
+#: .\app_teacher\views.py:174 .\app_teacher\views.py:264
 msgid "classroom_deleted"
 msgstr ""
 
-#: classroom_ge/app_teacher/views.py:150
+#: .\app_teacher\views.py:195
 msgid "classroom_archived"
 msgstr ""
 
-#: classroom_ge/app_teacher/views.py:152
+#: .\app_teacher\views.py:197
 msgid "classroom_unarchived"
 msgstr ""
 
-#: classroom_ge/app_teacher/views.py:191
+#: .\app_teacher\views.py:238
 msgid "new_lesson"
 msgstr ""
 
-#: classroom_ge/base/admin.py:9
+#: .\base\admin.py:9
 msgid "Personal info"
 msgstr ""
 
-#: classroom_ge/base/admin.py:10
+#: .\base\admin.py:10
 msgid "WEB Groups"
 msgstr ""
 
-#: classroom_ge/base/admin.py:11
+#: .\base\admin.py:11
 msgid "Permissions"
 msgstr ""
 
-#: classroom_ge/base/admin.py:12
+#: .\base\admin.py:12
 msgid "Important dates"
 msgstr ""
 
-#: classroom_ge/base/forms.py:21
+#: .\base\forms.py:21
 msgid "confirm_email"
 msgstr ""
 
-#: classroom_ge/base/forms.py:27 classroom_ge/base/forms.py:38
-#: classroom_ge/base/forms.py:43 classroom_ge/base/forms.py:64
-#: classroom_ge/base/forms.py:67 classroom_ge/base/forms.py:70
-#: classroom_ge/base/forms.py:73 classroom_ge/base/forms.py:76
-#: classroom_ge/base/forms.py:79 classroom_ge/base/forms.py:82
+#: .\base\forms.py:27 .\base\forms.py:38 .\base\forms.py:43 .\base\forms.py:64
+#: .\base\forms.py:67 .\base\forms.py:70 .\base\forms.py:73 .\base\forms.py:76
+#: .\base\forms.py:79 .\base\forms.py:82
 msgid "this_field_is_required"
 msgstr ""
 
-#: classroom_ge/base/forms.py:32
+#: .\base\forms.py:32
 msgid "confirm_password"
 msgstr ""
 
-#: classroom_ge/base/forms.py:54 classroom_ge/base/models.py:37
+#: .\base\forms.py:54 .\base\models.py:37
 msgid "surname"
 msgstr ""
 
-#: classroom_ge/base/forms.py:55 classroom_ge/base/models.py:38
+#: .\base\forms.py:55 .\base\models.py:38
 msgid "date_of_birth"
 msgstr ""
 
-#: classroom_ge/base/forms.py:56 classroom_ge/base/models.py:39
+#: .\base\forms.py:56 .\base\models.py:39
 msgid "school"
 msgstr ""
 
-#: classroom_ge/base/forms.py:57 classroom_ge/base/models.py:40
+#: .\base\forms.py:57 .\base\models.py:40
 msgid "city"
 msgstr ""
 
-#: classroom_ge/base/forms.py:58 classroom_ge/base/models.py:50
-#: classroom_ge/base/templates/base/login.html:13
+#: .\base\forms.py:58 .\base\models.py:50 .\base\templates\base\login.html:13
 msgid "email"
 msgstr ""
 
-#: classroom_ge/base/forms.py:59 classroom_ge/base/templates/base/login.html:17
+#: .\base\forms.py:59 .\base\templates\base\login.html:17
 msgid "password"
 msgstr ""
 
-#: classroom_ge/base/forms.py:122
+#: .\base\forms.py:122
 msgid "chosen_date_in_future"
 msgstr ""
 
-#: classroom_ge/base/forms.py:132 classroom_ge/base/forms.py:138
-#: classroom_ge/base/models.py:54
+#: .\base\forms.py:132 .\base\forms.py:138 .\base\models.py:54
 msgid "invalid_email"
 msgstr ""
 
-#: classroom_ge/base/forms.py:142
+#: .\base\forms.py:142
 msgid "emails_do_not_match"
 msgstr ""
 
-#: classroom_ge/base/forms.py:145
+#: .\base\forms.py:145
 msgid "unknown_error_refresh"
 msgstr ""
 
-#: classroom_ge/base/models.py:42
+#: .\base\models.py:42
 msgid "email_verified"
 msgstr ""
 
-#: classroom_ge/base/models.py:44
+#: .\base\models.py:44
 msgid "is_student"
 msgstr ""
 
-#: classroom_ge/base/models.py:45
+#: .\base\models.py:45
 msgid "is_teacher"
 msgstr ""
 
-#: classroom_ge/base/models.py:46
+#: .\base\models.py:46
 msgid "is_moderator"
 msgstr ""
 
-#: classroom_ge/base/models.py:47
+#: .\base\models.py:47
 msgid "is_administrator"
 msgstr ""
 
-#: classroom_ge/base/models.py:56
+#: .\base\models.py:56
 msgid "email_already_registered"
 msgstr ""
 
-#: classroom_ge/base/models.py:67
+#: .\base\models.py:67
 msgid "User"
 msgstr ""
 
-#: classroom_ge/base/models.py:68
+#: .\base\models.py:68
 msgid "Users"
 msgstr ""
 
-#: classroom_ge/base/models.py:74
+#: .\base\models.py:74
 msgid "subject_already_registered"
 msgstr ""
 
-#: classroom_ge/base/models.py:86
+#: .\base\models.py:82
+msgid "identifier"
+msgstr ""
+
+#: .\base\models.py:82
+msgid "identifier_already_registered"
+msgstr ""
+
+#: .\base\models.py:83
+msgid "topic_already_registered"
+msgstr ""
+
+#: .\base\models.py:92
+msgid "id_already_exists"
+msgstr ""
+
+#: .\base\models.py:92
+msgid "id"
+msgstr ""
+
+#: .\base\models.py:93
+msgid "text"
+msgstr ""
+
+#: .\base\models.py:93
+msgid "question_text_is_already_in_database"
+msgstr ""
+
+#: .\base\models.py:94
+msgid "choice_a"
+msgstr ""
+
+#: .\base\models.py:95
+msgid "choice_b"
+msgstr ""
+
+#: .\base\models.py:96
+msgid "choice_c"
+msgstr ""
+
+#: .\base\models.py:97
+msgid "choice_d"
+msgstr ""
+
+#: .\base\models.py:98
+msgid "correct_answer"
+msgstr ""
+
+#: .\base\models.py:103
+msgid "question"
+msgstr ""
+
+#: .\base\models.py:104
+msgid "topic"
+msgstr ""
+
+#: .\base\models.py:114
 msgid "has_read"
 msgstr ""
 
-#: classroom_ge/base/templates/base/login.html:27
+#: .\base\templates\base\login.html:27
 msgid "login"
 msgstr ""
 
-#: classroom_ge/base/templates/base/login.html:30
+#: .\base\templates\base\login.html:30
 msgid "dont_have_account_questionmark"
 msgstr ""
 
-#: classroom_ge/base/templates/base/login.html:34
-#: classroom_ge/base/templates/base/register.html:181
+#: .\base\templates\base\login.html:34 .\base\templates\base\register.html:181
 msgid "registration"
 msgstr ""
 
-#: classroom_ge/base/templates/base/register.html:9
-#: classroom_ge/base/views.py:67
+#: .\base\templates\base\register.html:9 .\base\views.py:67
 msgid "message_first_step_of_registration_done"
 msgstr ""
 
-#: classroom_ge/base/templates/base/template_activate_account.html:4
+#: .\base\templates\base\template_activate_account.html:4
 msgid "hello"
 msgstr ""
 
-#: classroom_ge/base/templates/base/template_activate_account.html:6
+#: .\base\templates\base\template_activate_account.html:6
 msgid "follow_link_for_email_verification"
 msgstr ""
 
-#: classroom_ge/base/templates/base/template_activation_link_expired.html:7
+#: .\base\templates\base\template_activation_link_expired.html:7
 msgid "activation_link_expired"
 msgstr ""
 
-#: classroom_ge/base/templates/base/template_activation_link_expired.html:12
+#: .\base\templates\base\template_activation_link_expired.html:12
 msgid "resend_activation_code"
 msgstr ""
 
-#: classroom_ge/base/views.py:88 classroom_ge/base/views.py:102
+#: .\base\views.py:88 .\base\views.py:102
 msgid "email_or_password_does_not_exist"
 msgstr ""
 
-#: classroom_ge/base/views.py:95
+#: .\base\views.py:95
 msgid "email_is_not_verified_yet"
 msgstr ""
 
-#: classroom_ge/base/views.py:120
+#: .\base\views.py:120
 msgid "activate_account"
 msgstr ""
 
-#: classroom_ge/base/views.py:152
+#: .\base\views.py:152
 msgid "email_activation_was_successfull"
 msgstr ""
 
-#: classroom_ge/base/views.py:157
+#: .\base\views.py:157
 msgid "something_went_wrong"
 msgstr ""
 
-#: classroom_ge/classroom_ge/settings.py:149
+#: .\classroom_ge\settings.py:171
 msgid "Georgian"
 msgstr ""
 
-#: classroom_ge/src/validators.py:13
+#: .\src\validators.py:13
 msgid "password_only_contains_these_characters"
 msgstr ""
 
-#: classroom_ge/src/validators.py:17
+#: .\src\validators.py:17
 msgid "password_at_lest_eight_chars"
 msgstr ""
 
-#: classroom_ge/src/validators.py:20
+#: .\src\validators.py:20
 msgid "password_not_more_than_50_chars"
 msgstr ""
 
-#: classroom_ge/src/validators.py:23
+#: .\src\validators.py:23
 msgid "password_at_lest_one_digit"
 msgstr ""
 
-#: classroom_ge/src/validators.py:26
+#: .\src\validators.py:26
 msgid "password_at_lest_one_uppercase"
 msgstr ""
 
-#: classroom_ge/src/validators.py:29
+#: .\src\validators.py:29
 msgid "password_at_lest_one_lowercase"
 msgstr ""
 
-#: classroom_ge/src/validators.py:32
+#: .\src\validators.py:32
 msgid "password_at_lest_one_special"
 msgstr ""
 
-#: classroom_ge/src/validators.py:35
+#: .\src\validators.py:35
 msgid "passwords_do_not_match"
 msgstr ""

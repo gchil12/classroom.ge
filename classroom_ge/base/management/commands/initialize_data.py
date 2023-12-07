@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from base.models import Subject, Topic, MultipleChoiceQuestion, MultipleChoiceQuestionToTopics
+from django.db.models import Count, Q, Subquery, OuterRef
+from base.models import Subject, Topic, Question, QuestionToTopic, QuestionChoice, Test, TestQuestion
 from app_teacher.models import Level
 from classroom_ge.settings import BASE_DIR
 import json
@@ -27,6 +28,8 @@ class Command(BaseCommand):
 
 
     def create_topics(self):
+        subject_math = Subject.objects.all().first()
+
         dir_data_file = os.path.join(BASE_DIR, 'data', 'topics.json')
         
         myfile = open(dir_data_file, encoding="utf8")
@@ -38,6 +41,7 @@ class Command(BaseCommand):
                     identifier=cur_entry['topic'],
                     name=cur_entry['title_ka'],
                     name_ka=cur_entry['title_ka'],
+                    subject=subject_math,
                 )
             except Exception as e:
                 print(f'Error creating topic: {e}')
@@ -45,6 +49,7 @@ class Command(BaseCommand):
 
 
     def create_questions(self): # NOSONAR
+
         dir_data_file = os.path.join(BASE_DIR, 'data', 'problem_database.json')
         myfile = open(dir_data_file, encoding="utf8")
         file_contents = json.load(myfile)
@@ -71,62 +76,101 @@ class Command(BaseCommand):
             cur_answer = answers[current_question_id]
             cur_topics = re.split(r',\s*|\s+', topics[current_question_id])
             
-            choices = {
-                "0": "{}",
-                "1": "{}",
-                "2": "{}",
-                "3": "{}",
-            }
-
-            # Assuming cur_choice_a, cur_choice_b, cur_choice_c, cur_choice_d are variables with string values
-            for i, cur_choice in enumerate([cur_choice_a, cur_choice_b, cur_choice_c, cur_choice_d]):
-                if cur_choice is not None:  # Check if the value is not None
-                    choices[str(i)] = cur_choice
-
-            choices_string = ', '.join(f'"{k}": "{v}"' for k, v in choices.items())
-            choices_string = '{' + choices_string + '}'
-
-            cur_answer_int = ord(cur_answer) - ord('ა')
             
             try:
-                cur_question = MultipleChoiceQuestion.objects.create(
-                    id=current_question_id,
+                cur_question = Question.objects.create(
                     text=cur_text,
-                    n_choices=4,
-                    choices=choices_string,
-                    correct_answer=cur_answer_int
+                    question_type='single_choice',
                 )
             except Exception as e:
-                print(f'Error creating question: {e}')
-                cur_question = MultipleChoiceQuestion.objects.get(
-                    text=cur_text
-                )
+                print(f'Error creating question {e}')
+                cur_question = None
+
+            
+            for topic in cur_topics:
+                try:
+                    cur_topic = Topic.objects.get(identifier=topic)
+                except Exception as e:
+                    print(f'Could not get topic. Skipping binding question to topic {e}')
+                    continue
+
+                try:
+                    QuestionToTopic.objects.create(
+                        question=cur_question,
+                        topic=cur_topic,
+                    )
+                except Exception as e:
+                    print(f'Error binding question to topic {e}')
+                    cur_question = None
             
 
-            if cur_question is not None:
-                try:
-                    for topic in cur_topics:
-                        topic_from_topics_list = Topic.objects.get(identifier=topic)
+            try:
+                QuestionChoice.objects.create(
+                    question = cur_question,
+                    text=cur_choice_a,
+                    is_correct=cur_answer=='ა'
+                )
 
-                        if topic_from_topics_list == None:
-                            print(f'Topic {topic} was not found in database')
-                        else:
-                            MultipleChoiceQuestionToTopics.objects.create(
-                                topic=topic_from_topics_list,
-                                question=cur_question
-                            )
-                except Exception as e:
-                    print(f'Error creating MultipleChoiceQuestionToTopics object : {e}')
+                QuestionChoice.objects.create(
+                    question = cur_question,
+                    text=cur_choice_b,
+                    is_correct=cur_answer=='ბ'
+                )
+
+                QuestionChoice.objects.create(
+                    question = cur_question,
+                    text=cur_choice_c,
+                    is_correct=cur_answer=='გ'
+                )
+
+                QuestionChoice.objects.create(
+                    question = cur_question,
+                    text=cur_choice_d,
+                    is_correct=cur_answer=='დ'
+                )
+            except Exception as e:
+                print(f'Error creating choices {e}')
+                cur_question = None
         
+
+    # def create_tests(self):
+    #     topics_with_at_least_one_question = Topic.objects.annotate(
+    #         num_questions=Count('question')
+    #     ).filter(num_questions__gte=1)
+
+
+    #     for topic in topics_with_at_least_one_question:
+    #         try:
+    #             cur_test = Test.objects.create(
+    #                 name=topic.name,
+    #                 test_type='assignment',
+    #             )
+    #         except Exception as e:
+    #             print(f'Could not create Test {e}')
+
+
+    #         questions = QuestionToTopic.objects.get(
+    #             topic==topic
+    #         ).values_list('question', flat=True)
+
+    #         for question in questions:
+    #             try:
+    #                 TestQuestion.objects.create(
+    #                     question=question,  
+    #                     topic=topic,
+    #                 )
+    #             except Exception as e:
+    #                 print(f'Could not create Test Question {e}')
 
 
     def handle(self, *args, **options):
         # Add Subject
-        # self.create_subjects()
-        # self.create_topics()
+        self.create_subjects()
+        self.create_topics()
         self.create_questions()
+        # self.create_tests()
 
-        # self.create_class_levels()
+        self.create_class_levels()
 
         
 

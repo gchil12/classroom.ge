@@ -84,7 +84,7 @@ def login_user(request):
 
         try:
             user = User.objects.get(email=email)
-        except Exception as e: # NOSONAR
+        except Exception:
             messages.error(request, _('email_or_password_does_not_exist'))
             return render(request, 'base/login.html') # NOSONAR
 
@@ -141,7 +141,7 @@ def activate_account(request, uidb64, token):
     try:
         uuid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(uuid = uuid)
-    except Exception as e: # NOSONAR
+    except Exception:
         user = None
 
     if user is not None:

@@ -1,0 +1,35 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+<table class="list_table">
+    <tr>
+        <th colspan="4">
+            სავარჯიშოები
+        </th>
+    </tr>
+    <tr>
+        <th>საგანი</th>
+        <th>საკითხი</th>
+        <th>სავარჯიშოების რაოდენობა</th>
+    </tr>
+    {% for topic in topics %}
+        <tr>
+            <td>
+                {{ topic.subject }}
+            </td>
+            <td style="background-color: aqua;">
+                <a href="{% url 'app_teacher:exercises-main-details' uuid=topic.uuid %}?lesson={{lesson_uuid}}">
+                    {{ topic.name }}
+                </a>
+            </td>
+            <td>
+                {{ topic.n_questions }}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
