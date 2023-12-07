@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.db.models import Count, Q, Subquery, OuterRef
-from base.models import Subject, Topic, Question, QuestionToTopic, QuestionChoice, Test, TestQuestion
+from base.models import Subject, Topic, Question, QuestionToTopic, QuestionChoice
 from app_teacher.models import Level
 from classroom_ge.settings import BASE_DIR
 import json
@@ -132,36 +132,6 @@ class Command(BaseCommand):
                 print(f'Error creating choices {e}')
                 cur_question = None
         
-
-    # def create_tests(self):
-    #     topics_with_at_least_one_question = Topic.objects.annotate(
-    #         num_questions=Count('question')
-    #     ).filter(num_questions__gte=1)
-
-
-    #     for topic in topics_with_at_least_one_question:
-    #         try:
-    #             cur_test = Test.objects.create(
-    #                 name=topic.name,
-    #                 test_type='assignment',
-    #             )
-    #         except Exception as e:
-    #             print(f'Could not create Test {e}')
-
-
-    #         questions = QuestionToTopic.objects.get(
-    #             topic==topic
-    #         ).values_list('question', flat=True)
-
-    #         for question in questions:
-    #             try:
-    #                 TestQuestion.objects.create(
-    #                     question=question,  
-    #                     topic=topic,
-    #                 )
-    #             except Exception as e:
-    #                 print(f'Could not create Test Question {e}')
-
 
     def handle(self, *args, **options):
         # Add Subject
