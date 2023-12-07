@@ -66,10 +66,10 @@ def classrooms(request):
     if not request.user.is_teacher:
         return redirect('app_base:home')
     
-    # classrooms_with_levels = Classroom.objects.prefetch_related('classroomtolevels_set__level').all()
+    now = timezone.now()
     closest_lesson_subquery = Lesson.objects.filter(
+        Q(lesson_date__gt=now.date()) | (Q(lesson_date=now.date()) & Q(lesson_start_time__gte=now.time())),
         classroom=OuterRef('pk'),
-        lesson_start_time__gte=timezone.now()
     ).order_by('lesson_date', 'lesson_start_time').values('lesson_start_time', 'name', 'lesson_date')[:1]
 
     classrooms_extended_table = Classroom.objects.annotate(
