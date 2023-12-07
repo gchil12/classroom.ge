@@ -65,6 +65,6 @@ class Test(models.Model):
 
 class TestQuestion(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-    test = models.ForeignKey(Test, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, blank=False, verbose_name=_('test'))
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, blank=False, verbose_name=_('question'))
     points = models.IntegerField(default=0, blank=True)
