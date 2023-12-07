@@ -8,7 +8,7 @@ class Classroom(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
     
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name=_('owner'))
-    name = models.CharField(max_length=200, blank=False, null=False, unique=False, verbose_name=_('name'))
+    name = models.CharField(max_length=200, blank=False, null=False, unique=False, default='', verbose_name=_('name'))
     subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True, verbose_name=_('subject'))
     description = models.CharField(max_length=200, blank=True, default="", verbose_name=_('description'))
     online_meeting_link = models.CharField(max_length=200, blank=True, default="", verbose_name=_('online_meeging_link'))
@@ -23,8 +23,8 @@ class Level(models.Model):
 
 
 class ClassroomToLevels(models.Model):
-    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=False, blank=False, verbose_name=_('owner'))
-    level = models.ForeignKey(Level, on_delete=models.CASCADE, null=False, blank=False, verbose_name=_('owner'))
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, blank=False, verbose_name=_('owner'))
+    level = models.ForeignKey(Level, on_delete=models.CASCADE, blank=False, verbose_name=_('owner'))
 
     class Meta:
         # Set the combination of model1 and model2 to be unique
@@ -36,7 +36,7 @@ class Lesson(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
 
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, verbose_name=_('classroom'))
-    name = models.CharField(max_length=200, blank=False, null=False, unique=False, verbose_name=_('name'))
+    name = models.CharField(max_length=200, blank=False, null=False, default=_('default_lesson_name'), unique=False, verbose_name=_('name'))
     description = models.CharField(max_length=200, blank=True, default="", verbose_name=_('description'))
     lesson_date = models.DateField(blank=False, null=True, verbose_name=_('lesson_date'))
     lesson_start_time = models.TimeField(blank=False, null=True, verbose_name=_('lesson_start_time'))
@@ -67,4 +67,4 @@ class TestQuestion(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    points = models.IntegerField(default=0, null=False, blank=True)
+    points = models.IntegerField(default=0, blank=True)
