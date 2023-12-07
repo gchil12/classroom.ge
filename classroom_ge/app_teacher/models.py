@@ -52,7 +52,7 @@ TEST_TYPE_CHOICES = [
 ]
 class Test(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, verbose_name=_('lesson'))
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, null=True, verbose_name=_('lesson'))
     name = models.CharField(verbose_name=_('name'), max_length=200, blank=True,)
     test_type = models.CharField(verbose_name=_('test_type'), max_length=20, choices=TEST_TYPE_CHOICES, default='assignment')
     
