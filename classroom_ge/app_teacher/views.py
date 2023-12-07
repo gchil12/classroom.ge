@@ -136,7 +136,6 @@ def new_classroom(request):
             classroom.save()
             
             level = Level.objects.filter(level=form.cleaned_data['levels']).first()
-            print(level)
             
             try:
                 classroom_to_level = ClassroomToLevels.objects.create(
@@ -358,7 +357,6 @@ def create_test_questions(topic_uuid:uuid, lesson_uuid:uuid):
             test_type='assignment',
         )
     except Exception as e:
-        print(f'Could not create Test {e}')
         return False
     
 
@@ -370,7 +368,6 @@ def create_test_questions(topic_uuid:uuid, lesson_uuid:uuid):
                 points=1,
             )
         except Exception as e:
-            print(f'Could not create Test Question {e}')
             return False
         
     return True
@@ -425,7 +422,6 @@ def choose_lessons_to_add_exercises(request, topic_uuid):
                 else:
                     messages.error(request, _('unknown_error_refresh'))
                     return redirect('app_teacher:home')    
-            except Exception as e:
-                print(f'Unknown Error {e}')
+            except Exception:
                 messages.error(request, _('unknown_error_refresh'))
                 return redirect('app_teacher:home')

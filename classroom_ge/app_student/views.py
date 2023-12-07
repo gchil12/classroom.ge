@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
-from app_teacher.models import Classroom, Lesson
+from app_teacher.models import Classroom, Lesson, Test
 from .models import StudentToClassroom
 from django.utils import timezone
 from django.db.models import Count, Q, Subquery, OuterRef
@@ -60,7 +60,7 @@ def classroom_list(request):
         return redirect('app_base:home')
     
     now = timezone.now()
-    
+
     closest_lesson_subquery = Lesson.objects.filter(
         Q(lesson_date__gt=now.date()) | (Q(lesson_date=now.date()) & Q(lesson_start_time__gte=now.time())),
         classroom=OuterRef('pk'),
@@ -94,13 +94,13 @@ def classroom_details(request, uuid):
     
     classroom = get_object_or_404(Classroom, uuid=uuid)
 
-    obj = StudentToClassroom.objects.get(
-        student=request.user,
-        classroom=classroom
-    )
-
-    if obj is None:
-        redirect_url = reverse('app_student:subscribe-classroom', kwargs={'uuid': uuid})
+    try:
+        StudentToClassroom.objects.get(
+            student=request.user,
+            classroom=classroom
+        )
+    except Exception:
+        redirect_url = reverse('app_student:subscribe-classroom', kwargs={'classroom_uuid': uuid})
         return redirect(redirect_url)
 
     lessons = Lesson.objects.filter(classroom=classroom)
@@ -111,3 +111,23 @@ def classroom_details(request, uuid):
     }
 
     return render(request, 'app_student/menu_elements/classroom_details.html', context)
+
+
+
+@login_required(login_url='app_base:login')
+def lesson_details(request, lesson_uuid):
+    if not request.user.is_student:
+        return redirect('app_base:home')
+    
+    lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
+
+    tests = Test.objects.filter(
+        lesson=lesson,
+    )
+
+    context = {
+        'tests': tests,
+        'lesson': lesson,
+    }
+
+    return render(request, 'app_student/lesson_details.html', context)

@@ -62,8 +62,6 @@ def register(request):
             )
 
             user.save()
-            print(user.is_student)
-            print(user.is_teacher)
             
             if user.is_student:
                 StudentProfile.objects.create(
@@ -144,7 +142,6 @@ def send_email_after_registration(request, uidb64):
 
     if email.send():
         messages.success(request, 'Email Varification Sent')
-        print('here')
 
     if request.method == 'POST':
         return redirect('app_base:login')

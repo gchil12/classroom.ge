@@ -1,0 +1,49 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<table style="width:100%" class="list_table" id="list_table">
+    <tr>
+        <th>საკლასო ოთახი</th>
+        <th>სახელი</th>
+        <th>თარიღი</th>
+        <th>დაწყება</th>
+        <th>დასწულება</th>
+        <th>აღწერა</th>
+    </tr>
+    <tr>
+        <td>
+            <a href="{% url 'app_student:classroom-detail' uuid=lesson.classroom.uuid %}" style="background-color: aqua;">
+                {{ lesson.classroom.name }}
+            </a>
+        </td>
+        <td>{{ lesson.name }}</td>
+        <td>{{ lesson.lesson_date }}</td>
+        <td>{{ lesson.lesson_start_time }}</td>
+        <td>{{ lesson.lesson_end_time }}</td>
+        <td>{{ lesson.description }}</td>
+    </tr>
+</table>
+
+<br>
+
+<table style="width:100%" class="list_table" id="list_table">
+    <tr>
+        <th>დავალებები</th>
+    </tr>
+    <tr>
+        <th>სახელი</th>
+        <th>ქულა</th>
+        <th>დავალების შესრულება/დათვალიერება</th>
+    </tr>
+    {% for test in tests %}
+        <tr>
+            <td>{{test.name}}</td>
+            <td>TODO</td>
+            <td>TODO</td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

@@ -7,5 +7,7 @@ urlpatterns = [
     path('classroom/subscribe/<uuid:classroom_uuid>', views.subscribe_to_classroom, name='subscribe-classroom'),
 
     path('classrooms/', views.classroom_list, name='classrooms'),
-    path('classroom/<uuid:uuid>/', views.classroom_details, name='classroom-detail')
+    path('classroom/<uuid:uuid>/', views.classroom_details, name='classroom-detail'),
+
+    path('lesson/<uuid:lesson_uuid>/', views.lesson_details, name='lesson-detail')
 ]

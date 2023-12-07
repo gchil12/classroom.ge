@@ -45,9 +45,9 @@
     {% for lesson in lessons %}
         <tr>
             <td style="background-color: aqua;">
-                
+                <a href="{% url 'app_student:lesson-detail' lesson_uuid=lesson.uuid %}">
                     {{ lesson.name }}
-                
+                </a>
             </td>
             <td>{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}</td>
             <td>{{ lesson.description }}</td>
