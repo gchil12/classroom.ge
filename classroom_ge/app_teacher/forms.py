@@ -3,6 +3,7 @@ from django import forms
 from .models import Classroom, Lesson, Level
 from django.utils.translation import gettext_lazy as _
 from django.forms.widgets import SelectDateWidget
+from django.utils import timezone
 
 class CreateNewClassroomForm(ModelForm):
     required_css_class = 'required'
@@ -56,3 +57,18 @@ class CreateNewLessonForm(ModelForm):
             ),
             'lesson_start_time': forms.TimeInput(format='%H:%M'),
         }
+
+    def clean(self):
+        now = timezone.now()
+
+        cleaned_data = super(CreateNewLessonForm, self).clean()
+
+        lesson_date = cleaned_data.get('lesson_date')
+        lesson_start_time = cleaned_data.get('lesson_start_time')
+        lesson_end_time = cleaned_data.get('lesson_end_time')
+
+        if lesson_date < now.date():
+            self.add_error("lesson_date", _('please_check_lesson_date'))
+
+        if lesson_start_time > lesson_end_time:
+            self.add_error("lesson_start_time", _('please_check_start_and_end_times'))
