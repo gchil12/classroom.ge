@@ -345,7 +345,7 @@ def exercise_main_details(request, uuid):
     return render(request, 'app_teacher/exercises/exercise_main_details.html', context)
 
 
-@login_required(login_url='app_base:login')
+
 def create_test_questions(topic_uuid:uuid, lesson_uuid:uuid):
     topic = get_object_or_404(Topic, uuid=topic_uuid)
     lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
@@ -365,13 +365,12 @@ def create_test_questions(topic_uuid:uuid, lesson_uuid:uuid):
             TestQuestion.objects.create(
                 test=cur_test,
                 question=question,
-                points=1,
+                max_point=1,
             )
         except Exception as e:
             return False
         
     return True
-    
     
 
 
