@@ -1,0 +1,32 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+<form role="form" class="text-start" action="{% url 'app_student:test-submit' student_test_uuid=student_test_uuid %}" method="POST" style="width: 60%; margin-left: auto; margin-right: auto;">
+    {% csrf_token %}
+
+    <ol>
+        {% for student_answer in student_answers %}
+            <li>
+                <div style="width: 100%; margin: 10px; background-color: antiquewhite;">
+                    {{ student_answer.question.question.text }}
+                    <br>
+                    <div style="text-align: center;">
+                        {% for choice in student_answer.question.question.questionchoice_set.all %}
+                            <input type="radio" name="chosen_choices_{{ student_answer.question.pk }}" value="{{ choice.pk }}" style="margin-left: 10px;">
+                                {{ choice.text }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ol>
+
+    <div class="text-center">
+        <input type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2" value="დასრულება">
+    </div>
+</form>
+
+{% endblock %}

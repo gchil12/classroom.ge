@@ -40,8 +40,23 @@
     {% for test in tests %}
         <tr>
             <td>{{test.name}}</td>
-            <td>TODO</td>
-            <td>TODO</td>
+            {% if test.taken %}
+                    <td>
+                        {{ test.student_points }} / {{ test.total_points }}
+                    </td>
+                    <td style="background-color: aqua;">
+                        <a href="{% url 'app_student:test-view' test_uuid=test.uuid %}">
+                            დათვალიერება
+                        </a>
+                    </td>
+            {% else %}
+                <td>{{test.student_points}} / {{test.total_points}}</td>
+                <td>
+                    <a href="{% url 'app_student:test-page' test_uuid=test.uuid %}" style="background-color: aqua;">
+                        დავალების შესრულება
+                    </a>
+                </td>
+            {% endif %}
         </tr>
     {% endfor %}
 </table>

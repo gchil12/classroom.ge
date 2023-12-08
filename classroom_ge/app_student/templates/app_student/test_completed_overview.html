@@ -1,0 +1,91 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+<ol style="width: 60%; margin-left: auto; margin-right: auto;">
+    {% for student_question in student_questions %}
+        <li>
+            <div style="width: 100%; margin: 10px;">
+                {{ student_question.question.question.text }}
+                <br>
+                {% for choice in student_question.question.question.questionchoice_set.all %}
+                    {% if student_question.answered %}
+                        {% if choice.is_correct %}
+                            <span style="background-color: lightgreen;">
+                                <input type="radio" style="margin-left: 10px;" disabled>
+                                {{ choice.text }}
+                            </span>
+                        {% else %}
+                            {% if choice in student_question.chosen_choices.all %}
+                                <span style="background-color: lightcoral;">
+                                    <input type="radio" style="margin-left: 10px;" disabled>
+                                    {{ choice.text }}
+                                </span>
+                            {% else %}
+                                <input type="radio" style="margin-left: 10px;" disabled>
+                                {{ choice.text }}
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        <input type="radio" style="margin-left: 10px;" disabled>
+                        {{ choice.text }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </li>
+    {% endfor %}
+
+    {% comment %}
+        {% if student_choice.choice.is_correct %}
+            <li>
+                <div style="width: 100%; margin: 10px;">
+                    {{ student_choice.student_answer.question.question.text }}
+                    <br>
+                    <div style="text-align: center;">
+                        {% for choice in student_choice.student_answer.question.question.questionchoice_set.all %}
+                            {% if student_choice.choice == choice %}
+                                <span style="background-color: lightgreen;">
+                                    <input type="radio" style="margin-left: 10px;" disabled>
+                                    {{ choice.text }}
+                                </span>
+                            {% else %}
+                                <input type="radio" style="margin-left: 10px;" disabled>
+                                {{ choice.text }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+        {% else %}
+        <li>
+            <div style="width: 100%; margin: 10px;">
+                {{ student_choice.student_answer.question.question.text }}
+                <br>
+                <div style="text-align: center;">
+                    {% for choice in student_choice.student_answer.question.question.questionchoice_set.all %}
+                        {% if student_choice.choice == choice %}
+                            <span style="background-color: lightsalmon;">
+                                <input type="radio" style="margin-left: 10px;" disabled>
+                                {{ choice.text }}
+                            </span>
+                        {% elif choice.is_correct %}
+                            <span style="background-color: lightgreen;">
+                                <input type="radio" style="margin-left: 10px;" disabled>
+                                {{ choice.text }}
+                            </span>
+                        {% else %}
+                            <input type="radio" style="margin-left: 10px;" disabled>
+                            {{ choice.text }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </li>
+        {% endif %}
+    {% endfor %}
+
+    {% endcomment %}
+</ol>
+{% endblock %}
