@@ -16,8 +16,10 @@ urlpatterns = [
     path('delete_lesson/<uuid:uuid>/', views.delete_lesson, name='lesson-delete'),
     path('lesson/<uuid:uuid>/', views.lesson_details, name='lesson-detail'),
 
-    path('exercises', views.exercises_main_page, name='exercises-main'),
-    path('exercise_details/<uuid:uuid>/', views.exercise_main_details, name='exercises-main-details'),
+    path('tests', views.tests_main_page, name='test-main'),
+    path('test_example/<uuid:uuid>/', views.test_example_page, name='test-example-page'),
+    path('test_details/<uuid:test_uuid>/', views.test_details, name='test-details'),
+    path('test_results/<uuid:test_uuid>/<uuid:student_uuid>', views.test_results_student, name='test-results-student'),
 
-    path('choose_lesson/<uuid:topic_uuid>/', views.choose_lessons_to_add_exercises, name='choose-lesson'),
+    path('choose_lesson/<uuid:topic_uuid>/', views.choose_lessons_to_add_test, name='choose-lesson'),
 ]

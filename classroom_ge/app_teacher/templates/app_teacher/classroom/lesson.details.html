@@ -39,7 +39,7 @@
                     <h6 class="mb-0">დავალებები</h6>
                 </div>
                 <div class="col-6 text-end">
-                    <a class="btn bg-gradient-primary mb-0" href="{% url 'app_teacher:exercises-main' %}?lesson={{lesson.uuid}}"
+                    <a class="btn bg-gradient-primary mb-0" href="{% url 'app_teacher:test-main' %}?lesson={{lesson.uuid}}"
                         ><i class="material-icons text-sm">add</i>&nbsp;&nbsp;დავალების დამატება</a
                     >
                 </div>
@@ -52,20 +52,20 @@
                     class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
                 >
                     <div class="d-flex flex-column">
-                        <h6 class="mb-3 text-sm"><a href="#">
+                        <h6 class="mb-3 text-sm"><a href="{% url 'app_teacher:test-details' test_uuid=test.uuid %}">
                             {{test.name}}
                         </a></h6>
                         <span class="mb-2 text-xs"
                             >დაწერა:
                             <span class="text-dark font-weight-bold ms-sm-2"
-                                > {{test.num_students}} </span
+                                > TODO / {{test.num_students}} </span
                             ></span
                         >
                         <span class="mb-2 text-xs"
                             >საშუალო ქულა:
                             <span class="text-dark ms-sm-2 font-weight-bold"
                                 >
-                                {{test.average_grade}}</span
+                                TODO </span
                             ></span
                         >
                     </div>

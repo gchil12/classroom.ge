@@ -1,0 +1,29 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+
+<table class="list_table">
+    <tr>
+        <th>სახელი</th>
+        <th>გვარი</th>
+        <th>ქულა</th>
+    </tr>
+    {% for student in students %}
+    {{student}}
+        <tr>
+            <td>{{student.user.name}}</td>
+            <td>{{student.user.surname}}</td>
+            <td>{{student.student_points}} / {{student.max_points}}</td>
+            <td>
+                <a>
+                    <a href="{% url 'app_teacher:test-results-student' test_uuid=test_uuid student_uuid=student.uuid %}">ტესტის ნახვა</a>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

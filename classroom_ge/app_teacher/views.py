@@ -3,9 +3,10 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.translation import gettext_lazy as _
-from app_student.models import StudentToClassroom
+from app_student.models import StudentToClassroom, StudentProfile, StudentTest, StudentQuestion
 from django.contrib import messages
 from django.db.models import Count, Q, Subquery, OuterRef, Avg
+from django.db.models import BooleanField, Case, When, Value, F, Sum, IntegerField
 from django.utils import timezone
 from base.models import Topic, Question, QuestionToTopic
 from .models import Classroom, Lesson, Level, ClassroomToLevels
@@ -289,7 +290,6 @@ def lesson_details(request, uuid):
         lesson=lesson,  # Replace with the actual lesson object
     ).annotate(
         num_students=Count('studenttest__student', distinct=True),
-        average_grade=Avg('testquestion__max_point', filter=Q(studenttest__completed=True))
     )
         
     context = {
@@ -302,7 +302,7 @@ def lesson_details(request, uuid):
 
 ############### Execrices #################
 @login_required(login_url='app_base:login')
-def exercises_main_page(request):
+def tests_main_page(request):
     if not request.user.is_teacher:
         return redirect('app_base:home')
 
@@ -316,12 +316,12 @@ def exercises_main_page(request):
         'topics': topics_with_at_least_one_question,
         'lesson_uuid': lesson_uuid,
     }
-    return render(request, 'app_teacher/menu_elements/exercises.html', context)
+    return render(request, 'app_teacher/menu_elements/tests.html', context)
 
 
 
 @login_required(login_url='app_base:login')
-def exercise_main_details(request, uuid):
+def test_example_page(request, uuid):
     if not request.user.is_teacher:
         return redirect('app_base:home')
     
@@ -346,7 +346,7 @@ def exercise_main_details(request, uuid):
         'lesson': lesson,
     }
 
-    return render(request, 'app_teacher/exercises/exercise_main_details.html', context)
+    return render(request, 'app_teacher/tests/test_example_page.html', context)
 
 
 
@@ -379,7 +379,7 @@ def create_test_questions(topic_uuid:uuid, lesson_uuid:uuid):
 
 
 @login_required(login_url='app_base:login')
-def choose_lessons_to_add_exercises(request, topic_uuid):
+def choose_lessons_to_add_test(request, topic_uuid):
     if not request.user.is_teacher:
         return redirect('app_base:home')
 
@@ -397,7 +397,7 @@ def choose_lessons_to_add_exercises(request, topic_uuid):
         classrooms = Classroom.objects.filter(
             owner=request.user,
         )
-        return render(request, 'app_teacher/exercises/add_exercises_to_lesson.html', {'classrooms': classrooms, 'topic_uuid': topic_uuid})
+        return render(request, 'app_teacher/tests/add_test_to_lesson.html', {'classrooms': classrooms, 'topic_uuid': topic_uuid})
     else:
         lesson_uuid = request.GET.get('lesson')
     
@@ -413,7 +413,7 @@ def choose_lessons_to_add_exercises(request, topic_uuid):
             lessons = Lesson.objects.filter(
                 classroom=Classroom.objects.get(uuid=classroom_uuid)
             )
-            return render(request, 'app_teacher/exercises/add_exercises_to_lesson.html', {'lessons': lessons, 'topic_uuid': topic_uuid, 'classroom_uuid': classroom_uuid},)
+            return render(request, 'app_teacher/tests/add_test_to_lesson.html', {'lessons': lessons, 'topic_uuid': topic_uuid, 'classroom_uuid': classroom_uuid},)
         else:
             try:
                 res = create_test_questions(topic_uuid, lesson_uuid)
@@ -428,3 +428,66 @@ def choose_lessons_to_add_exercises(request, topic_uuid):
             except Exception:
                 messages.error(request, _('unknown_error_refresh'))
                 return redirect('app_teacher:home')
+            
+
+
+@login_required(login_url='app_base:login')
+def test_details(request, test_uuid):
+    if not request.user.is_teacher:
+        return redirect('app_base:home')
+    
+    test = get_object_or_404(Test, uuid=test_uuid)
+
+    if test.lesson.classroom.owner != request.user:
+        messages.error(request, _('error_unauthorized_access'))
+        return redirect('app_teacher:home')
+
+    students = StudentProfile.objects.filter(
+        user__studenttoclassroom__classroom=test.lesson.classroom
+    ).annotate(
+        max_points=Subquery(
+            StudentTest.objects.filter(
+                student=OuterRef('pk'),
+                test=test,
+            ).annotate(
+                total_max_points=Sum('studentquestion__question__max_point')
+            ).values('total_max_points')
+        ),
+        student_points=Subquery(
+            StudentTest.objects.filter(
+                student=OuterRef('pk'),
+                test=test,
+            ).annotate(
+                total_max_points=Sum('studentquestion__given_point')
+            ).values('total_max_points')
+        )
+    )
+
+    print(students)
+    context={
+        'students': students,
+        'test_uuid': test_uuid,
+    }
+
+    return render(request, 'app_teacher/tests/test_details.html', context)
+
+
+
+@login_required(login_url='app_base:login')
+def test_results_student(request, test_uuid, student_uuid):
+    if not request.user.is_teacher:
+        return redirect('app_base:home')
+    
+    test = get_object_or_404(Test,uuid=test_uuid)
+    current_student = StudentProfile.objects.get(uuid=student_uuid)
+
+    student_test = get_object_or_404(StudentTest, student=current_student, test=test)
+    
+    student_questions = StudentQuestion.objects.filter(student_test=student_test).order_by('order')
+    
+    
+    context = {
+        'student_questions': student_questions,
+    }
+
+    return render(request, 'app_student/test_completed_overview.html', context)
