@@ -42,7 +42,7 @@
             <td>{{test.name}}</td>
             {% if test.taken %}
                     <td>
-                        {{ test.student_points }} / {{ test.total_points }}
+                        {{ test.total_points }} / {{ test.max_points }}
                     </td>
                     <td style="background-color: aqua;">
                         <a href="{% url 'app_student:test-view' test_uuid=test.uuid %}">
@@ -50,7 +50,7 @@
                         </a>
                     </td>
             {% else %}
-                <td>{{test.student_points}} / {{test.total_points}}</td>
+                <td> - </td>
                 <td>
                     <a href="{% url 'app_student:test-page' test_uuid=test.uuid %}" style="background-color: aqua;">
                         დავალების შესრულება

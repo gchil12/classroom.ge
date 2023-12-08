@@ -96,7 +96,7 @@ def classroom_details(request, uuid):
         return redirect('app_base:home')
     
     classroom = get_object_or_404(Classroom, uuid=uuid)
-
+    
     try:
         StudentToClassroom.objects.get(
             student=request.user,
@@ -106,8 +106,11 @@ def classroom_details(request, uuid):
         redirect_url = reverse('app_student:subscribe-classroom', kwargs={'classroom_uuid': uuid})
         return redirect(redirect_url)
 
-    lessons = Lesson.objects.filter(classroom=classroom)
-
+    lessons = Lesson.objects.annotate(
+        n_tests=Count('test'),
+        num_tests_written=Count('test__studenttest')
+    )
+    
     context = {
         'lessons': lessons,
         'classroom': classroom,
@@ -139,13 +142,16 @@ def lesson_details(request, lesson_uuid):
             default=Value(False),
             output_field=BooleanField()
         ),
-        total_points=Sum('testquestion__max_point'),
-        student_points=Sum(Case(
-            When(studenttest__student=current_student, then=F('testquestion__max_point')),
-            default=Value(0),
-            output_field=IntegerField()
+        max_points=Sum(Case(
+            When(studenttest__student=current_student, 
+                then=F('studenttest__studentquestion__question__max_point'))
         )),
+        total_points=Sum(Case(
+            When(studenttest__student=current_student, 
+                then=F('studenttest__studentquestion__given_point'))
+        ))
     ).distinct().order_by('-date_created')
+    
 
     context = {
         'tests': tests_for_student,
@@ -250,7 +256,7 @@ def test_submit(request, student_test_uuid):
                 student_question.save()
 
         student_test.save()
-        
+
         messages.success(request, _('test_submitted_sucessfully'))
         redirect_url = reverse('app_student:test-view', kwargs={'test_uuid': student_test.test.uuid})
         return redirect(redirect_url)
