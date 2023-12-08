@@ -8,14 +8,14 @@
     {% csrf_token %}
 
     <ol>
-        {% for student_answer in student_answers %}
+        {% for student_question in student_questions %}
             <li>
                 <div style="width: 100%; margin: 10px; background-color: antiquewhite;">
-                    {{ student_answer.question.question.text }}
+                    {{ student_question.question.question.text }}
                     <br>
                     <div style="text-align: center;">
-                        {% for choice in student_answer.question.question.questionchoice_set.all %}
-                            <input type="radio" name="chosen_choices_{{ student_answer.question.pk }}" value="{{ choice.pk }}" style="margin-left: 10px;">
+                        {% for choice in student_question.question.question.questionchoice_set.all %}
+                            <input type="radio" name="chosen_choices_{{ student_question.question.pk }}" value="{{ choice.pk }}" style="margin-left: 10px;">
                                 {{ choice.text }}
                         {% endfor %}
                     </div>

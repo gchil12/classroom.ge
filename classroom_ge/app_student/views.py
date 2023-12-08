@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
 from app_teacher.models import Classroom, Lesson, Test, TestQuestion
 from base.models import QuestionChoice
-from .models import StudentToClassroom, StudentProfile, StudentTest, StudentAnswer, StudentAnswerToChoice
+from .models import StudentToClassroom, StudentProfile, StudentTest, StudentQuestion, StudentQuestionToChoice
 from django.utils import timezone
 from django.db.models import Count, Q, Subquery, OuterRef
 from django.db.models import BooleanField, Case, When, Value, F, Sum, IntegerField
@@ -178,7 +178,7 @@ def test_show_page(request, test_uuid):
         test_questions = TestQuestion.objects.filter(test=test).all()
         order_id = 0
         for test_question in test_questions:
-            StudentAnswer.objects.create(
+            StudentQuestion.objects.create(
                 student_test = student_test,
                 question = test_question,
                 order=order_id,
@@ -186,23 +186,22 @@ def test_show_page(request, test_uuid):
             order_id += 1
 
         context = {
-            'student_answers': StudentAnswer.objects.filter(student_test=student_test).all().order_by('order'),
+            'student_questions': StudentQuestion.objects.filter(student_test=student_test).all().order_by('order'),
             'student_test_uuid': student_test.uuid,
         }
         
     else:
         student_test = get_object_or_404(StudentTest, student=current_student, test=test)
 
-        student_answers = StudentAnswer.objects.filter(student_test=student_test).order_by('order')
-        selected_choices = StudentAnswer.objects.filter(student_test=student_test).values_list('chosen_choices__pk', flat=True)
+        student_questions = StudentQuestion.objects.filter(student_test=student_test).order_by('order')
+        selected_choices = StudentQuestion.objects.filter(student_test=student_test).values_list('chosen_choices__pk', flat=True)
 
         context = {
-            'student_answers': student_answers,
+            'student_questions': student_questions,
             'selected_choices': selected_choices,
             'student_test_uuid': student_test.uuid,
         }
 
-    print(student_test.uuid)
     return render(request, 'app_student/test_form.html', context)
     
 
@@ -224,7 +223,6 @@ def test_submit(request, student_test_uuid):
         return redirect('app_student:home') #NOSONAR
     
     if student_test.completed:
-        print('redirected from here')
         redirect_url = reverse('app_student:test-view', kwargs={'test_uuid': student_test.test.uuid})
         return redirect(redirect_url)
 
@@ -233,27 +231,26 @@ def test_submit(request, student_test_uuid):
         student_test.end_time = now
         student_test.completed = True
 
-        for student_answer in student_test.studentanswer_set.all():
-            print(student_answer)
-            choice_pk = request.POST.get(f'chosen_choices_{student_answer.question.pk}')
-            print(choice_pk)
+        for student_question in student_test.studentquestion_set.all():
+            choice_pk = request.POST.get(f'chosen_choices_{student_question.question.pk}')
             if choice_pk:
                 choice = get_object_or_404(QuestionChoice, pk=choice_pk)
-                StudentAnswerToChoice.objects.create(
-                    student_answer=student_answer,
+                StudentQuestionToChoice.objects.create(
+                    student_question=student_question,
                     choice=choice,
                 )
-                print('here')
-                print(student_answer)
-                student_answer.answered = True
+
+                student_question.answered = True
 
                 if choice.is_correct:
-                    student_answer.given_point = student_answer.question.max_point
+                    student_question.given_point = student_question.question.max_point
                 else:
-                    student_answer.given_point = 0
+                    student_question.given_point = 0
 
-                student_answer.save()
+                student_question.save()
 
+        student_test.save()
+        
         messages.success(request, _('test_submitted_sucessfully'))
         redirect_url = reverse('app_student:test-view', kwargs={'test_uuid': student_test.test.uuid})
         return redirect(redirect_url)
@@ -275,11 +272,11 @@ def view_computed_test(request, test_uuid):
 
     student_test = get_object_or_404(StudentTest, student=current_student, test=test)
     
-    student_answers = StudentAnswer.objects.filter(student_test=student_test).order_by('order')
+    student_questions = StudentQuestion.objects.filter(student_test=student_test).order_by('order')
     
     
     context = {
-        'student_questions': student_answers,
+        'student_questions': student_questions,
     }
 
     return render(request, 'app_student/test_completed_overview.html', context)

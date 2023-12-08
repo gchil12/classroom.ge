@@ -35,7 +35,7 @@ class StudentTest(models.Model):
         return f"{self.student.user.name}'s attempt at {self.test.name}"
 
 
-class StudentAnswer(models.Model):
+class StudentQuestion(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
 
     student_test = models.ForeignKey(StudentTest, on_delete=models.CASCADE)
@@ -45,15 +45,15 @@ class StudentAnswer(models.Model):
     answered = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
 
-    chosen_choices = models.ManyToManyField(QuestionChoice, through='StudentAnswerToChoice')
+    chosen_choices = models.ManyToManyField(QuestionChoice, through='StudentQuestionToChoice')
     
     def __str__(self):
         return f"{self.student_test.student.user.name}'s answer to {self.question.question.text}"
 
 
-class StudentAnswerToChoice(models.Model):
+class StudentQuestionToChoice(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-    student_answer = models.ForeignKey(StudentAnswer, on_delete=models.CASCADE)
+    student_question = models.ForeignKey(StudentQuestion, on_delete=models.CASCADE)
     choice = models.ForeignKey(QuestionChoice, on_delete=models.CASCADE)
 
 

@@ -41,10 +41,10 @@
         {% if student_choice.choice.is_correct %}
             <li>
                 <div style="width: 100%; margin: 10px;">
-                    {{ student_choice.student_answer.question.question.text }}
+                    {{ student_choice.student_question.question.question.text }}
                     <br>
                     <div style="text-align: center;">
-                        {% for choice in student_choice.student_answer.question.question.questionchoice_set.all %}
+                        {% for choice in student_choice.student_question.question.question.questionchoice_set.all %}
                             {% if student_choice.choice == choice %}
                                 <span style="background-color: lightgreen;">
                                     <input type="radio" style="margin-left: 10px;" disabled>
@@ -61,10 +61,10 @@
         {% else %}
         <li>
             <div style="width: 100%; margin: 10px;">
-                {{ student_choice.student_answer.question.question.text }}
+                {{ student_choice.student_question.question.question.text }}
                 <br>
                 <div style="text-align: center;">
-                    {% for choice in student_choice.student_answer.question.question.questionchoice_set.all %}
+                    {% for choice in student_choice.student_question.question.question.questionchoice_set.all %}
                         {% if student_choice.choice == choice %}
                             <span style="background-color: lightsalmon;">
                                 <input type="radio" style="margin-left: 10px;" disabled>
