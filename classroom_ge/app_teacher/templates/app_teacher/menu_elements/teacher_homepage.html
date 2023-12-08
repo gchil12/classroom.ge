@@ -4,124 +4,141 @@
 
 {% block content %}
 
-<h3>მასწავლებლის მთავარი გვერდი: {{request.user.email}} - {{ request.user.name }} - {{ request.user.surname }}</h3>
+<div class="row">
 
-<br>
-
-<table style="width:100%" class="list_table">
-    <tr>
-        <th colspan="4">
-            შემდეგი გაკვეთილები
-        </th>
-    </tr>
-    <tr>
-        <th>კლასის სახელი</th>
-        <th>საგანი</th>
-        <th>საფეხური</th>
-        <th>გაკვეთილის სახელი</th>
-        
-        <th>თარიღი, დრო</th>
-    </tr>
-    {% for closest_lesson in closest_lessons %}
-        <tr>
-            <td style="background-color: aqua;"><a href="{% url 'app_teacher:classroom-detail' uuid=closest_lesson.classroom.uuid %}">{{ closest_lesson.classroom.name }}</a></td>
-            <td>{{ closest_lesson.classroom.subject }}</td>
-            <td>
-                {% for classroom_to_levels in classroom.classroomtolevels_set.all %}
-                    {{ classroom_to_levels.level.level }}
-                {% endfor %}
-            </td>
-            <td style="background-color: aqua;"><a href="{% url 'app_teacher:lesson-detail' uuid=closest_lesson.uuid %}">{{ closest_lesson.name }}</a></td>
-            <td>{{ closest_lesson.lesson_date }} - {{ closest_lesson.lesson_start_time }}</td>
-            
-            
-        </tr>
-    {% endfor %}
-</table>
-
-
-<br>
-
-
-<div style="width: fit-content; background-color: aquamarine;">
-    <a href="{% url 'app_teacher:create-new-classroom' %}">ახალი საკლასო ოთახის შექმნა</a>
-</div>
-<table style="width:100%" class="list_table">
-    <tr>
-        <th colspan="4">
-            საკლასო ოთახები
-        </th>
-    </tr>
-    <tr>
-        <th>სახელი</th>
-        <th>საგანი</th>
-        <th>საფეხური</th>
-        <th>მოსწავლეების რაოდენობა</th>
-        <th>შემდეგი გაკვეთილის სახელი, თარიღი, დრო</th>
-        <th>რანგი</th>
-        <th>გაკვეთილის შექმნა</th>
-    </tr>
-    {% for classroom in classrooms %}
-        {% if classroom.is_archived == False %}
-            <tr>
-                <td style="background-color: aquamarine;"><a href="{% url 'app_teacher:classroom-detail' uuid=classroom.uuid %}">{{ classroom.name }}</a></td>
-                <td>{{ classroom.subject }}</td>
-                <td>
-                    {% for classroom_to_levels in classroom.classroomtolevels_set.all %}
-                        {{ classroom_to_levels.level.level }}
+    <div class="col-sm">
+    
+        <div class="card">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-info shadow-warning border-radius-lg pt-4 pb-3">
+                    <h6 class="text-white text-capitalize ps-3">შემდეგი გაკვეთილები</h6>
+                </div>
+            </div>
+            <div class="card-body pt-4 p-3">
+                <ul class="list-group">
+                    {% for closest_lesson in closest_lessons %}
+                    <li
+                        class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+                    >
+                        <div class="d-flex flex-column">
+                            <h6 class="mb-3 text-sm">თემა: <a href="{% url 'app_teacher:lesson-detail' uuid=closest_lesson.uuid %}">
+                                {{ closest_lesson.name }}
+                            </a></h6>
+                            <span class="mb-2 text-xs"
+                                >საგანი:
+                                <span class="text-dark font-weight-bold ms-sm-2"
+                                    >{{ closest_lesson.classroom.subject }}</span
+                                ></span
+                            >
+                            <span class="mb-2 text-xs"
+                                >კლასი:
+                                <span class="text-dark font-weight-bold ms-sm-2"
+                                    >{{ closest_lesson.classroom.name }}</span
+                                ></span
+                            >
+                            <span class="mb-2 text-xs"
+                                >თარიღი:
+                                <span class="text-dark font-weight-bold ms-sm-2"
+                                    >{{ closest_lesson.lesson_date }} {{ closest_lesson.lesson_start_time }}</span
+                                ></span
+                            >
+                        </div>
+                    </li>
                     {% endfor %}
-                </td>
-                <td>{{ classroom.num_students }}</td>
-                {% if classroom.closest_lesson_name%}
-                    <th>{{ classroom.closest_lesson_name }} - {{ classroom.closest_lesson_date }} - {{ classroom.closest_lesson_start_time }} </th>
-                {% else %}
-                    <th>გაკვეთილები არ არის დაგეგმილი</th>
-                {% endif %}
-                <th>რანგი:TODO</th>
-                <th>
-                    <div style="width: fit-content; background-color: aquamarine;">
-                        <a href="{% url 'app_teacher:create-new-lesson' classroom_uuid=classroom.uuid %}">ახალი გაკვეთილის შექმნა</a>
-                    </div>
-                </th>
-            </tr>
-        {% endif %}
-    {% endfor %}
-</table>
-
-<br>
+        
+                </ul>
+            </div>
+        </div>
+    
+    </div>
 
 
+<div class="col-sm">
+
+<div class="card">
+    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+		<div class="bg-gradient-warning shadow-warning border-radius-lg pt-4 pb-3">
+            <h6 class="text-white text-capitalize ps-3">კლასები</h6>
+		</div>
+	</div>
+	<div class="card-body pt-4 p-3">
+		<ul class="list-group">
+            {% for classroom in classrooms %} {% if classroom.is_archived == False %}
+            <li
+				class="col-sm list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+			>
+				<div class="d-flex flex-column">
+					<h6 class="mb-3 text-sm"><a href="{% url 'app_teacher:classroom-detail' uuid=classroom.uuid %}"
+                        >{{ classroom.name }}</a
+                    ></h6>
+					<span class="mb-2 text-xs"
+						>საგანი:
+						<span class="text-dark font-weight-bold ms-sm-2"
+							>{{ classroom.subject }}</span
+						></span
+					>
+					<span class="mb-2 text-xs"
+						>საფეხური:
+						<span class="text-dark ms-sm-2 font-weight-bold"
+							>{% for classroom_to_levels in classroom.classroomtolevels_set.all %}
+                            {{ classroom_to_levels.level.level }}
+                        {% endfor %} </span
+						></span
+					>
+                    <span class="mb-2 text-xs"
+						>მოსწავლეების რაოდენობა:
+						<span class="text-dark ms-sm-2 font-weight-bold"
+							>{{ classroom.num_students }}</span
+						></span
+					>
+                    <span class="mb-2 text-xs"
+						>რანგი:
+						<span class="text-dark ms-sm-2 font-weight-bold"
+							>TODO</span
+						></span
+					>
+					<span class="text-xs"
+						>შემდეგი გაკვეთილი:
+						<span class="text-dark ms-sm-2 font-weight-bold"
+							>
+                            {% if classroom.closest_lesson_name %}
+                            {{ classroom.closest_lesson_name }} ({{ classroom.closest_lesson_date }}; {{ classroom.closest_lesson_start_time }})
+                            {% else %}
+                                გაკვეთილები არ არის დაგეგმილი
+                            {% endif %}
+                            </span
+						></span
+					>
+				</div>
+				<div class="ms-auto text-end">
+					<a class="btn btn-info px-3 mb-0" href="{% url 'app_teacher:create-new-lesson' classroom_uuid=classroom.uuid %}"
+						><i class="material-icons text-sm me-2">add</i>ახალი გაკვეთილი</a
+					>
+				</div>
+			</li>
+            {% endif %} {% endfor %}
+
+		</ul>
+	</div>
+</div>
+
+</div>
+
+</div>
+
+
+{% endblock %}
 
 
 
-{% comment %}
-<table style="width:100%" class="list_table">
-    <tr>
-        <th colspan="4">
-            დაარქივებული საკლასო ოთახები
-        </th>
-    </tr>
-    <tr>
-        <th>შემქმნელი</th>
-        <th>სახელი</th>
-        <th>თემა</th>
-        <th>აღწერა</th>
-        <th>ამოაარქივება</th>
-        <th>წაშლა</th>
-    </tr>
-    {% for classroom in classrooms %}
-        {% if classroom.is_archived == True  %}
-            <tr>
-                <td>{{ classroom.owner.name }} {{ classroom.owner.surname }}</td>
-                <td style="background-color: aquamarine;"><a href="{% url 'app_teacher:classroom-detail' uuid=classroom.uuid %}">{{ classroom.name }}</a></td>
-                <td>{{ classroom.subject }}</td>
-                <td>{{ classroom.description }}</td>
-                <td><a href="{% url 'app_teacher:classroom-archive' uuid=classroom.uuid %}">ამოაარქივება</a></td>
-                <td><a href="{% url 'app_teacher:classroom-delete' uuid=classroom.uuid %}" onclick="return confirmDelete();">წაშლა</a></td>
-            </tr>
-        {% endif %}
-    {% endfor %}
-</table>
-{% endcomment %}
+
+
+{% block js-foot %}
+
+<script>
+    var nav_page = document.getElementById("nav-main");
+    nav_page.classList.add("active");
+    nav_page.classList.add("bg-gradient-secondary");
+</script>
 
 {% endblock %}

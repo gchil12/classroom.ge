@@ -1,35 +1,74 @@
-{% extends 'base/main.html' %}
-{% load i18n %}
-{% load static %}
+{% extends 'base/main.html' %} {% load i18n %} {% load static %} {% block content %}
 
-{% block content %}
+<div class="card">
+	<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+		<div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+			<h6 class="text-white text-capitalize ps-3">სავარჯიშოები</h6>
+		</div>
+	</div>
+	<div class="card-body px-0 pb-2">
+		<div class="table-responsive">
+			<table class="table align-items-center mb-0">
+				<thead>
+					<tr>
+						<th
+							class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+						>
+							საგანი
+						</th>
+						<th
+							class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+						>
+							საკითხი
+						</th>
+						<th
+							class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+						>
+							სავარჯიშოების რაოდენობა
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for topic in topics %}
+					<tr>
+						<td>
+							<div class="d-flex px-2 py-1">
+								<div class="d-flex flex-column justify-content-center">
+									<h6 class="mb-0 text-sm">{{ topic.subject }}</h6>
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="d-flex flex-column justify-content-center">
+								<a
+									href="{% url 'app_teacher:exercises-main-details' uuid=topic.uuid %}?lesson={{lesson_uuid}}"
+								>
+									{{ topic.name }}
+								</a>
+							</div>
+						</td>
+						<td class="align-middle text-center text-sm">
+							<span class="text-xs font-weight-bold">
+								{{ topic.n_questions }}
+							</span>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 
-<table class="list_table">
-    <tr>
-        <th colspan="4">
-            სავარჯიშოები
-        </th>
-    </tr>
-    <tr>
-        <th>საგანი</th>
-        <th>საკითხი</th>
-        <th>სავარჯიშოების რაოდენობა</th>
-    </tr>
-    {% for topic in topics %}
-        <tr>
-            <td>
-                {{ topic.subject }}
-            </td>
-            <td style="background-color: aqua;">
-                <a href="{% url 'app_teacher:exercises-main-details' uuid=topic.uuid %}?lesson={{lesson_uuid}}">
-                    {{ topic.name }}
-                </a>
-            </td>
-            <td>
-                {{ topic.n_questions }}
-            </td>
-        </tr>
-    {% endfor %}
-</table>
+{% endblock %}
+
+
+{% block js-foot %}
+
+<script>
+    var nav_page = document.getElementById("nav-exercises");
+    nav_page.classList.add("active");
+    nav_page.classList.add("bg-gradient-primary");
+</script>
 
 {% endblock %}

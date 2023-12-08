@@ -1,52 +1,92 @@
-{% extends 'base/main.html' %}
-{% load i18n %}
-{% load static %}
+{% extends 'base/main.html' %} {% load i18n %} {% load static %} {% block content %}
 
-{% block content %}
+<div class="card">
+	<div class="card-header pb-0 p-3">
+		<div class="row">
+			<div class="col-6 d-flex align-items-center">
+				<h6 class="mb-0">კლასები</h6>
+			</div>
+			<div class="col-6 text-end">
+				<a class="btn bg-gradient-warning mb-0" href="{% url 'app_teacher:create-new-classroom' %}"
+					><i class="material-icons text-sm">add</i>&nbsp;&nbsp;ახალი საკლასო ოთახი</a
+				>
+			</div>
+		</div>
+	</div>
+	<div class="card-body pt-4 p-3">
+		<ul class="list-group">
+            {% for classroom in classrooms %} {% if classroom.is_archived == False %}
+            <li
+				class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+			>
+				<div class="d-flex flex-column">
+					<h6 class="mb-3 text-sm"><a href="{% url 'app_teacher:classroom-detail' uuid=classroom.uuid %}"
+                        >{{ classroom.name }}</a
+                    ></h6>
+					<span class="mb-2 text-xs"
+						>საგანი:
+						<span class="text-dark font-weight-bold ms-sm-2"
+							>{{ classroom.subject }}</span
+						></span
+					>
+					<span class="mb-2 text-xs"
+						>საფეხური:
+						<span class="text-dark ms-sm-2 font-weight-bold"
+							>{% for classroom_to_levels in classroom.classroomtolevels_set.all %}
+                            {{ classroom_to_levels.level.level }}
+                        {% endfor %} </span
+						></span
+					>
+                    <span class="mb-2 text-xs"
+						>მოსწავლეების რაოდენობა:
+						<span class="text-dark ms-sm-2 font-weight-bold"
+							>{{ classroom.num_students }}</span
+						></span
+					>
+                    <span class="mb-2 text-xs"
+						>რანგი:
+						<span class="text-dark ms-sm-2 font-weight-bold"
+							>TODO</span
+						></span
+					>
+					<span class="text-xs"
+						>შემდეგი გაკვეთილი:
+						<span class="text-dark ms-sm-2 font-weight-bold"
+							>
+                            {% if classroom.closest_lesson_name %}
+                            {{ classroom.closest_lesson_name }} ({{ classroom.closest_lesson_date }}; {{ classroom.closest_lesson_start_time }})
+                            {% else %}
+                                გაკვეთილები არ არის დაგეგმილი
+                            {% endif %}
+                            </span
+						></span
+					>
+				</div>
+				<div class="ms-auto text-end">
+					<a class="btn btn-info px-3 mb-0" href="{% url 'app_teacher:create-new-lesson' classroom_uuid=classroom.uuid %}"
+						><i class="material-icons text-sm me-2">add</i>ახალი გაკვეთილი</a
+					>
+				</div>
+			</li>
+            {% endif %} {% endfor %}
 
-<div style="width: fit-content; background-color: aquamarine;">
-    <a href="{% url 'app_teacher:create-new-classroom' %}">ახალი საკლასო ოთახის შექმნა</a>
+
+
+		</ul>
+	</div>
 </div>
-<table style="width:100%" class="list_table">
-    <tr>
-        <th colspan="4">
-            საკლასო ოთახები
-        </th>
-    </tr>
-    <tr>
-        <th>სახელი</th>
-        <th>საგანი</th>
-        <th>საფეხური</th>
-        <th>მოსწავლეების რაოდენობა</th>
-        <th>შემდეგი გაკვეთილის სახელ, დრო, თარიღი</th>
-        <th>რანგი</th>
-        <th>გაკვეთილის შექმნა</th>
-    </tr>
-    {% for classroom in classrooms %}
-        {% if classroom.is_archived == False %}
-            <tr>
-                <td style="background-color: aquamarine;"><a href="{% url 'app_teacher:classroom-detail' uuid=classroom.uuid %}">{{ classroom.name }}</a></td>
-                <td>{{ classroom.subject }}</td>
-                <th> 
-                    {% for classroom_to_levels in classroom.classroomtolevels_set.all %}
-                        {{ classroom_to_levels.level.level }}
-                    {% endfor %}
-                </th>
-                <td>{{ classroom.num_students }}</td>
-                {% if classroom.closest_lesson_name%}
-                    <th>{{ classroom.closest_lesson_name }} - {{ classroom.closest_lesson_date }} - {{ classroom.closest_lesson_start_time }} </th>
-                {% else %}
-                    <th>გაკვეთილები არ არის დაგეგმილი</th>
-                {% endif %}
-                <th>რანგი:TODO</th>
-                <th>
-                    <div style="width: fit-content; background-color: aquamarine;">
-                        <a href="{% url 'app_teacher:create-new-lesson' classroom_uuid=classroom.uuid %}">ახალი გაკვეთილის შექმნა</a>
-                    </div>
-                </th>
-            </tr>
-        {% endif %}
-    {% endfor %}
-</table>
+
+
+{% endblock %}
+
+
+
+{% block js-foot %}
+
+<script>
+    var nav_page = document.getElementById("nav-classes");
+    nav_page.classList.add("active");
+    nav_page.classList.add("bg-gradient-warning");
+</script>
 
 {% endblock %}

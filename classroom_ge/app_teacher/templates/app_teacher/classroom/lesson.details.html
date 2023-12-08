@@ -3,50 +3,101 @@
 {% load static %}
 
 {% block content %}
-<table style="width:100%" class="list_table" id="list_table">
-    <tr>
-        <th>საკლასო ოთახი</th>
-        <th>სახელი</th>
-        <th>თარიღი</th>
-        <th>დაწყება</th>
-        <th>დასწულება</th>
-        <th>აღწერა</th>
-        <th>წაშლა</th>
-    </tr>
-    <tr>
-        <td>
-            <a href="{% url 'app_teacher:classroom-detail' uuid=lesson.classroom.uuid %}" style="background-color: aqua;">
-                {{ lesson.classroom.name }}
-            </a>
-        </td>
-        <td>{{ lesson.name }}</td>
-        <td>{{ lesson.lesson_date }}</td>
-        <td>{{ lesson.lesson_start_time }}</td>
-        <td>{{ lesson.lesson_end_time }}</td>
-        <td>{{ lesson.description }}</td>
-        <td><a href="{% url 'app_teacher:lesson-delete' uuid=lesson.uuid %}" style="background-color: aqua;">წაშლა</a></td>
-    </tr>
-</table>
 
-<br>
+<div class="container-fluid py-4">
 
-<a href="{% url 'app_teacher:exercises-main' %}?lesson={{lesson.uuid}}" style="background-color: aqua;">დავალების დამატება</a>
-<table style="width:100%" class="list_table" id="list_table">
-    <tr>
-        <th>დავალებები</th>
-    </tr>
-    <tr>
-        <th>სახელი</th>
-        <th>დაწერა % მოსწავლემ</th>
-        <th>საშუალო ქულა</th>
-    </tr>
-    {% for test in tests %}
-        <tr>
-            <td>{{test.name}}</td>
-            <td>TODO</td>
-            <td>TODO</td>
-        </tr>
-    {% endfor %}
-</table>
+    <div class="card mb-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">
+                    <span style="opacity:0.5;"><a href="{% url 'app_teacher:classrooms' %}" class="text-white">კლასები</a> / <a href="{% url 'app_teacher:classroom-detail' uuid=lesson.classroom.uuid %}" class="text-white">
+                        {{ lesson.classroom.name }}
+                    </a> / </span>
+                    {{ lesson.name }}</h6>
+            </div>
+        </div>
+        <div class="card-body pt-4 p-4">
+            <div class="d-flex flex-column">
+                <ul class="list-group">
+                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">თარიღი:</strong> &nbsp; {{ lesson.lesson_date }} </li>
+                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">დრო:</strong> &nbsp; {{ lesson.lesson_start_time }} - {{ lesson.lesson_end_time }} </li>
+                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">აღწერა:</strong> &nbsp; {{ lesson.description }} </li>
+                </ul>
+            </div>
+            <div class="ms-auto text-end">
+                <a class="btn btn-danger px-3 mb-0" href="{% url 'app_teacher:lesson-delete' uuid=lesson.uuid %}"
+                    ><i class="material-icons text-sm me-2">delete</i>გაკვეთილის წაშლა</a
+                >
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header pb-0 p-3">
+            <div class="row">
+                <div class="col-6 d-flex align-items-center">
+                    <h6 class="mb-0">დავალებები</h6>
+                </div>
+                <div class="col-6 text-end">
+                    <a class="btn bg-gradient-primary mb-0" href="{% url 'app_teacher:exercises-main' %}?lesson={{lesson.uuid}}"
+                        ><i class="material-icons text-sm">add</i>&nbsp;&nbsp;დავალების დამატება</a
+                    >
+                </div>
+            </div>
+        </div>
+        <div class="card-body pt-4 p-3">
+            <ul class="list-group">
+                {% for test in tests %}
+                <li
+                    class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+                >
+                    <div class="d-flex flex-column">
+                        <h6 class="mb-3 text-sm"><a href="#">
+                            {{test.name}}
+                        </a></h6>
+                        <span class="mb-2 text-xs"
+                            >დაწერა:
+                            <span class="text-dark font-weight-bold ms-sm-2"
+                                > TODO მოსწავლემ </span
+                            ></span
+                        >
+                        <span class="mb-2 text-xs"
+                            >საშუალო ქულა:
+                            <span class="text-dark ms-sm-2 font-weight-bold"
+                                >TODO</span
+                            ></span
+                        >
+                    </div>
+                    <div class="ms-auto text-end">
+                        <a class="btn btn-outline-danger px-3 mb-0" href="#"
+                            ><i class="material-icons text-sm me-2">delete</i>წაშლა (TODO)</a
+                        >
+                    </div>
+                </li>
+                {% endfor %}
+    
+    
+    
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+
+{% endblock %}
+
+
+
+
+
+{% block js-foot %}
+
+<script>
+    var nav_page = document.getElementById("nav-classes");
+    nav_page.classList.add("active");
+    nav_page.classList.add("bg-gradient-warning");
+</script>
 
 {% endblock %}

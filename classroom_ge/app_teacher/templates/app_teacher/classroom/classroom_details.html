@@ -3,110 +3,140 @@
 {% load static %}
 
 {% block content %}
-<a href="{% url 'app_teacher:classrooms' %}" style="background-color: aquamarine;">კლასების სია</a>
 
-<h3>მასწავლებელი - კლასის დეტალები</h3>
+<div class="container-fluid py-4">
 
-<br>
-
-<table class="list_table">
-    <tr>
-        <th>კლასის სახელი</th>
-        <td>{{ classroom.name }}</td>
-    </tr>
-    <tr>
-        <th>საგანი</th>
-        <td>{{ classroom.subject }}</td>
-    </tr>
-    <tr>
-        <th>აღწერა</th>
-        <td>{{ classroom.description }}</td>
-    </tr>
-    <tr>
-        <th>შეხვედრის ლინკი</th>
-        <th>{{ classroom.online_meeting_link }}</th>
-    </tr>
-    <tr>
-        <th>მოწვევის ლინკი</th>
-        <td>
-            <input type="text" value="{{ domain }}{% url 'app_student:subscribe-classroom' classroom_uuid=classroom.uuid %}" id="classroom-link">
-        </td>
-    </tr>
-    {% comment %}
-    <tr collspan="2">
-        <td>
-            <a href="{% url 'app_teacher:classroom-archive' uuid=classroom.uuid %}">ამოაარქივება</a>
-        </td>
-    </tr>
-    {% endcomment %}
-    <td colspan="2" style="background-color: red;">
-        <a href="{% url 'app_teacher:classroom-delete' uuid=classroom.uuid %}" style="color: black;" onclick="return confirmDelete();">წაშლა</a>
-    </td>
-</table>
-
-<br>
-
-<table class="list_table">
-    <tr collspan="2">
-        <th>მოსწავლეები</th>
-    </tr>
-    <tr>
-        <th>სახელი</th>
-        <th>გვარი</th>
-        <th>საშუალო ქულა</th>
-    </tr>
-    {% for student_to_classroom in student_to_classrooms %}
-        <tr>
-            <td>{{ student_to_classroom.student.name }}</td>
-            <td>{{ student_to_classroom.student.surname }}</td>
-            <td>TODO</td>
-        </tr>
-    {% endfor %}
-</table>
-
-
-<br>
-
-<div style="width: fit-content; background-color: aquamarine;">
-    <a href="{% url 'app_teacher:create-new-lesson' classroom_uuid=classroom.uuid %}">ახალი გაკვეთილის შექმნა</a>
+<div class="card mb-4">
+	<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+		<div class="bg-gradient-warning shadow-warning border-radius-lg pt-4 pb-3">
+            <h6 class="text-white text-capitalize ps-3">
+                <span style="opacity:0.5;"><a href="{% url 'app_teacher:classrooms' %}" class="text-white">კლასები</a> / </span>
+                {{ classroom.name }}</h6>
+		</div>
+	</div>
+	<div class="card-body pt-4 p-4">
+        <div class="d-flex flex-column">
+		    <ul class="list-group">
+                <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">საგანი:</strong> &nbsp; {{ classroom.subject }} </li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">აღწერა:</strong> &nbsp; {{ classroom.description }} </li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">შეხვედრის ბმული:</strong> &nbsp; {{ classroom.online_meeting_link }} </li>
+                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">მოწვევის ბმული:</strong> &nbsp; <a href="{{ domain }}{% url 'app_student:subscribe-classroom' classroom_uuid=classroom.uuid %}">{{ domain }}{% url 'app_student:subscribe-classroom' classroom_uuid=classroom.uuid %}</a> </li>
+            </ul>
+        </div>
+        <div class="ms-auto text-end">
+            <a class="btn btn-danger px-3 mb-0" href="{% url 'app_teacher:classroom-delete' uuid=classroom.uuid %}" onclick="return confirmDelete();"
+                ><i class="material-icons text-sm me-2">delete</i>კლასის წაშლა</a
+            >
+        </div>
+	</div>
 </div>
 
-<br>
+<div class="card mb-4">
+	<div class="card-header p-3">
+		<div class="col-6 d-flex align-items-center">
+            <h6 class="mb-0">მოსწავლეები</h6>
+        </div>
+	</div>
+	<div class="card-body px-0 pb-2">
+		<div class="table-responsive">
+			<table class="table align-items-center mb-0">
+				<thead>
+					<tr>
+						<th
+							class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+						>
+							სახელი, გვარი
+						</th>
+						<th
+							class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+						>
+							საშუალო ქულა
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for student_to_classroom in student_to_classrooms %}
+					<tr>
+						<td>
+							<div class="d-flex px-2 py-1">
+								<div class="d-flex flex-column justify-content-center">
+									<h6 class="mb-0 text-sm">{{ student_to_classroom.student.name }} {{ student_to_classroom.student.surname }}</h6>
+								</div>
+							</div>
+						</td>
+						<td class="align-middle text-center text-sm">
+							<span class="text-xs font-weight-bold">
+								TODO
+							</span>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 
-<table style="width:100%" class="list_table" id="list_table">
-    <tr>
-        <th colspan="4">
-            გაკვეთილები
-        </th>
-    </tr>
-    <tr>
-        <th>გაკვეთილის სახელი</th>
-        <th>თარიღი და საათი</th>
-        <th>აღწერა</th>
-        <th>წაშლა</th>
-    </tr>
-    {% for lesson in lessons %}
-        <tr>
-            <td style="background-color: aqua;">
-                <a href="{% url 'app_teacher:lesson-detail' uuid=lesson.uuid %}">
-                    {{ lesson.name }}
-                </a>
-            </td>
-            <td>{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}</td>
-            <td>{{ lesson.description }}</td>
-            <td><a href="{% url 'app_teacher:lesson-delete' uuid=lesson.uuid %}">წაშლა</a></td>
-        </tr>
-    {% endfor %}
-</table>
+<div class="card">
+	<div class="card-header pb-0 p-3">
+		<div class="row">
+			<div class="col-6 d-flex align-items-center">
+				<h6 class="mb-0">გაკვეთილები</h6>
+			</div>
+			<div class="col-6 text-end">
+				<a class="btn bg-gradient-info mb-0" href="{% url 'app_teacher:create-new-classroom' %}"
+					><i class="material-icons text-sm">add</i>&nbsp;&nbsp;ახალი გაკვეთილი</a
+				>
+			</div>
+		</div>
+	</div>
+	<div class="card-body pt-4 p-3">
+		<ul class="list-group">
+            {% for lesson in lessons %}
+            <li
+				class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+			>
+				<div class="d-flex flex-column">
+					<h6 class="mb-3 text-sm"><a href="{% url 'app_teacher:lesson-detail' uuid=lesson.uuid %}">
+                        {{ lesson.name }}
+                    </a></h6>
+					<span class="mb-2 text-xs"
+						>თარიღი:
+						<span class="text-dark font-weight-bold ms-sm-2"
+							>{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}</span
+						></span
+					>
+					<span class="mb-2 text-xs"
+						>აღწერა:
+						<span class="text-dark ms-sm-2 font-weight-bold"
+							>{{ lesson.description }}</span
+						></span
+					>
+				</div>
+				<div class="ms-auto text-end">
+					<a class="btn btn-outline-danger px-3 mb-0" href="{% url 'app_teacher:lesson-delete' uuid=lesson.uuid %}"
+						><i class="material-icons text-sm me-2">delete</i>წაშლა</a
+					>
+				</div>
+			</li>
+            {% endfor %}
 
-<br>
+		</ul>
+	</div>
+</div>
 
-<table style="width:100%" class="list_table" id="list_table">
-    <tr>
-        <th colspan="4">
-            საუკეთესო მოსწავლეები
-        </th>
-    </tr>
-</table>
+</div>
+
+
+{% endblock %}
+
+
+{% block js-foot %}
+
+<script>
+    var nav_page = document.getElementById("nav-classes");
+    nav_page.classList.add("active");
+    nav_page.classList.add("bg-gradient-warning");
+</script>
 
 {% endblock %}
