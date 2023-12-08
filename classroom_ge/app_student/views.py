@@ -106,9 +106,16 @@ def classroom_details(request, uuid):
         redirect_url = reverse('app_student:subscribe-classroom', kwargs={'classroom_uuid': uuid})
         return redirect(redirect_url)
 
-    lessons = Lesson.objects.annotate(
+    current_student = get_object_or_404(StudentProfile, user=request.user)
+
+    lessons = Lesson.objects.filter(
+        classroom = classroom
+    ).annotate(
         n_tests=Count('test'),
-        num_tests_written=Count('test__studenttest')
+        num_tests_written=Count(Case(
+            When(test__studenttest__student=current_student, then=F('test__studenttest')),
+            output_field=IntegerField(),
+        ))
     )
     
     context = {
