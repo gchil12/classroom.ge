@@ -127,7 +127,7 @@ def lesson_details(request, lesson_uuid):
     lesson = get_object_or_404(Lesson, uuid=lesson_uuid)    
 
     tests_for_student = Test.objects.filter(
-        lesson__classroom__studenttoclassroom__student=request.user
+        lesson=lesson
     ).annotate(
         taken=Case(
             When(studenttest__student=current_student, then=Value(True)),

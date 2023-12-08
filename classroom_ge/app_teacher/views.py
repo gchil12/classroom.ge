@@ -5,7 +5,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.translation import gettext_lazy as _
 from app_student.models import StudentToClassroom
 from django.contrib import messages
-from django.db.models import Count, Q, Subquery, OuterRef
+from django.db.models import Count, Q, Subquery, OuterRef, Avg
 from django.utils import timezone
 from base.models import Topic, Question, QuestionToTopic
 from .models import Classroom, Lesson, Level, ClassroomToLevels
@@ -283,11 +283,15 @@ def lesson_details(request, uuid):
     if lesson.classroom.owner != request.user:
         messages.error(request, _('error_unauthorized_access'))
         return redirect('app_teacher:home')
+
     
-    tests = Test.objects.filter(
-        lesson=lesson,
+    tests= Test.objects.filter(
+        lesson=lesson,  # Replace with the actual lesson object
+    ).annotate(
+        num_students=Count('studenttest__student', distinct=True),
+        average_grade=Avg('testquestion__max_point', filter=Q(studenttest__completed=True))
     )
-    
+        
     context = {
         'lesson': lesson,
         'tests': tests
