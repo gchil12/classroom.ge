@@ -322,7 +322,7 @@ def lesson_details(request, uuid):
                     output_field=FloatField()
                 )),
                 Value(0)
-            ) / F('max_score')*100,
+            ) / F('max_score')*100*F('students_completed')/n_students,
             output_field=FloatField()
         ),
     )
