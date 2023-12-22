@@ -12,16 +12,18 @@
         <th>ქულა</th>
     </tr>
     {% for student in students %}
-    {{student}}
         <tr>
             <td>{{student.user.name}}</td>
             <td>{{student.user.surname}}</td>
-            <td>{{student.student_points}} / {{student.max_points}}</td>
-            <td>
-                <a>
+            {% if student.student_points %}
+                <td>{{student.student_points}} / {{student.max_points}}</td>
+                <td>
                     <a href="{% url 'app_teacher:test-results-student' test_uuid=test_uuid student_uuid=student.uuid %}">ტესტის ნახვა</a>
-                </a>
-            </td>
+                </td>
+            {% else %}
+                <td> - </td>
+                <td>არ აქვს დაწერილი</td>
+            {% endif %}    
         </tr>
     {% endfor %}
 </table>

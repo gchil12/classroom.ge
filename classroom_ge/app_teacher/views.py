@@ -5,8 +5,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.translation import gettext_lazy as _
 from app_student.models import StudentToClassroom, StudentProfile, StudentTest, StudentQuestion
 from django.contrib import messages
-from django.db.models import Count, Q, Subquery, OuterRef, Avg
-from django.db.models import BooleanField, Case, When, Value, F, Sum, IntegerField
+from django.db.models import Count, Q, Subquery, OuterRef, Avg, FloatField, ExpressionWrapper
+from django.db.models import Case, When, Value, F, Sum
+from django.db.models.functions import Coalesce
 from django.utils import timezone
 from base.models import Topic, Question, QuestionToTopic
 from .models import Classroom, Lesson, Level, ClassroomToLevels
@@ -285,22 +286,57 @@ def lesson_details(request, uuid):
         messages.error(request, _('error_unauthorized_access'))
         return redirect('app_teacher:home')
 
-    
-    tests= Test.objects.filter(
-        lesson=lesson,  # Replace with the actual lesson object
-    ).annotate(
-        num_students=Count('studenttest__student', distinct=True),
+    # Number of students in the classroom
+    n_students = len(StudentToClassroom.objects.filter(
+        classroom=lesson.classroom
+    ))
+
+    # Tests in current classroom
+    tests = Test.objects.filter(lesson=lesson)
+
+    # Maximum Score for Each Test
+    tests = tests.annotate(
+        max_score=Sum('testquestion__max_point')
     )
-        
+
+    # Total Points for Each Student Test
+    total_points_subquery = StudentQuestion.objects.filter(
+        student_test__test=OuterRef('pk')
+    ).values(
+        'student_test__test'
+    ).annotate(
+        total_given_points=Sum('given_point')
+    ).values(
+        'total_given_points'
+    )
+
+    # Average Performance + Number of students who completed the test
+    tests = tests.annotate(
+        students_completed=Count('studenttest__student', distinct=True),
+        total_points=Subquery(total_points_subquery, output_field=FloatField()),
+        average_performance=ExpressionWrapper(
+            Coalesce(
+                Avg(Case(
+                    When(total_points__isnull=False, then='total_points'),
+                    default=0,
+                    output_field=FloatField()
+                )),
+                Value(0)
+            ) / F('max_score')*100,
+            output_field=FloatField()
+        ),
+    )
+
     context = {
         'lesson': lesson,
-        'tests': tests
+        'tests': tests,
+        'n_students': n_students,
     }
 
     return render(request, 'app_teacher/classroom/lesson.details.html', context)
 
 
-############### Execrices #################
+############### Tests/Exercises #################
 @login_required(login_url='app_base:login')
 def tests_main_page(request):
     if not request.user.is_teacher:
@@ -325,13 +361,21 @@ def test_example_page(request, uuid):
     if not request.user.is_teacher:
         return redirect('app_base:home')
     
-    lesson_uuid = request.GET.get('lesson')
-    
+    # Try to get lesson UUID from URL
     try:
+        lesson_uuid = request.GET.get('lesson')
         uuid_obj = unique_id_import.UUID(lesson_uuid)
         
+        # UUID OK
         if uuid_obj:
-            lesson = Lesson.objects.get(uuid=lesson_uuid)
+            lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
+
+            # Lesson belongs to current teacher
+            if lesson.classroom.owner != request.user:
+                messages.error(request, _('error_unauthorized_access'))
+                return redirect('app_teacher:home')
+        else:
+            lesson = None
     except Exception:
         lesson = None
         
@@ -383,51 +427,60 @@ def choose_lessons_to_add_test(request, topic_uuid):
     if not request.user.is_teacher:
         return redirect('app_base:home')
 
+    # Choosing classroom
     classroom_uuid = request.GET.get('classroom')
 
     try:
-        uuid_obj = unique_id_import.UUID(classroom_uuid)
-        
-        if uuid_obj:
-            lesson = Lesson.objects.get(uuid=classroom_uuid)
+        # Classroom already chosen by user
+        classroom = Classroom.objects.get(uuid=classroom_uuid)
     except Exception:
-        lesson = None
-
-    if classroom_uuid is None:
+        # Classroom was not chosen yet
         classrooms = Classroom.objects.filter(
             owner=request.user,
         )
         return render(request, 'app_teacher/tests/add_test_to_lesson.html', {'classrooms': classrooms, 'topic_uuid': topic_uuid})
-    else:
-        lesson_uuid = request.GET.get('lesson')
+
+
+    # Classroom does not belong to teacher
+    if classroom.owner != request.user:
+        messages.error(request, _('error_unauthorized_access'))
+        return redirect('app_teacher:home')
+
     
-        try:
-            uuid_obj = unique_id_import.UUID(lesson_uuid)
-            
-            if uuid_obj:
-                lesson = Lesson.objects.get(uuid=lesson_uuid)
-        except Exception:
-            lesson = None
+    # Choosing lesson
+    lesson_uuid = request.GET.get('lesson')
 
-        if lesson is None:
-            lessons = Lesson.objects.filter(
-                classroom=Classroom.objects.get(uuid=classroom_uuid)
-            )
-            return render(request, 'app_teacher/tests/add_test_to_lesson.html', {'lessons': lessons, 'topic_uuid': topic_uuid, 'classroom_uuid': classroom_uuid},)
+    try:
+        # Lesson already chosen by user
+        lesson = Lesson.objects.get(uuid=lesson_uuid)
+    except Exception:
+        # Lesson was not chosen yet
+        lessons = Lesson.objects.filter(
+            classroom=Classroom.objects.get(uuid=classroom_uuid)
+        )
+        return render(request, 'app_teacher/tests/add_test_to_lesson.html', {'lessons': lessons, 'topic_uuid': topic_uuid, 'classroom_uuid': classroom_uuid},)
+
+
+    # Lesson does not belong to teacher
+    if lesson.classroom.owner != request.user:
+        messages.error(request, _('error_unauthorized_access'))
+        return redirect('app_teacher:home')
+    
+
+    # Adding test to lesson
+    try: 
+        res = create_test_questions(topic_uuid, lesson_uuid)
+
+        if res:
+            messages.success(request, _('exercises_added_successfully'))
+            redirect_url = reverse('app_teacher:lesson-detail', kwargs={'uuid': lesson_uuid})
+            return redirect(redirect_url)
         else:
-            try:
-                res = create_test_questions(topic_uuid, lesson_uuid)
-
-                if res:
-                    messages.success(request, _('exercises_added_successfully'))
-                    redirect_url = reverse('app_teacher:lesson-detail', kwargs={'uuid': lesson_uuid})
-                    return redirect(redirect_url)
-                else:
-                    messages.error(request, _('unknown_error_refresh'))
-                    return redirect('app_teacher:home')    
-            except Exception:
-                messages.error(request, _('unknown_error_refresh'))
-                return redirect('app_teacher:home')
+            messages.error(request, _('unknown_error_refresh'))
+            return redirect('app_teacher:home')    
+    except Exception:
+        messages.error(request, _('unknown_error_refresh'))
+        return redirect('app_teacher:home')
             
 
 
@@ -458,8 +511,8 @@ def test_details(request, test_uuid):
                 student=OuterRef('pk'),
                 test=test,
             ).annotate(
-                total_max_points=Sum('studentquestion__given_point')
-            ).values('total_max_points')
+                student_points=Sum('studentquestion__given_point')
+            ).values('student_points')
         )
     )
 
