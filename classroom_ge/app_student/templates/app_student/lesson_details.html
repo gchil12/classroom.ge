@@ -61,12 +61,21 @@
                     </td>
             {% else %}
                 <td> - </td>
-                <td>
-                    <a href="{% url 'app_student:test-page' test_uuid=test.uuid %}" style="background-color: aqua;">
-                        დავალების შესრულება
-                    </a>
-                </td>
+                {% if test.deadline < current_time %}
+                    <td style="background-color: aqua;">
+                        <a href="{% url 'app_student:test-page' test_uuid=test.uuid %}">
+                            ჩაბარების ბოლო ვადა ამოიწურა. დათვალიერება
+                        </a>
+                    </td>
+                {% else %}
+                    <td>
+                        <a href="{% url 'app_student:test-page' test_uuid=test.uuid %}" style="background-color: aqua;">
+                            დავალების შესრულება
+                        </a>
+                    </td>
+                {% endif %}
             {% endif %}
+            
         </tr>
     {% endfor %}
 </table>

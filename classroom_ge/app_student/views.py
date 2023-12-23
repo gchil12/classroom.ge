@@ -119,7 +119,7 @@ def classroom_details(request, uuid):
         classroom=classroom
     ).annotate(
         n_tests=Subquery(num_tests_subquery, output_field=IntegerField()),
-        num_tests_written=Count(
+        num_tests_written=F('n_tests') - Count(
             Case(
                 When(test__studenttest__student=current_student, then=F('test__studenttest')),
                 output_field=IntegerField()
@@ -181,6 +181,7 @@ def lesson_details(request, lesson_uuid):
     context = {
         'tests': tests,
         'lesson': lesson,
+        'current_time': timezone.now().date()
     }
 
     return render(request, 'app_student/lesson_details.html', context)
@@ -190,6 +191,8 @@ def lesson_details(request, lesson_uuid):
 def test_show_page(request, test_uuid):
     if not request.user.is_student:
         return redirect('app_base:home')
+    
+    now = timezone.now()
     
     test = get_object_or_404(Test, uuid=test_uuid)
     current_student = get_object_or_404(StudentProfile, user=request.user)
@@ -202,8 +205,8 @@ def test_show_page(request, test_uuid):
             student=current_student,
             test=test,
             completed=False,
-            start_time=timezone.now(),
-            end_time=timezone.now()
+            start_time=now,
+            end_time=now
         )
         
         test_questions = list(TestQuestion.objects.filter(test=test).all())
@@ -234,7 +237,12 @@ def test_show_page(request, test_uuid):
             'student_test_uuid': student_test.uuid,
         }
 
-    return render(request, 'app_student/test_form.html', context)
+
+    if test.deadline >= now.date():
+        return render(request, 'app_student/test_form.html', context)
+    else:
+        redirect_url = reverse('app_student:test-view', kwargs={'test_uuid': test.uuid})
+        return redirect(redirect_url)
     
 
 
@@ -253,6 +261,11 @@ def test_submit(request, student_test_uuid):
     if student_test.student != current_student:
         messages.error(request, _('error_unauthorized_access'))
         return redirect('app_student:home') #NOSONAR
+    
+    if student_test.test.deadline < now.date():
+        messages.error(request, _('deadline_passed'))
+        redirect_url = reverse('app_student:test-view', kwargs={'test_uuid': student_test.test.uuid})
+        return redirect(redirect_url)
     
     if student_test.completed:
         redirect_url = reverse('app_student:test-view', kwargs={'test_uuid': student_test.test.uuid})

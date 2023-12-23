@@ -40,7 +40,7 @@
         <th>გაკვეთილის სახელი</th>
         <th>თარიღი და საათი</th>
         <th>აღწერა</th>
-        <th>დაწერილი სავარჯიშოები</th>
+        <th>დასაწერი სავარჯიშოები</th>
     </tr>
     {% for lesson in lessons %}
         <tr>
@@ -51,7 +51,7 @@
             </td>
             <td>{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}</td>
             <td>{{ lesson.description }}</td>
-            <td>{{ lesson.num_tests_written }} \ {{ lesson.n_tests }}</td>
+            <td>{{ lesson.num_tests_written }} </td>
         </tr>
     {% endfor %}
 </table>
