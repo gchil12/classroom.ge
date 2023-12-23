@@ -1,3 +1,5 @@
+from collections.abc import Callable, Iterable, Mapping
+from typing import Any
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
@@ -15,6 +17,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_str
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
+import threading
 
 
 # Create your views here.
@@ -123,6 +126,14 @@ def logout_user(request):
 
 
 ################# Account Activation #################
+class EmailThread(threading.Thread):
+    def __init__(self, email):
+        self.email = email
+        threading.Thread.__init__(self)
+
+    def run(self):
+        self.email.send(fail_silently=False)
+
 
 def send_email_after_registration(request, uidb64):
     uuid = force_str(urlsafe_base64_decode(uidb64))
@@ -140,8 +151,8 @@ def send_email_after_registration(request, uidb64):
 
     email = EmailMessage(email_subject, message, to=[user.email])
 
-    if email.send():
-        messages.success(request, 'Email Varification Sent')
+    EmailThread(email).start()
+    messages.success(request, 'Email Varification Sent')
 
     if request.method == 'POST':
         return redirect('app_base:login')
