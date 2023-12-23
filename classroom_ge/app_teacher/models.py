@@ -65,7 +65,8 @@ class Test(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, null=True, verbose_name=_('lesson'))
     name = models.CharField(verbose_name=_('name'), max_length=200, blank=True,)
     test_type = models.CharField(verbose_name=_('test_type'), max_length=20, choices=TEST_TYPE_CHOICES, default='assignment')
-    
+    deadline = models.DateField(blank=False, null=True, verbose_name=_('test_deadline'), default=None)
+
     questions = models.ManyToManyField(Question, through='TestQuestion', verbose_name=_('question'))
     date_created = models.DateTimeField(auto_now_add=True, blank=True, verbose_name=_('date_created'),)
     

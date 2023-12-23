@@ -34,12 +34,22 @@
     </tr>
     <tr>
         <th>სახელი</th>
+        <th>ჩაბარების ბოლო ვადა</th>
         <th>ქულა</th>
         <th>დავალების შესრულება/დათვალიერება</th>
     </tr>
     {% for test in tests %}
         <tr>
             <td>{{test.name}}</td>
+            {% if test.deadline is None %}
+                <td>
+                    უვადო
+                </td>
+            {% else %}
+                <td>
+                    {{test.deadline}}
+                </td>
+            {% endif %}
             {% if test.completed %}
                     <td>
                         {{ test.total_points }} / {{ test.max_points }}

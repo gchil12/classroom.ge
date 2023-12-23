@@ -11,7 +11,7 @@ from django.db.models.functions import Coalesce
 from django.utils import timezone
 from base.models import Topic, Question, QuestionToTopic
 from .models import Classroom, Lesson, Level, ClassroomToLevels
-from .forms import CreateNewClassroomForm, CreateNewLessonForm
+from .forms import CreateNewClassroomForm, CreateNewLessonForm, DateForm
 import json
 import uuid as unique_id_import
 import uuid
@@ -329,7 +329,7 @@ def lesson_details(request, uuid):
                 ) / F('max_score')*100*F('students_completed')/n_students,
                 output_field=FloatField()
             ),
-        )
+        ).order_by('-date_created')
     else:
         tests = tests.annotate(
             average_performance=Value(0.0, output_field=FloatField())
@@ -403,15 +403,16 @@ def test_example_page(request, uuid):
 
 
 
-def create_test_questions(topic_uuid:uuid, lesson_uuid:uuid):
+def create_test_questions(topic_uuid:uuid, lesson_uuid:uuid, deadline):
     topic = get_object_or_404(Topic, uuid=topic_uuid)
     lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
-
+    print(deadline)
     try:
         cur_test = Test.objects.create(
             lesson=lesson,
             name=topic.name,
             test_type='assignment',
+            deadline=deadline
         )
     except Exception as e:
         return False
@@ -475,22 +476,54 @@ def choose_lessons_to_add_test(request, topic_uuid):
         messages.error(request, _('error_unauthorized_access'))
         return redirect('app_teacher:home')
     
+    redirect_url = reverse('app_teacher:add-test-confirmation', kwargs={'classroom_uuid': classroom_uuid, 'lesson_uuid': lesson_uuid, 'topic_uuid': topic_uuid})
+    return redirect(redirect_url)
 
-    # Adding test to lesson
-    try: 
-        res = create_test_questions(topic_uuid, lesson_uuid)
 
-        if res:
-            messages.success(request, _('exercises_added_successfully'))
-            redirect_url = reverse('app_teacher:lesson-detail', kwargs={'uuid': lesson_uuid})
-            return redirect(redirect_url)
-        else:
-            messages.error(request, _('unknown_error_refresh'))
-            return redirect('app_teacher:home')    
-    except Exception:
-        messages.error(request, _('unknown_error_refresh'))
-        return redirect('app_teacher:home')
-            
+@login_required(login_url='app_base:login')
+def add_test_to_lesson_confirmation(request, classroom_uuid, lesson_uuid, topic_uuid):
+    classroom = Classroom.objects.get(uuid=classroom_uuid)
+    lesson = Lesson.objects.get(uuid=lesson_uuid)
+    topic = get_object_or_404(Topic, uuid=topic_uuid)
+
+    context = {
+        'classroom': classroom,
+        'lesson': lesson,
+        'topic': topic
+    }
+
+    if request.method == 'POST':
+        form = DateForm(request.POST)
+        try:
+            if form.is_valid():
+                deadline = form.cleaned_data['deadline']
+
+                # Adding test to lesson
+                try: 
+                    res = create_test_questions(topic_uuid, lesson_uuid, deadline)
+
+                    if res:
+                        messages.success(request, _('exercises_added_successfully'))
+                        redirect_url = reverse('app_teacher:lesson-detail', kwargs={'uuid': lesson_uuid})
+                        return redirect(redirect_url)
+                    else:
+                        messages.error(request, _('unknown_error_refresh'))
+                        return redirect('app_teacher:home')
+                except Exception:
+                    messages.error(request, _('unknown_error_refresh'))
+                    return redirect('app_teacher:home')
+            else:
+                raise Exception
+        except Exception:
+            messages.error(request, _('invalid_input'))
+            context['deadline_form'] = DateForm()
+            return render(request, 'app_teacher/tests/add_test_to_lesson_confirmation_page.html', context)
+    else:
+        deadline_form = DateForm()
+
+        context['deadline_form'] = deadline_form
+        return render(request, 'app_teacher/tests/add_test_to_lesson_confirmation_page.html', context)
+
 
 
 @login_required(login_url='app_base:login')

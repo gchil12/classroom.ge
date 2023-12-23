@@ -56,6 +56,16 @@
                             {{test.name}}
                         </a></h6>
                         <span class="mb-2 text-xs"
+                            >ჩაბარების ბოლო ვადა:
+                            <span class="text-dark font-weight-bold ms-sm-2">
+                                {% if test.deadline is None %}
+                                    უვადო
+                                {% else %}
+                                    {{test.deadline}}
+                                {% endif %}
+                            </span>
+                        </span>
+                        <span class="mb-2 text-xs"
                             >დაწერა:
                             <span class="text-dark font-weight-bold ms-sm-2"
                                 > {{test.students_completed}} / {{n_students}} </span

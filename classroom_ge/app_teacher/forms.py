@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.forms import ModelForm
 from django import forms
 from .models import Classroom, Lesson, Level
@@ -72,3 +73,18 @@ class CreateNewLessonForm(ModelForm):
 
         if lesson_start_time > lesson_end_time:
             self.add_error("lesson_start_time", _('please_check_start_and_end_times'))
+
+
+class DateForm(forms.Form):
+    deadline = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'id': 'georgianDate'}), label=_('deadline'),)
+
+    
+    def clean(self):
+        now = timezone.now()
+
+        cleaned_data = super(DateForm, self).clean()
+
+        deadline = cleaned_data.get('deadline')
+
+        if deadline < now.date():
+            self.add_error("deadline", _('please_check_lesson_date'))

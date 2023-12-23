@@ -23,4 +23,5 @@ urlpatterns = [
     path('test_results/<uuid:test_uuid>/<uuid:student_uuid>', views.test_results_student, name='test-results-student'),
 
     path('choose_lesson/<uuid:topic_uuid>/', views.choose_lessons_to_add_test, name='choose-lesson'),
+    path('choose_lesson/<uuid:classroom_uuid>/<uuid:lesson_uuid>/<uuid:topic_uuid>', views.add_test_to_lesson_confirmation, name='add-test-confirmation'),
 ]

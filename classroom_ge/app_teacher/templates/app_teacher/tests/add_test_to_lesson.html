@@ -5,8 +5,7 @@
 {% block content %}
 
     {% if classrooms %}
-        <!-- Classrooms Should be displayed -->
-        აირჩიეთ კლასი>
+        აირჩიეთ კლასი
         <ul>
             {% for classroom in classrooms %}
                 <li><a href="{% url 'app_teacher:choose-lesson'  topic_uuid=topic_uuid %}?classroom={{classroom.uuid}}">{{ classroom.name }}</a></li>        
@@ -15,8 +14,7 @@
     {% endif %}
 
     {% if lessons %}
-        <!-- Classrooms Should be displayed -->
-        აირჩიეთ გაკვეთილი>
+        აირჩიეთ გაკვეთილი
         <ul>
             {% for lesson in lessons %}
                 <li><a href="{% url 'app_teacher:choose-lesson'  topic_uuid=topic_uuid %}?classroom={{classroom_uuid}}&lesson={{lesson.uuid}}">{{ lesson.name }}</a></li>        

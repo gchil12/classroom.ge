@@ -1,0 +1,47 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+დავალების "{{topic.name}}" დამატება კლასის "{{classroom.name}}" გაკვეთილში "{{lesson.name}}"
+
+{% if deadline_form %}
+        <div>
+            {% if deadline_form.deadline.errors|length > 0 %}
+            sss
+                <ul class="errorlist">
+                    {% for error in deadline_form.deadline.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <form method="post" action="{% url 'app_teacher:add-test-confirmation' classroom_uuid=classroom.uuid lesson_uuid=lesson.uuid topic_uuid=topic.uuid %}">
+            {% csrf_token %}
+            {{ deadline_form }}
+            <button type="submit">დამატება</button>
+        </form>
+    {% endif %}
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    // GEO calendar picker
+	flatpickr("#georgianDate", {
+		dateFormat: "Y-m-d",
+		locale: {
+			firstDayOfWeek: 1, // Monday
+			weekdays: {
+				shorthand: ["კვ", "ორ", "სმ", "ოთ", "ხთ", "პა", "შა"],
+				longhand: ["კვირა", "ორშაბათი", "სამშაბათი", "ოთხშაბათი", "ხუთშაბათი", "პარასკევი", "შაბათი"]
+			},
+			months: {
+				shorthand: ["იან", "თებ", "მარ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"],
+				longhand: ["იანვარი", "თებერვალი", "მარტი", "აპრილი", "მაისი", "ივნისი", "ივლისი", "აგვისტო", "სექტემბერი", "ოქტომბერი", "ნოემბერი", "დეკემბერი"]
+			},
+		},
+	});
+</script>
+{% endblock %}
