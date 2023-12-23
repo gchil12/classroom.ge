@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-23 04:57+0100\n"
+"POT-Creation-Date: 2023-12-23 16:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,7 +61,7 @@ msgstr "თქვენ უკვე ხართ აღნიშნულ ს�
 msgid "subscribed_to_classroom_successfully"
 msgstr "საკლასო ოთახში გაწევრიანება წარმატებით დასრულდა!"
 
-#: .\classroom_ge\app_student\views.py:254
+#: .\classroom_ge\app_student\views.py:262
 #: .\classroom_ge\app_teacher\views.py:96
 #: .\classroom_ge\app_teacher\views.py:173
 #: .\classroom_ge\app_teacher\views.py:194
@@ -76,11 +76,15 @@ msgstr "საკლასო ოთახში გაწევრიანე�
 msgid "error_unauthorized_access"
 msgstr "თქვენ არ ხართ ავტორიზებული აღნიშნული ქმედებისთვის"
 
-#: .\classroom_ge\app_student\views.py:286
+#: .\classroom_ge\app_student\views.py:266
+msgid "deadline_passed"
+msgstr "ჩაბარების ვადა ამოიწურა"
+
+#: .\classroom_ge\app_student\views.py:299
 msgid "test_submitted_sucessfully"
 msgstr "ტესტი დაემატა წარმატებით"
 
-#: .\classroom_ge\app_student\views.py:291
+#: .\classroom_ge\app_student\views.py:304
 msgid "something_is_wrong"
 msgstr "უცნობი შეცდომა. განმეორების შემთხვევაში გთხოვთ დაგვიკავშირდეთ"
 
@@ -422,7 +426,7 @@ msgid "registration"
 msgstr "რეგისტრაცია"
 
 #: .\classroom_ge\base\templates\base\register.html:9
-#: .\classroom_ge\base\views.py:78
+#: .\classroom_ge\base\views.py:81
 msgid "message_first_step_of_registration_done"
 msgstr ""
 "თქვენ წარმატებით დარეგისტრირდით! შეამოწმეთ ელ-ფოსტა და გაიარეთ იმეილის "
@@ -444,23 +448,23 @@ msgstr "აქტივაციის ლინკის ვადა ამო
 msgid "resend_activation_code"
 msgstr "აქტივაციის ლინკის ხელახლა გამოგზავნა"
 
-#: .\classroom_ge\base\views.py:99 .\classroom_ge\base\views.py:113
+#: .\classroom_ge\base\views.py:102 .\classroom_ge\base\views.py:116
 msgid "email_or_password_does_not_exist"
 msgstr "ელ. ფოსტა ან პაროლი არასწორია"
 
-#: .\classroom_ge\base\views.py:106
+#: .\classroom_ge\base\views.py:109
 msgid "email_is_not_verified_yet"
 msgstr "ელ. ფოსტა არ არის ვერიფიცირებული"
 
-#: .\classroom_ge\base\views.py:131
+#: .\classroom_ge\base\views.py:142
 msgid "activate_account"
 msgstr "ანგარიშის აქტივაცია"
 
-#: .\classroom_ge\base\views.py:162
+#: .\classroom_ge\base\views.py:173
 msgid "email_activation_was_successfull"
 msgstr "ელექტრონული ფოსტის აქტივაცია წარმატებით განხორციელდა!"
 
-#: .\classroom_ge\base\views.py:167
+#: .\classroom_ge\base\views.py:178
 msgid "something_went_wrong"
 msgstr "უცნობი შეცდომა. განმეორების შემთხვევაში გთხოვთ დაგვიკავშირდეთ"
 
