@@ -310,22 +310,31 @@ def lesson_details(request, uuid):
         'total_given_points'
     )
 
-    # Average Performance + Number of students who completed the test
     tests = tests.annotate(
         students_completed=Count('studenttest__student', distinct=True),
-        total_points=Subquery(total_points_subquery, output_field=FloatField()),
-        average_performance=ExpressionWrapper(
-            Coalesce(
-                Avg(Case(
-                    When(total_points__isnull=False, then='total_points'),
-                    default=0,
-                    output_field=FloatField()
-                )),
-                Value(0)
-            ) / F('max_score')*100*F('students_completed')/n_students,
-            output_field=FloatField()
-        ),
     )
+
+    if n_students > 0:
+        # Average Performance + Number of students who completed the test
+        tests = tests.annotate(
+            total_points=Subquery(total_points_subquery, output_field=FloatField()),
+            average_performance=ExpressionWrapper(
+                Coalesce(
+                    Avg(Case(
+                        When(total_points__isnull=False, then='total_points'),
+                        default=0,
+                        output_field=FloatField()
+                    )),
+                    Value(0)
+                ) / F('max_score')*100*F('students_completed')/n_students,
+                output_field=FloatField()
+            ),
+        )
+    else:
+        tests = tests.annotate(
+            average_performance=Value(0.0, output_field=FloatField())
+        )
+
 
     context = {
         'lesson': lesson,
@@ -513,10 +522,15 @@ def test_details(request, test_uuid):
             ).annotate(
                 student_points=Sum('studentquestion__given_point')
             ).values('student_points')
-        )
+        ),
+        completed=Subquery(
+            StudentTest.objects.filter(
+                student=OuterRef('pk'),
+                test=test,
+            ).values('completed')
+        ),
     )
 
-    print(students)
     context={
         'students': students,
         'test_uuid': test_uuid,
@@ -544,3 +558,26 @@ def test_results_student(request, test_uuid, student_uuid):
     }
 
     return render(request, 'app_student/test_completed_overview.html', context)
+
+
+@login_required(login_url='app_base:login')
+def test_delete(request, test_uuid):
+    if not request.user.is_teacher:
+        return redirect('app_base:home')
+    
+    test = get_object_or_404(Test,uuid=test_uuid)
+    lesson_uuid = test.lesson.uuid
+
+    if test.lesson.classroom.owner != request.user:
+        messages.error(request, _('error_unauthorized_access'))
+        return redirect('app_teacher:home')
+
+    
+    if request.method == 'POST':        
+        messages.success(request, _('test_deleted'))
+        test.delete()
+
+        redirect_url = reverse('app_teacher:lesson-detail', kwargs={'uuid': lesson_uuid})
+        return redirect(redirect_url)
+    else:
+        return render(request, 'app_teacher/tests/confirm_test_deletion.html', {'test': test, 'lesson_uuid': lesson_uuid})

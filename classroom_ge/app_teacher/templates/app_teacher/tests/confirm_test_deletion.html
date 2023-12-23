@@ -1,0 +1,21 @@
+{% extends 'base/main.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+<div style="max-width: 32rem">
+    {% trans 'are_you_shure_to_delete_test_with_name' %} <span style="color: red;">"{{ test.name }}"</span>?
+    <br>
+
+    <form action="{% url 'app_teacher:test-delete' test_uuid=test.uuid %}" method="post">
+        {% csrf_token %}
+        <input id="conform_deletion" type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2" value="{% trans 'delete' %}">
+    </form>
+    <form action="{% url 'app_teacher:lesson-detail' uuid=lesson_uuid %}" method="post">
+        {% csrf_token %}
+        <input id="do_not_delete" type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2" value="{% trans 'cancel' %}">
+    </form>
+</div>
+
+{% endblock %}

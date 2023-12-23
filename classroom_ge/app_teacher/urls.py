@@ -19,6 +19,7 @@ urlpatterns = [
     path('tests', views.tests_main_page, name='test-main'),
     path('test_example/<uuid:uuid>/', views.test_example_page, name='test-example-page'),
     path('test_details/<uuid:test_uuid>/', views.test_details, name='test-details'),
+    path('test_delete/<uuid:test_uuid>/', views.test_delete, name='test-delete'),
     path('test_results/<uuid:test_uuid>/<uuid:student_uuid>', views.test_results_student, name='test-results-student'),
 
     path('choose_lesson/<uuid:topic_uuid>/', views.choose_lessons_to_add_test, name='choose-lesson'),

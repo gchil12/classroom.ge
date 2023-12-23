@@ -15,7 +15,7 @@
         <tr>
             <td>{{student.user.name}}</td>
             <td>{{student.user.surname}}</td>
-            {% if student.student_points %}
+            {% if student.completed %}
                 <td>{{student.student_points}} / {{student.max_points}}</td>
                 <td>
                     <a href="{% url 'app_teacher:test-results-student' test_uuid=test_uuid student_uuid=student.uuid %}">ტესტის ნახვა</a>

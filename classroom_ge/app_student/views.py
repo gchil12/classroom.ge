@@ -9,6 +9,7 @@ from .models import StudentToClassroom, StudentProfile, StudentTest, StudentQues
 from django.utils import timezone
 from django.db.models import Count, Q, Subquery, OuterRef
 from django.db.models import BooleanField, Case, When, Value, F, Sum, IntegerField
+from django.db.models.functions import Coalesce
 from random import shuffle
 
 
@@ -108,16 +109,25 @@ def classroom_details(request, uuid):
 
     current_student = get_object_or_404(StudentProfile, user=request.user)
 
+    num_tests_subquery = Test.objects.filter(
+        lesson=OuterRef('pk')
+    ).order_by().values('lesson_id').annotate(
+        test_count=Count('pk')
+    ).values('test_count')
+
     lessons = Lesson.objects.filter(
-        classroom = classroom
+        classroom=classroom
     ).annotate(
-        n_tests=Count('test'),
-        num_tests_written=Count(Case(
-            When(test__studenttest__student=current_student, then=F('test__studenttest')),
-            output_field=IntegerField(),
-        ))
+        n_tests=Subquery(num_tests_subquery, output_field=IntegerField()),
+        num_tests_written=Count(
+            Case(
+                When(test__studenttest__student=current_student, then=F('test__studenttest')),
+                output_field=IntegerField()
+            ),
+            distinct=True
+        )
     )
-    
+
     context = {
         'lessons': lessons,
         'classroom': classroom,
@@ -134,21 +144,30 @@ def lesson_details(request, lesson_uuid):
     
     current_student = StudentProfile.objects.get(user=request.user)
 
-    lesson = get_object_or_404(Lesson, uuid=lesson_uuid)    
+    lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
 
-    tests_for_student = Test.objects.filter(
+    tests = Test.objects.filter(
         lesson=lesson
+    )
+
+    # Subquery to check if the current student has completed the test
+    has_completed_subquery = StudentTest.objects.filter(
+        test=OuterRef('pk'), 
+        student=current_student
     ).annotate(
-        taken=Case(
-            When(studenttest__student=current_student, then=Value(True)),
-            default=Value(False),
-            output_field=BooleanField()
-        ),
-        completed=Case(
-            When(studenttest__student=current_student, studenttest__completed=True, then=Value(True)),
-            default=Value(False),
-            output_field=BooleanField()
-        ),
+        has_completed=Coalesce(
+            Case(
+                When(completed=True, then=Value(True)),
+                default=Value(False),
+                output_field=BooleanField()
+            ),
+            Value(False)
+        )
+    ).values('has_completed')[:1]  # Ensure it returns a single value
+
+    # Annotate the tests with whether the current student has completed them
+    tests = tests.annotate(
+        completed=Subquery(has_completed_subquery),
         max_points=Sum(Case(
             When(studenttest__student=current_student, 
                 then=F('studenttest__studentquestion__question__max_point'))
@@ -157,11 +176,10 @@ def lesson_details(request, lesson_uuid):
             When(studenttest__student=current_student, 
                 then=F('studenttest__studentquestion__given_point'))
         ))
-    ).distinct().order_by('-date_created')
+    ).distinct().order_by('-date_created')  
     
-
     context = {
-        'tests': tests_for_student,
+        'tests': tests,
         'lesson': lesson,
     }
 
@@ -188,7 +206,8 @@ def test_show_page(request, test_uuid):
             end_time=timezone.now()
         )
         
-        test_questions = TestQuestion.objects.filter(test=test).all()
+        test_questions = list(TestQuestion.objects.filter(test=test).all())
+        shuffle(test_questions)
         order_id = 0
         for test_question in test_questions:
             StudentQuestion.objects.create(

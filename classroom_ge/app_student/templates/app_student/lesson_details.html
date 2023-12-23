@@ -40,7 +40,7 @@
     {% for test in tests %}
         <tr>
             <td>{{test.name}}</td>
-            {% if test.taken %}
+            {% if test.completed %}
                     <td>
                         {{ test.total_points }} / {{ test.max_points }}
                     </td>
