@@ -41,7 +41,8 @@ def teacher_homepage(request):
         closest_lesson_date=Subquery(closest_lesson_subquery[:1].values('lesson_date')),
     ).filter(owner=request.user)
 
-    
+    classrooms_with_rank = annotate_classrooms_with_rank(classrooms_extended_table, now)
+
     user_classrooms = request.user.classroom_set.all()
 
     all_lessons = []
@@ -55,7 +56,7 @@ def teacher_homepage(request):
     closest_lessons = sorted(all_lessons, key=lambda lesson: (lesson.lesson_date, lesson.lesson_start_time))[:5]
 
     context = {
-        'classrooms': classrooms_extended_table,
+        'classrooms': classrooms_with_rank,
         'closest_lessons': closest_lessons,
     }
     
@@ -63,6 +64,47 @@ def teacher_homepage(request):
 
 
 ############### Classrooms #################
+def annotate_classrooms_with_rank(classrooms_extended_table, now):
+    # Convert queryset to list and add rank
+    classrooms_with_rank = list(classrooms_extended_table)
+
+    for classroom in classrooms_with_rank:
+        classroom_lessons = Lesson.objects.filter(classroom=classroom)
+
+        student_to_classroom = StudentToClassroom.objects.filter(classroom=classroom)
+
+        student_points = 0
+        total_points = 0
+
+        for student_classroom in student_to_classroom:
+            student_profile = StudentProfile.objects.get(user=student_classroom.student)
+
+            for lesson in classroom_lessons:
+                tests = Test.objects.filter(
+                    lesson=lesson
+                ).annotate(
+                    total_max_point = Sum(F('testquestion__max_point'))
+                )
+
+                for test in tests:
+                    student_test = StudentTest.objects.filter(student=student_profile, test=test.uuid).first()
+
+                    if student_test and student_test.completed:
+                        student_points += StudentQuestion.objects.filter(student_test=student_test).aggregate(Sum('given_point'))['given_point__sum'] or 0
+                    elif test.deadline:
+                        if test.deadline < now.date():
+                            student_points += 0
+                        else:
+                            continue
+                    else:
+                        continue
+
+                    total_points += test.total_max_point
+
+        classroom.rank = round(student_points/total_points*100, 3) if total_points else 0
+
+    return classrooms_with_rank
+
 
 @login_required(login_url='app_base:login')
 def classrooms(request):
@@ -83,7 +125,9 @@ def classrooms(request):
         closest_lesson_date=Subquery(closest_lesson_subquery.values('lesson_date')),
     ).filter(owner=request.user)
 
-    return render(request, 'app_teacher/menu_elements/classrooms_page.html', {'classrooms': classrooms_extended_table})
+    classrooms_with_rank = annotate_classrooms_with_rank(classrooms_extended_table, now)
+
+    return render(request, 'app_teacher/menu_elements/classrooms_page.html', {'classrooms': classrooms_with_rank})
 
 
 @login_required(login_url='app_base:login')
@@ -368,7 +412,7 @@ def lesson_details(request, uuid):
                         output_field=FloatField()
                     )),
                     Value(0)
-                ) / F('max_score')*100*F('students_completed')/n_students,
+                ) / F('max_score')*100,
                 output_field=FloatField()
             ),
         ).order_by('-date_created')
