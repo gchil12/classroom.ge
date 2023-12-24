@@ -311,7 +311,7 @@ def lesson_details(request, uuid):
     )
 
     tests = tests.annotate(
-        students_completed=Count('studenttest__student', distinct=True),
+        students_completed=Count('studenttest__student', filter=Q(studenttest__completed=True), distinct=True),
     )
 
     if n_students > 0:
