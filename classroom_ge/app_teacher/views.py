@@ -5,7 +5,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.translation import gettext_lazy as _
 from app_student.models import StudentToClassroom, StudentProfile, StudentTest, StudentQuestion
 from django.contrib import messages
-from django.db.models import Count, Q, Subquery, OuterRef, Avg, FloatField, ExpressionWrapper
+from django.db.models import Count, Q, Subquery, OuterRef, Avg, FloatField, ExpressionWrapper, IntegerField, Exists, BooleanField
 from django.db.models import Case, When, Value, F, Sum
 from django.db.models.functions import Coalesce
 from django.utils import timezone
@@ -16,6 +16,7 @@ import json
 import uuid as unique_id_import
 import uuid
 from .models import Test, TestQuestion
+from collections import OrderedDict
 
 # Create your views here.
 @login_required(login_url='app_base:login')
@@ -90,6 +91,8 @@ def classroom_details(request, uuid):
     if not request.user.is_teacher:
         return redirect('app_base:home')
     
+    current_date = timezone.now().date()
+
     classroom = get_object_or_404(Classroom, uuid=uuid)
 
     if classroom.owner != request.user:
@@ -100,13 +103,52 @@ def classroom_details(request, uuid):
 
     student_to_classrooms = StudentToClassroom.objects.filter(classroom=classroom)
 
+    all_tests = Test.objects.filter(
+        lesson__classroom = classroom
+    ).annotate(
+        total_max_point = Sum(F('testquestion__max_point'))
+    )
+
+    students_with_scores = {}
+
+    for student_classroom in student_to_classrooms:
+        student = student_classroom.student
+        student_profile = StudentProfile.objects.get(user=student)
+
+        students_with_scores[student] = {'given_point': 0, 'max_point': 0}
+
+        for test in all_tests:
+            student_test = StudentTest.objects.filter(student=student_profile, test=test.uuid).first()
+            
+            if student_test and student_test.completed:
+                given_points = StudentQuestion.objects.filter(student_test=student_test).aggregate(Sum('given_point'))['given_point__sum'] or 0
+            elif test.deadline:
+                if test.deadline < current_date:
+                    given_points = 0
+                else:
+                    continue
+            else:
+                continue
+            
+            students_with_scores[student]['given_point'] += given_points
+            students_with_scores[student]['max_point'] += test.total_max_point
+
+        print(students_with_scores[student]['given_point'])
+        print(students_with_scores[student]['max_point'])
+        students_with_scores[student]['score'] = 100*students_with_scores[student]['given_point'] / students_with_scores[student]['max_point'] if students_with_scores[student]['max_point'] > 0 else 0
+        students_with_scores[student]['score'] = round(students_with_scores[student]['score'],3)
+    
+
+    students_with_scores = OrderedDict(sorted(students_with_scores.items(), key=lambda item: item[1]['given_point'], reverse=True))
+
+    # print(student_tests)
     domain = get_current_site(request).domain
     
     context = {
         'classroom': classroom,
         'lessons': lessons,
         'domain': domain,
-        'student_to_classrooms': student_to_classrooms,
+        'students_with_scores': students_with_scores,
     }
 
     return render(request, 'app_teacher/classroom/classroom_details.html', context)

@@ -19,6 +19,11 @@
 		    <ul class="list-group">
                 <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">საგანი:</strong> &nbsp; {{ classroom.subject }} </li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">აღწერა:</strong> &nbsp; {{ classroom.description }} </li>
+				<li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">საფეხური:</strong> &nbsp; 
+					{% for classroom_to_levels in classroom.classroomtolevels_set.all %}
+						{{ classroom_to_levels.level.level }}
+					{% endfor %}
+				</li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">შეხვედრის ბმული:</strong> &nbsp; {{ classroom.online_meeting_link }} </li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">მოწვევის ბმული:</strong> &nbsp; <a href="{{ domain }}{% url 'app_student:subscribe-classroom' classroom_uuid=classroom.uuid %}">{{ domain }}{% url 'app_student:subscribe-classroom' classroom_uuid=classroom.uuid %}</a> </li>
             </ul>
@@ -55,18 +60,18 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for student_to_classroom in student_to_classrooms %}
+					{% for student, score in students_with_scores.items %}
 					<tr>
 						<td>
 							<div class="d-flex px-2 py-1">
 								<div class="d-flex flex-column justify-content-center">
-									<h6 class="mb-0 text-sm">{{ student_to_classroom.student.name }} {{ student_to_classroom.student.surname }}</h6>
+									<h6 class="mb-0 text-sm">{{ student.name }} {{ student.surname }}</h6>
 								</div>
 							</div>
 						</td>
 						<td class="align-middle text-center text-sm">
 							<span class="text-xs font-weight-bold">
-								TODO
+								{{ score.score }}%
 							</span>
 						</td>
 					</tr>
