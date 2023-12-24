@@ -7,7 +7,7 @@ from app_teacher.models import Classroom, Lesson, Test, TestQuestion
 from base.models import QuestionChoice
 from .models import StudentToClassroom, StudentProfile, StudentTest, StudentQuestion, StudentQuestionToChoice
 from django.utils import timezone
-from django.db.models import Count, Q, Subquery, OuterRef
+from django.db.models import Count, Q, Subquery, OuterRef, Exists
 from django.db.models import BooleanField, Case, When, Value, F, Sum, IntegerField
 from django.db.models.functions import Coalesce
 from random import shuffle
@@ -20,9 +20,48 @@ def student_homepage(request):
     
     student_to_classrooms = StudentToClassroom.objects.filter(student=request.user)
 
+    now = timezone.now()
+
+    closest_lessons = Lesson.objects.filter(
+        Q(lesson_date__gt=now.date()) | (Q(lesson_date=now.date()) & Q(lesson_start_time__gte=now.time())),
+        classroom__studenttoclassroom__student=request.user,
+    ).distinct().annotate(
+        classroom_name=F('classroom__name'),
+        classroom_uuid=F('classroom__uuid'),
+        classroom_subject=F('classroom__subject__name'),
+    ).order_by(
+        'lesson_date', 'lesson_start_time'
+    ).values('lesson_start_time', 'name', 'uuid', 'lesson_date', 'classroom_name', 'classroom_uuid', 'classroom_subject')[:5]
+
+
+    incomplete_test_subquery = StudentTest.objects.filter(
+        student=StudentProfile.objects.get(user=request.user),
+        test=OuterRef('pk'),
+        completed=False
+    )
+
+    # Query for tests
+    upcoming_tests = Test.objects.filter(
+        Q(studenttest__isnull=True) |  # Test not attempted by the student
+        Exists(incomplete_test_subquery),  # Test attempted but not completed
+        Q(deadline__gt=now.date()) | Q(deadline__isnull=True)
+    ).distinct().annotate(
+        classroom_name=F('lesson__classroom__name'),
+        classroom_uuid=F('lesson__classroom__uuid'),
+        classroom_subject=F('lesson__classroom__subject__name'),
+        lesson_name=F('lesson__name'),
+        lesson_uuid=F('lesson__uuid'),
+    ).order_by('deadline').values(
+        'name', 'uuid', 'deadline', 'classroom_name', 'classroom_uuid', 'classroom_subject', 'lesson_name', 'lesson_uuid',
+    )[:5]  # Replace 'some_date_field' with the field you use to determine the closeness of the test
+
+
     context = {
         'student_to_classrooms': student_to_classrooms,
+        'closest_lessons': closest_lessons,
+        'upcoming_tests': upcoming_tests,
     }
+
     return render(request, 'app_student/student_homepage.html', context)
     
 

@@ -16,7 +16,6 @@
 		<th>აღწერა</th>
 	</tr>
 	{% for student_to_classroom in student_to_classrooms %}
-		
 		<tr>
 			<td>{{ student_to_classroom.classroom.owner.name }} {{ student_to_classroom.classroom.owner.surname }}</td>
 			<td>
@@ -29,6 +28,76 @@
 		</tr>
 	{% endfor %}
 </table>
+
+<br>
+<table class="list_table">
+	<tr colspan="4">
+      	უახლოესი გაკვეთილები
+  	</tr>
+	<tr>
+    <th>გაკვეთილის სახელი</th>
+		<th>კლასის სახელი</th>
+		<th>საგანი</th>
+    <th>დრო</th>
+	</tr>
+	{% for lesson in closest_lessons %}
+		<tr>
+      <td>
+        <a href="{% url 'app_student:lesson-detail' lesson_uuid=lesson.uuid %}">
+            {{ lesson.name }}
+        </a>
+      </td>
+			<td>
+        <a href="{% url 'app_student:classroom-detail' uuid=lesson.classroom_uuid %}">
+          {{ lesson.classroom_name }}
+        </a>
+      </td>
+			<td>{{ lesson.classroom_subject }}</td>
+			<td>{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}</td>
+		</tr>
+	{% endfor %}
+</table>
+
+<br>
+<br>
+<table class="list_table">
+	<tr colspan="4">
+      	უახლოესი დავალებები
+  	</tr>
+	<tr>
+    <th>დავალების სახელი</th>
+    <th>გაკვეთილის სახელი</th>
+		<th>კლასის სახელი</th>
+		<th>დავალება</th>
+    <th>ჩაბარების ბოლო ვადა</th>
+	</tr>
+	{% for test in upcoming_tests %}
+		<tr>
+      <td>
+        {{ test.name }}
+      </td>
+      <td>
+        <a href="{% url 'app_student:lesson-detail' lesson_uuid=test.lesson_uuid %}">
+          {{ test.lesson_name }}
+        </a>
+      </td>
+			<td>
+        <a href="{% url 'app_student:classroom-detail' uuid=test.classroom_uuid %}">
+          {{ test.classroom_name }}
+        </a>
+      </td>
+      <th>{{ test.name }}</th>
+			<td>
+        {% if test.deadline %}
+          {{ test.deadline }}
+        {% else %}
+          უვადო
+        {% endif %}
+      </td>
+		</tr>
+	{% endfor %}
+</table>
+
 
 <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
     <span class="mask  bg-gradient-primary  opacity-6"></span>
