@@ -139,7 +139,7 @@ def classroom_details(request, uuid):
         students_with_scores[student]['score'] = round(students_with_scores[student]['score'],3)
     
 
-    students_with_scores = OrderedDict(sorted(students_with_scores.items(), key=lambda item: item[1]['given_point'], reverse=True))
+    students_with_scores = OrderedDict(sorted(students_with_scores.items(), key=lambda item: item[1]['score'], reverse=True))
 
     # print(student_tests)
     domain = get_current_site(request).domain
