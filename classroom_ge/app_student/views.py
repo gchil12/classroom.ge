@@ -301,7 +301,7 @@ def test_submit(request, student_test_uuid):
         messages.error(request, _('error_unauthorized_access'))
         return redirect('app_student:home') #NOSONAR
     
-    if student_test.test.deadline < now.date():
+    if student_test.test.deadline is not None and student_test.test.deadline < now.date():
         messages.error(request, _('deadline_passed'))
         redirect_url = reverse('app_student:test-view', kwargs={'test_uuid': student_test.test.uuid})
         return redirect(redirect_url)
