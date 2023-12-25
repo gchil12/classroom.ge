@@ -277,7 +277,7 @@ def test_show_page(request, test_uuid):
         }
 
 
-    if test.deadline >= now.date():
+    if test.deadline == None or test.deadline >= now.date():
         return render(request, 'app_student/test_form.html', context)
     else:
         redirect_url = reverse('app_student:test-view', kwargs={'test_uuid': test.uuid})
