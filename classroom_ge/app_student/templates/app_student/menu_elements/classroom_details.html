@@ -64,7 +64,7 @@
                         <span class="mb-2 text-xs"
                             >დასაწერი სავარჯიშოები:
                             <span class="text-dark ms-sm-2 font-weight-bold"
-                                >{% if lesson.num_tests_written %}{{ lesson.num_tests_written }} {% else %} 0 {% endif %}</span
+                                >{{ lesson.tests_to_write }}</span
                             ></span
                         >
                         <a class="btn btn-outline-info mb-0" href="{% url 'app_base:google_login' called_from='classroom' lesson_uuid=lesson.uuid %}">Google Calendar-ში დამატება</a>

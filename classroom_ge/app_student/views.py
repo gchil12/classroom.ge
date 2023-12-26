@@ -104,6 +104,8 @@ def classroom_list(request):
     
     now = timezone.now()
 
+    current_student = get_object_or_404(StudentProfile, user=request.user)
+
     closest_lesson_subquery = Lesson.objects.filter(
         Q(lesson_date__gt=now.date()) | (Q(lesson_date=now.date()) & Q(lesson_start_time__gte=now.time())),
         classroom=OuterRef('pk'),
@@ -122,12 +124,34 @@ def classroom_list(request):
         n_lessons=Subquery(n_lessons_subquery),
     ).filter(studenttoclassroom__student=request.user)
 
-    # classrooms = Classroom.objects.filter(studenttoclassroom__student=request.user)
+
+    for classroom in classrooms_extended_table:
+        lessons = Lesson.objects.filter(classroom=classroom)
+
+        n_tests_to_write = 0
+
+        for lesson in lessons:
+            tests = Test.objects.filter(lesson=lesson)
+
+            
+
+            for test in tests:
+                student_test = StudentTest.objects.filter(student=current_student, test=test).first()
+
+                if student_test is None:
+                    n_tests_to_write += 1
+                else:
+                    if not student_test.completed and (student_test.test.deadline and student_test.test.deadline > timezone.now().date() or student_test.test.deadline is None):
+                        n_tests_to_write += 1
+
+            
+        classroom.tests_to_write = n_tests_to_write
 
     context = {
         'classrooms': classrooms_extended_table,
     }
     return render(request, 'app_student/menu_elements/classrooms.html', context)
+
 
 
 @login_required(login_url='app_base:login')
@@ -154,18 +178,24 @@ def classroom_details(request, uuid):
         test_count=Count('pk')
     ).values('test_count')
 
-    lessons = Lesson.objects.filter(
-        classroom=classroom
-    ).annotate(
-        n_tests=Subquery(num_tests_subquery, output_field=IntegerField()),
-        num_tests_written=F('n_tests') - Count(
-            Case(
-                When(test__studenttest__student=current_student, then=F('test__studenttest')),
-                output_field=IntegerField()
-            ),
-            distinct=True
-        )
-    )
+    lessons = Lesson.objects.filter(classroom=classroom)
+
+    for lesson in lessons:
+        tests = Test.objects.filter(lesson=lesson)
+
+        n_tests_to_write = 0
+
+        for test in tests:
+            student_test = StudentTest.objects.filter(student=current_student, test=test).first()
+
+            if student_test is None:
+                n_tests_to_write += 1
+            else:
+                if not student_test.completed and (student_test.test.deadline and student_test.test.deadline > timezone.now().date() or student_test.test.deadline is None):
+                    n_tests_to_write += 1
+
+        
+        lesson.tests_to_write = n_tests_to_write
 
     context = {
         'lessons': lessons,
