@@ -36,57 +36,51 @@
 			</div>
 		</div>
 		<div class="card-body pt-4 p-3">
-			<form
-				role="form"
-				class="text-start"
-				method="POST"
-			>
-				{% csrf_token %}
-
-				<ul class="list-group">
-					{% for student_question in student_questions %}
-					<li
-						class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
-					>
-						<div class="col">
-							<div class="mb-3 d-flex">
-                                <div class="mt-2" style="margin-right: 5px;">
-								<strong
-									style="
-										padding: 10px;
-										color: white;
-										background-color: #d81b60;
-										border-radius: 7px;
-										margin-right: 5px;
-									"
-									>{{ student_question.order|add:"1" }}. </strong
-								>
-                                </div>
-                                <p> {{ student_question.question.question.text }} </p>
+			<ul class="list-group">
+				{% for student_question in student_questions %}
+				<li
+					class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+				>
+					<div class="col">
+						<div class="mb-3 d-flex">
+							<div class="mt-2" style="margin-right: 5px;">
+							<strong
+								style="
+									padding: 10px;
+									color: white;
+									background-color: #d81b60;
+									border-radius: 7px;
+									margin-right: 5px;
+								"
+								>{{ student_question.order|add:"1" }}. </strong
+							>
 							</div>
-
-							{% for choice in student_question.question.question.questionchoice_set.all %}
-                            {% if student_question.answered %}
-                            {% if choice.is_correct %}
-							<div class="form-check correct-answer">
-                            {% else %}
-                            {% if choice in student_question.chosen_choices.all %}
-							<div class="form-check incorrect-answer">
-                            {% else %}
-							<div class="form-check">
-                            {% endif %}
-                                {% endif %}
-								<label class="custom-control-label" for="customRadio1" style="margin-top: 0.5rem;"
-									>{{ choice.text }}</label
-								>
-							</div>
-                            {% endif %}
-							{% endfor %}
+							<p> {{ student_question.question.question.text }} </p>
 						</div>
-					</li>
-					{% endfor %}
-				</ul>
-			</form>
+
+						{% for choice in student_question.question.question.questionchoice_set.all %}
+							{% if student_question.answered %}
+								{% if choice.is_correct %}
+									<div class="form-check correct-answer">
+								{% else %}
+									{% if choice in student_question.chosen_choices.all %}
+										<div class="form-check incorrect-answer">
+									{% else %}
+										<div class="form-check">
+									{% endif %}
+								{% endif %}
+							{% else %}
+								<div class="form-check">
+							{% endif %}
+							<label class="custom-control-label" for="customRadio1" style="margin-top: 0.5rem;">
+								{{ choice.text }}
+							</label>
+							</div>
+						{% endfor %}
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
 		</div>
     </div>
 </div>
