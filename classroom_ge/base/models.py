@@ -4,7 +4,6 @@ from django.core import validators
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext
-import datetime
 
 # Create your models here.
 class CustomUserManager(BaseUserManager):
@@ -123,7 +122,7 @@ class QuestionChoice(models.Model):
 # TODO: Implement Messates
 class Message(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     severity = models.IntegerField(default=0)
     description = models.CharField(verbose_name=_('description'),max_length=200, blank=True, default="")
     has_read = models.BooleanField(verbose_name=_('has_read'), default=False)

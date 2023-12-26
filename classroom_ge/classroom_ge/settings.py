@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+import environ
 from pathlib import Path
 from .my_constants import (
     DATABASE_PARAMS,
@@ -20,6 +21,8 @@ from .my_constants import (
     django_secret_key,
     captcha_public_key,
     captcha_private_key,
+    google_oauth2_client_id,
+    google_oauth2_client_secret,
     email_host_,
     email_host_password_,
     email_port_
@@ -197,6 +200,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Gootle reCaptcha
 RECAPTCHA_PUBLIC_KEY = captcha_public_key
 RECAPTCHA_PRIVATE_KEY = captcha_private_key
+
+# Google Calendar
+GOOGLE_OAUTH2_CLIENT_ID = google_oauth2_client_id
+GOOGLE_OAUTH2_CLIENT_SECRET = google_oauth2_client_secret
+
+try:
+    # Bypassing https requirement for localhost for OAUTH2
+    env = environ.Env()
+    environ.Env.read_env(os.path.join(BASE_DIR, 'classroom_ge', 'my_env.env'))
+except Exception:
+    # No env File
+    pass
 
 # For sending emails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

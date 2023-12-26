@@ -81,3 +81,16 @@ class TestQuestion(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE, blank=False, null=True, verbose_name=_('test'))
     question = models.ForeignKey(Question, on_delete=models.CASCADE, blank=False, null=True, verbose_name=_('question'))
     max_point = models.IntegerField(default=0, blank=True)
+
+
+class UsersToLessonGoogleCalendarEvents(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True)
+    google_calendar_event_id = models.CharField(max_length=255, blank=True, null=True, default=None)
+
+
+    class Meta:
+        unique_together = ('user', 'lesson')
+    

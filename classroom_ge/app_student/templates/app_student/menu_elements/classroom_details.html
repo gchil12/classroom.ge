@@ -67,6 +67,7 @@
                                 >{% if lesson.num_tests_written %}{{ lesson.num_tests_written }} {% else %} 0 {% endif %}</span
                             ></span
                         >
+                        <a class="btn btn-outline-info mb-0" href="{% url 'app_base:google_login' called_from='classroom' lesson_uuid=lesson.uuid %}">Google Calendar-ში დამატება</a>
                     </div>
                 </li>
                 {% endfor %}

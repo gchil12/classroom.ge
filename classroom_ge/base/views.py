@@ -1,15 +1,13 @@
-from collections.abc import Callable, Iterable, Mapping
-from typing import Any
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from .forms import RegistrationForm
 from .models import User
 from app_student.models import StudentProfile
-from app_teacher.models import TeacherProfile
+from app_teacher.models import TeacherProfile, Lesson
 
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
@@ -18,6 +16,12 @@ from django.utils.encoding import force_bytes, force_str
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 import threading
+from google_auth_oauthlib.flow import Flow
+from classroom_ge.settings import GOOGLE_OAUTH2_CLIENT_ID, GOOGLE_OAUTH2_CLIENT_SECRET
+from classroom_ge.my_constants import google_oauth2_redirect_url
+from googleapiclient.discovery import build
+import uuid
+from app_teacher.models import UsersToLessonGoogleCalendarEvents
 
 
 # Create your views here.
@@ -178,3 +182,160 @@ def activate_account(request, uidb64, token):
         messages.error(request, _('something_went_wrong'))
 
     return redirect('app_base:home')
+
+
+################## Google Calendar ########################
+def google_login(request, called_from, lesson_uuid):
+    flow = Flow.from_client_config(
+        client_config={
+            'web': {
+                'client_id': GOOGLE_OAUTH2_CLIENT_ID,
+                'client_secret': GOOGLE_OAUTH2_CLIENT_SECRET,
+                'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
+                'token_uri': 'https://accounts.google.com/o/oauth2/token'
+            }
+        },
+        scopes=['https://www.googleapis.com/auth/calendar'],
+        redirect_uri=google_oauth2_redirect_url,
+    )
+
+    authorization_url, state = flow.authorization_url(
+        access_type='offline',
+        include_granted_scopes='true'
+    )
+
+    request.session['called_from'] = called_from
+    request.session['lesson_uuid'] = str(lesson_uuid)
+    request.session['state'] = state
+    request.session.save()
+
+    return redirect(authorization_url)
+
+
+def google_callback(request):
+    state = request.session.get('state')
+
+    flow = Flow.from_client_config(
+        client_config={
+            'web': {
+                'client_id': GOOGLE_OAUTH2_CLIENT_ID,
+                'client_secret': GOOGLE_OAUTH2_CLIENT_SECRET,
+                'auth_uri': 'https://accounts.google.com/o/oauth2/auth',
+                'token_uri': 'https://accounts.google.com/o/oauth2/token'
+            }
+        },
+        scopes=['https://www.googleapis.com/auth/calendar'],
+        state=state,
+        redirect_uri=google_oauth2_redirect_url,
+    )
+
+    flow.fetch_token(authorization_response=request.build_absolute_uri())
+
+    credentials = flow.credentials
+
+    called_from = request.session.get('called_from')
+    lesson_uuid_str = request.session.get('lesson_uuid')
+    lesson_uuid = uuid.UUID(lesson_uuid_str)
+
+    if 'called_from' in request.session:
+        del request.session['called_from']
+
+    if 'lesson_uuid' in request.session:
+        del request.session['lesson_uuid']
+
+
+    return add_lesson_to_calendar(request, credentials, called_from, lesson_uuid)
+
+
+def add_lesson_to_calendar(request, credentials, called_from, lesson_uuid):
+    service = build('calendar', 'v3', credentials=credentials)
+
+    lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
+
+    event_in_database = UsersToLessonGoogleCalendarEvents.objects.filter(user=request.user, lesson=lesson)
+
+    if not event_in_database:
+        try:
+            created_event = add_event_to_google_calendar(request, service, lesson)
+
+            db_new_calendar_event = UsersToLessonGoogleCalendarEvents.objects.create(
+                user=request.user,
+                lesson=lesson,
+                google_calendar_event_id=created_event['id']
+            )
+            db_new_calendar_event.save()
+            messages.success(request, _('event_added_to_calendar'))
+        except Exception:
+            messages.error(request, _('error_adding_event_to_calendar'))
+    else:
+        if not check_event_exists(service, event_in_database.first().google_calendar_event_id):
+            try:
+                add_event_to_google_calendar(request, service, lesson)
+                messages.success(request, _('event_added_to_calendar'))
+            except Exception:
+                messages.error(request, _('error_adding_event_to_calendar'))
+        else:
+            messages.error(request, _('event_already_exists_in_calendar'))
+
+    
+    if called_from == 'classroom':
+        uuid = lesson.classroom.uuid
+        uuid_name = 'uuid'
+
+        if request.user.is_teacher:
+            link_to_reverse = 'app_teacher:classroom-detail'
+        elif request.user.is_student:
+            link_to_reverse = 'app_student:classroom-detail'
+        else:
+            messages.error(request, _('unknown_error_refresh'))
+            return redirect('app_base:home')
+        
+    elif called_from=='lesson':
+        uuid = lesson.uuid
+        uuid_name = 'lesson_uuid'
+
+        if request.user.is_teacher:
+            link_to_reverse = 'app_teacher:lesson-detail'
+        elif request.user.is_student:
+            link_to_reverse = 'app_student:lesson-detail'
+        else:
+            messages.error(request, _('unknown_error_refresh'))
+            return redirect('app_base:home')
+    else:
+        messages.error(request, _('unknown_error_refresh'))
+        return redirect('app_base:home')
+    
+
+    redirect_url = reverse(link_to_reverse, kwargs={uuid_name: uuid})
+    
+    return redirect(redirect_url)
+
+
+
+def check_event_exists(service, event_id):
+    try:
+        # Attempt to get the event by its ID
+        event = service.events().get(calendarId='primary', eventId=event_id).execute()
+        return True  # Event exists, return True and the event details
+    except Exception as e:
+        return False  # Event does not exist, return False
+    
+
+def add_event_to_google_calendar(request, service, lesson):
+    event = {
+        'summary': lesson.name,
+        'description': lesson.description,
+        'start': {
+            'dateTime': f'{lesson.lesson_date.isoformat()}T{lesson.lesson_start_time.isoformat()}',
+            'timeZone': 'UTC',
+        },
+        'end': {
+            'dateTime': f'{lesson.lesson_date.isoformat()}T{lesson.lesson_end_time.isoformat()}',
+            'timeZone': 'UTC',
+        },
+    }
+
+    created_event = service.events().insert(calendarId='primary', body=event).execute()
+    
+    return created_event
+    

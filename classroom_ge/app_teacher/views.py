@@ -177,15 +177,13 @@ def classroom_details(request, uuid):
             students_with_scores[student]['given_point'] += given_points
             students_with_scores[student]['max_point'] += test.total_max_point
 
-        print(students_with_scores[student]['given_point'])
-        print(students_with_scores[student]['max_point'])
+
         students_with_scores[student]['score'] = 100*students_with_scores[student]['given_point'] / students_with_scores[student]['max_point'] if students_with_scores[student]['max_point'] > 0 else 0
         students_with_scores[student]['score'] = round(students_with_scores[student]['score'],3)
     
 
     students_with_scores = OrderedDict(sorted(students_with_scores.items(), key=lambda item: item[1]['score'], reverse=True))
 
-    # print(student_tests)
     domain = get_current_site(request).domain
     
     context = {
@@ -492,7 +490,7 @@ def test_example_page(request, uuid):
 def create_test_questions(topic_uuid:uuid, lesson_uuid:uuid, deadline):
     topic = get_object_or_404(Topic, uuid=topic_uuid)
     lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
-    print(deadline)
+    
     try:
         cur_test = Test.objects.create(
             lesson=lesson,
@@ -673,6 +671,7 @@ def test_results_student(request, test_uuid, student_uuid):
     
     
     context = {
+        'test': test,
         'student_questions': student_questions,
     }
 

@@ -7,7 +7,8 @@ from .models import (
     ClassroomToLevels,
     Lesson,
     Test,
-    TestQuestion
+    TestQuestion,
+    UsersToLessonGoogleCalendarEvents
     # Test,
     # TestVariant,
     # Questions,
@@ -38,3 +39,4 @@ admin.site.register(ClassroomToLevels)
 admin.site.register(Lesson)
 admin.site.register(Test, TestAdmin)
 admin.site.register(TestQuestion, TestQuestionAdmin)
+admin.site.register(UsersToLessonGoogleCalendarEvents)

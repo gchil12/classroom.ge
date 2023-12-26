@@ -22,6 +22,9 @@
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">თარიღი:</strong> &nbsp; {{ lesson.lesson_date }} </li>
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">დრო:</strong> &nbsp; {{ lesson.lesson_start_time }} - {{ lesson.lesson_end_time }} </li>
                     <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">აღწერა:</strong> &nbsp; {{ lesson.description }} </li>
+                    <li class="list-group-item border-0 ps-0 pt-0 text-sm">
+                        <a class="btn btn-outline-info mb-0 mt-2" href="{% url 'app_base:google_login' called_from='lesson' lesson_uuid=lesson.uuid %}?">Google Calendar-ში დამატება</a>
+                    </li>
                 </ul>
             </div>
             <div class="ms-auto text-end">

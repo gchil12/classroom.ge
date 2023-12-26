@@ -107,8 +107,9 @@
                     </a></h6>
 					<span class="mb-2 text-xs"
 						>თარიღი:
-						<span class="text-dark font-weight-bold ms-sm-2"
-							>{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}</span
+						<span class="text-dark font-weight-bold ms-sm-2">
+							{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}
+						</span
 						></span
 					>
 					<span class="mb-2 text-xs"
@@ -117,6 +118,7 @@
 							>{{ lesson.description }}</span
 						></span
 					>
+					<a class="btn btn-outline-info mb-0" href="{% url 'app_base:google_login' called_from='classroom' lesson_uuid=lesson.uuid %}">Google Calendar-ში დამატება</a>
 				</div>
 				<div class="ms-auto text-end">
 					<a class="btn btn-outline-danger px-3 mb-0" href="{% url 'app_teacher:lesson-delete' uuid=lesson.uuid %}"

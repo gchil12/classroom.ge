@@ -27,7 +27,6 @@ class StudentTest(models.Model):
 
 
     class Meta:
-        # Set the combination of model1 and model2 to be unique
         unique_together = ('student', 'test')
 
     
