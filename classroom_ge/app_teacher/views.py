@@ -532,6 +532,22 @@ def choose_lessons_to_add_test(request, topic_uuid):
         classrooms = Classroom.objects.filter(
             owner=request.user,
         )
+
+        now = timezone.now()
+        closest_lesson_subquery = Lesson.objects.filter(
+            Q(lesson_date__gt=now.date()) | (Q(lesson_date=now.date()) & Q(lesson_start_time__gte=now.time())),
+            classroom=OuterRef('pk'),
+        ).order_by('lesson_date', 'lesson_start_time').values('lesson_start_time', 'name', 'lesson_date')[:1]
+            
+        classrooms = Classroom.objects.annotate(
+            num_levels=Count('classroomtolevels__level'),
+            num_students=Count('studenttoclassroom__student', filter=Q(studenttoclassroom__student__is_student=True)),
+            closest_lesson_start_time=Subquery(closest_lesson_subquery[:1].values('lesson_start_time')),
+            closest_lesson_name=Subquery(closest_lesson_subquery[:1].values('name')),
+            closest_lesson_date=Subquery(closest_lesson_subquery[:1].values('lesson_date')),
+        ).filter(owner=request.user)
+
+        classrooms = annotate_classrooms_with_rank(classrooms, now)
         return render(request, 'app_teacher/tests/add_test_to_lesson.html', {'classrooms': classrooms, 'topic_uuid': topic_uuid})
 
 
@@ -548,11 +564,12 @@ def choose_lessons_to_add_test(request, topic_uuid):
         # Lesson already chosen by user
         lesson = Lesson.objects.get(uuid=lesson_uuid)
     except Exception:
+        classroom=Classroom.objects.get(uuid=classroom_uuid)
         # Lesson was not chosen yet
         lessons = Lesson.objects.filter(
-            classroom=Classroom.objects.get(uuid=classroom_uuid)
+            classroom=classroom
         )
-        return render(request, 'app_teacher/tests/add_test_to_lesson.html', {'lessons': lessons, 'topic_uuid': topic_uuid, 'classroom_uuid': classroom_uuid},)
+        return render(request, 'app_teacher/tests/add_test_to_lesson.html', {'lessons': lessons, 'topic_uuid': topic_uuid, 'classroom': classroom},)
 
 
     # Lesson does not belong to teacher

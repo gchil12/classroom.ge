@@ -5,21 +5,110 @@
 {% block content %}
 
     {% if classrooms %}
-        აირჩიეთ კლასი
-        <ul>
-            {% for classroom in classrooms %}
-                <li><a href="{% url 'app_teacher:choose-lesson'  topic_uuid=topic_uuid %}?classroom={{classroom.uuid}}">{{ classroom.name }}</a></li>        
-            {% endfor %}
-        </ul>
+        <div class="card">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-warning shadow-warning border-radius-lg pt-4 pb-3">
+                    <h6 class="text-white text-capitalize ps-3">დავალების დასამატებლად აირჩიეთ საკლასო ოთახი</h6>
+                </div>
+            </div>
+            <div class="card-body pt-4 p-3">
+                <ul class="list-group">
+                    {% for classroom in classrooms %} {% if classroom.is_archived == False %}
+                    <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg" style="cursor: pointer;"
+                        onmouseenter='this.classList.add("bg-gray-200")'
+                        onmouseleave='this.classList.remove("bg-gray-200")'
+                        onclick='location.href="{% url 'app_teacher:choose-lesson'  topic_uuid=topic_uuid %}?classroom={{classroom.uuid}}";' style="cursor: pointer;"
+                    >
+                        <div class="d-flex flex-column">
+                            <h6 class="mb-3 text-sm">
+                                >{{ classroom.name }}
+                            </h6>
+                            <span class="mb-2 text-xs"
+                                >საგანი:
+                                <span class="text-dark font-weight-bold ms-sm-2"
+                                    >{{ classroom.subject }}</span
+                                ></span
+                            >
+                            <span class="mb-2 text-xs"
+                                >საფეხური:
+                                <span class="text-dark ms-sm-2 font-weight-bold"
+                                    >{% for classroom_to_levels in classroom.classroomtolevels_set.all %}
+                                    {{ classroom_to_levels.level.level }}
+                                {% endfor %} </span
+                                ></span
+                            >
+                            <span class="mb-2 text-xs"
+                                >მოსწავლეების რაოდენობა:
+                                <span class="text-dark ms-sm-2 font-weight-bold"
+                                    >{{ classroom.num_students }}</span
+                                ></span
+                            >
+                            <span class="mb-2 text-xs"
+                                >რანგი:
+                                <span class="text-dark ms-sm-2 font-weight-bold"
+                                    >{{ classroom.rank }}%</span
+                                ></span
+                            >
+                            <span class="text-xs"
+                                >შემდეგი გაკვეთილი:
+                                <span class="text-dark ms-sm-2 font-weight-bold"
+                                    >
+                                    {% if classroom.closest_lesson_name %}
+                                    {{ classroom.closest_lesson_name }} ({{ classroom.closest_lesson_date }}; {{ classroom.closest_lesson_start_time }})
+                                    {% else %}
+                                        გაკვეთილები არ არის დაგეგმილი
+                                    {% endif %}
+                                    </span
+                                ></span
+                            >
+                        </div>
+                    </li>
+                    {% endif %} {% endfor %}
+                </ul>
+            </div>
+
+        </div>
     {% endif %}
 
     {% if lessons %}
-        აირჩიეთ გაკვეთილი
-        <ul>
-            {% for lesson in lessons %}
-                <li><a href="{% url 'app_teacher:choose-lesson'  topic_uuid=topic_uuid %}?classroom={{classroom_uuid}}&lesson={{lesson.uuid}}">{{ lesson.name }}</a></li>        
-            {% endfor %}
-        </ul>
+    <div class="card">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-info shadow-warning border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">დავალების დასამატებლად აირჩიეთ გაკვეთილი კლასისთვის: {{classroom.name}}</h6>
+            </div>
+        </div>
+        <div class="card-body pt-4 p-3">
+            <ul class="list-group">
+                {% for lesson in lessons %}
+                <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg" style="cursor: pointer;"
+                    onmouseenter='this.classList.add("bg-gray-200")'
+                    onmouseleave='this.classList.remove("bg-gray-200")'
+                    onclick='location.href="{% url 'app_teacher:choose-lesson'  topic_uuid=topic_uuid %}?classroom={{classroom.uuid}}&lesson={{lesson.uuid}}";' style="cursor: pointer;"
+                >
+                    <div class="d-flex flex-column">
+                        <h6 class="mb-3 text-sm"><a href="{% url 'app_teacher:lesson-detail' uuid=lesson.uuid %}">
+                            {{ lesson.name }}
+                        </a></h6>
+                        <span class="mb-2 text-xs"
+                            >თარიღი:
+                            <span class="text-dark font-weight-bold ms-sm-2">
+                                {{ lesson.lesson_date }} {{ lesson.lesson_start_time }}
+                            </span
+                            ></span
+                        >
+                        <span class="mb-2 text-xs"
+                            >აღწერა:
+                            <span class="text-dark ms-sm-2 font-weight-bold"
+                                >{{ lesson.description }}</span
+                            ></span
+                        >
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
     {% endif %}
     
 

@@ -4,28 +4,79 @@
 
 {% block content %}
 
+<div class="card">
+	<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+		<div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+			<h6 class="text-white text-capitalize ps-3">შედეგები</h6>
+		</div>
+	</div>
+	<div class="card-body px-0 pb-2">
+		<div class="table-responsive">
+			<table class="table align-items-center mb-0">
+				<thead>
+					<tr>
+						<th
+							class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+						>
+							სახელი
+						</th>
+						<th
+							class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+						>
+							გვარი
+						</th>
+						<th
+							class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+						>
+							ქულა
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for student in students %}
+                        <tr>
+                            <td>
+                                <div class="d-flex px-2 py-1">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">{{student.user.name}}</h6>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-sm">{{student.user.surname}}</h6>
+                                </div>
+                            </td>
+                            {% if student.completed %}
+                                <td>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        {{student.student_points}} / {{student.max_points}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <a class="btn btn-outline-info px-3 mb-0" href="{% url 'app_teacher:test-results-student' test_uuid=test_uuid student_uuid=student.uuid %}">ტესტის ნახვა</a>
+                                    </div>
+                                </td>
+                            {% else %}
+                            <td>
+                                <div class="d-flex flex-column justify-content-center">
+                                    -
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-column justify-content-center">
+                                    არ აქვს დაწერილი    
+                                </div>
+                            </td>
+                            {% endif %}    
+                        </tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 
-<table class="list_table">
-    <tr>
-        <th>სახელი</th>
-        <th>გვარი</th>
-        <th>ქულა</th>
-    </tr>
-    {% for student in students %}
-        <tr>
-            <td>{{student.user.name}}</td>
-            <td>{{student.user.surname}}</td>
-            {% if student.completed %}
-                <td>{{student.student_points}} / {{student.max_points}}</td>
-                <td>
-                    <a href="{% url 'app_teacher:test-results-student' test_uuid=test_uuid student_uuid=student.uuid %}">ტესტის ნახვა</a>
-                </td>
-            {% else %}
-                <td> - </td>
-                <td>არ აქვს დაწერილი</td>
-            {% endif %}    
-        </tr>
-    {% endfor %}
-</table>
 
 {% endblock %}

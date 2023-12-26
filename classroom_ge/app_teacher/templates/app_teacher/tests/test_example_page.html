@@ -4,36 +4,49 @@
 
 {% block content %}
 
-<style>
-    ol {list-style-type: georgian;}
-    ol > li:before {
-        content: ")";
-    }
-</style>
+<div class="container-fluid py-4">
+	<div class="card mb-4">
+		<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+			<div
+				class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3"
+			>
+				<h6 class="text-white text-capitalize ps-3">
+                    {{ topic.name }}
+				</h6>
+			</div>
+		</div>
+        
+		<div class="card-body pt-4 p-3">
+            <a href="{% url 'app_teacher:choose-lesson' topic_uuid=topic.uuid %}">
+                <div class="btn btn-outline-primary shadow-primary">
+                    დააჭირეთ აქ გაკვეთილის იმ ასარჩევად სადაც გსურთ დაამატოთ აღნიშნული სავარჯიშოები    
+                </div>
+            </a>
+			<ol class="list-group">
+				{% for question in questions %}
+				<li
+					class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+				>
+					<div class="col">
+						<div class="mb-3 d-flex">
+							<div class="mt-2" style="margin-right: 5px;">
+							</div>
+							<p> {{ question.text }} </p>
+						</div>
 
-<h3>{{ topic.name }}</h3>
-
-{% if lesson %}
-    <a href="{% url 'app_teacher:choose-lesson' topic_uuid=topic.uuid %}?classroom={{lesson.classroom.uuid}}&lesson={{lesson.uuid}}">ამოცანების დამატება გაკვეთილში: {{ lesson.name }}</a>
-{% else %}
-    <a href="{% url 'app_teacher:choose-lesson' topic_uuid=topic.uuid %}">გაკვეთილის ასარჩევად სადაც გსურთ დაამატოთ აღნიშნული დავალებები დააჭირეთ აქ</a>
-{% endif %}
-
-<div style="width: 100%;">
-    {% for question in questions %}
-    <div style="background-color: bisque; margin-top: 3px; width: 40em; margin-left: auto; margin-right: auto;">
-        <div style="width: 80%; margin: auto;">
-            {{ question.text }}
-        </div>
-        <div style="display: flex; width: 80%; margin: auto;">
-            <ol>
-            {% for choice in question.questionchoice_set.all %}
-                <li>{{ choice.text }}</li>
-            {% endfor %}
-            </ol>
-        </div>
+						{% for choice in question.questionchoice_set.all %}
+                            <div class="form-check">
+                                <label class="custom-control-label" for="customRadio1" style="margin-top: 0.5rem;">
+                                    {{ choice.text }}
+                                </label>
+							</div>
+						{% endfor %}
+					</div>
+				</li>
+				{% endfor %}
+			</ol>
+		</div>
     </div>
-    {% endfor %}
 </div>
 
 {% endblock %}
