@@ -59,8 +59,15 @@
 						<span class="mb-2 text-xs"
 							>ჩაბარების ბოლო ვადა:
 							<span class="text-dark font-weight-bold ms-sm-2">
-								{% if test.deadline is None %} უვადო {% else %}
-								{{test.deadline}} {% endif %}
+								{% if test.deadline is None %}
+									უვადო 
+								{% else %}
+									{% if test.deadline < current_time %}
+										ვადა ამოიწურა ({{test.deadline}})
+									{% else %}
+										{{test.deadline}}
+									{% endif %}
+								{% endif %}
 							</span>
 						</span>
 						{% if test.completed %}
@@ -73,7 +80,7 @@
 						{% endif %}
 					</div>
 					<div class="ms-auto text-end">
-						{% if test.completed %}
+						{% if test.completed or test.deadline < current_time %}
 						<a
 							class="btn btn-outline-info px-3 mb-0"
 							href="{% url 'app_student:test-view' test_uuid=test.uuid %}"
