@@ -1,83 +1,108 @@
-{% extends 'base/main.html' %}
-{% load i18n %}
-{% load static %}
+{% extends 'base/main.html' %} {% load i18n %} {% load static %} {% block content %}
 
-{% block content %}
-<table style="width:100%" class="list_table" id="list_table">
-    <tr>
-        <th>საკლასო ოთახი</th>
-        <th>სახელი</th>
-        <th>თარიღი</th>
-        <th>დაწყება</th>
-        <th>დასწულება</th>
-        <th>აღწერა</th>
-    </tr>
-    <tr>
-        <td>
-            <a href="{% url 'app_student:classroom-detail' uuid=lesson.classroom.uuid %}" style="background-color: aqua;">
-                {{ lesson.classroom.name }}
-            </a>
-        </td>
-        <td>{{ lesson.name }}</td>
-        <td>{{ lesson.lesson_date }}</td>
-        <td>{{ lesson.lesson_start_time }}</td>
-        <td>{{ lesson.lesson_end_time }}</td>
-        <td>{{ lesson.description }}</td>
-    </tr>
-</table>
+<div class="container-fluid py-4">
+	<div class="card mb-4">
+		<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+			<div class="bg-gradient-info shadow-info border-radius-lg pt-4 pb-3">
+				<h6 class="text-white text-capitalize ps-3">
+					<span style="opacity: 0.5"
+						><a href="{% url 'app_student:classrooms' %}" class="text-white"
+							>კლასები</a
+						>
+						/
+						<a
+							href="{% url 'app_student:classroom-detail' uuid=lesson.classroom.uuid %}"
+							class="text-white"
+						>
+							{{ lesson.classroom.name }}
+						</a>
+						/
+					</span>
+					{{ lesson.name }}
+				</h6>
+			</div>
+		</div>
+		<div class="card-body pt-4 p-4">
+			<div class="d-flex flex-column">
+				<ul class="list-group">
+					<li class="list-group-item border-0 ps-0 pt-0 text-sm">
+						<strong class="text-dark">თარიღი:</strong> &nbsp; {{ lesson.lesson_date }}
+					</li>
+					<li class="list-group-item border-0 ps-0 pt-0 text-sm">
+						<strong class="text-dark">დრო:</strong> &nbsp; {{ lesson.lesson_start_time }} - {{ lesson.lesson_end_time }}
+					</li>
+					<li class="list-group-item border-0 ps-0 pt-0 text-sm">
+						<strong class="text-dark">აღწერა:</strong> &nbsp; {{ lesson.description }}
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 
-<br>
+	{% if tests %}
+	<div class="card">
+		<div class="card-header pb-0 p-3">
+			<div class="row">
+				<div class="col-6 d-flex align-items-center">
+					<h6 class="mb-0">დავალებები</h6>
+				</div>
+			</div>
+		</div>
+		<div class="card-body pt-4 p-3">
+			<ul class="list-group">
+				{% for test in tests %}
+				<li
+					class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+				>
+					<div class="d-flex flex-column">
+						<h6 class="mb-3 text-sm">{{test.name}}</h6>
+						<span class="mb-2 text-xs"
+							>ჩაბარების ბოლო ვადა:
+							<span class="text-dark font-weight-bold ms-sm-2">
+								{% if test.deadline is None %} უვადო {% else %}
+								{{test.deadline}} {% endif %}
+							</span>
+						</span>
+						{% if test.completed %}
+						<span class="mb-2 text-xs"
+							>ქულა:
+							<span class="text-dark ms-sm-2 font-weight-bold">
+								{{ test.total_points }} / {{ test.max_points }}
+							</span></span
+						>
+						{% endif %}
+					</div>
+					<div class="ms-auto text-end">
+						{% if test.completed %}
+						<a
+							class="btn btn-outline-info px-3 mb-0"
+							href="{% url 'app_student:test-view' test_uuid=test.uuid %}"
+							><i class="material-icons text-sm me-2">view_headline</i>დავალების
+							დათვალიერება</a
+						>
+						{% else %}
+						<a
+							class="btn btn-outline-success px-3 mb-0"
+							href="{% url 'app_student:test-page' test_uuid=test.uuid %}"
+							><i class="material-icons text-sm me-2">edit_note</i>დავალების
+							შესრულება</a
+						>
+						{% endif %}
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	{% endif %}
+</div>
 
-<table style="width:100%" class="list_table" id="list_table">
-    <tr>
-        <th>დავალებები</th>
-    </tr>
-    <tr>
-        <th>სახელი</th>
-        <th>ჩაბარების ბოლო ვადა</th>
-        <th>ქულა</th>
-        <th>დავალების შესრულება/დათვალიერება</th>
-    </tr>
-    {% for test in tests %}
-        <tr>
-            <td>{{test.name}}</td>
-            {% if test.deadline is None %}
-                <td>
-                    უვადო
-                </td>
-            {% else %}
-                <td>
-                    {{test.deadline}}
-                </td>
-            {% endif %}
-            {% if test.completed %}
-                    <td>
-                        {{ test.total_points }} / {{ test.max_points }}
-                    </td>
-                    <td style="background-color: aqua;">
-                        <a href="{% url 'app_student:test-view' test_uuid=test.uuid %}">
-                            დათვალიერება
-                        </a>
-                    </td>
-            {% else %}
-                <td> - </td>
-                {% if test.deadline < current_time %}
-                    <td style="background-color: aqua;">
-                        <a href="{% url 'app_student:test-page' test_uuid=test.uuid %}">
-                            ჩაბარების ბოლო ვადა ამოიწურა. დათვალიერება
-                        </a>
-                    </td>
-                {% else %}
-                    <td>
-                        <a href="{% url 'app_student:test-page' test_uuid=test.uuid %}" style="background-color: aqua;">
-                            დავალების შესრულება
-                        </a>
-                    </td>
-                {% endif %}
-            {% endif %}
-            
-        </tr>
-    {% endfor %}
-</table>
+{% endblock %} {% block js-foot %}
+
+<script>
+	var nav_page = document.getElementById("nav-classes");
+	nav_page.classList.add("active");
+	nav_page.classList.add("bg-gradient-warning");
+</script>
 
 {% endblock %}

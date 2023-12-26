@@ -1,7 +1,7 @@
 {% extends 'base/main.html' %} {% load i18n %} {% load static %} {% block content %}
 
 <div class="card">
-	<div class="card-header pb-0 p-3">
+	{% comment %} <div class="card-header pb-0 p-3">
 		<div class="row">
 			<div class="col-6 d-flex align-items-center">
 				<h6 class="mb-0">კლასები</h6>
@@ -12,12 +12,24 @@
 				>
 			</div>
 		</div>
+	</div> {% endcomment %}
+	<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+		<div class="bg-gradient-warning shadow-warning border-radius-lg pt-4 pb-3">
+			<h6 class="text-white text-capitalize ps-3">კლასები</h6>
+		</div>
+	</div>
+	<div class="col-6" style="margin-top: 20px; margin-left: 20px;">
+		<a class="btn bg-gradient-success mb-0" href="{% url 'app_teacher:create-new-classroom' %}"
+			><i class="material-icons text-sm">add</i>&nbsp;&nbsp;ახალი საკლასო ოთახი</a
+		>
 	</div>
 	<div class="card-body pt-4 p-3">
 		<ul class="list-group">
             {% for classroom in classrooms %} {% if classroom.is_archived == False %}
-            <li
-				class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+            <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+				onclick='location.href="{% url 'app_teacher:classroom-detail' uuid=classroom.uuid %}";' style="cursor: pointer;"
+				onmouseenter='this.classList.add("bg-gray-200")'
+				onmouseleave='this.classList.remove("bg-gray-200")'
 			>
 				<div class="d-flex flex-column">
 					<h6 class="mb-3 text-sm"><a href="{% url 'app_teacher:classroom-detail' uuid=classroom.uuid %}"
@@ -62,11 +74,11 @@
 						></span
 					>
 				</div>
-				<div class="ms-auto text-end">
+				{% comment %} <div class="ms-auto text-end">
 					<a class="btn btn-info px-3 mb-0" href="{% url 'app_teacher:create-new-lesson' classroom_uuid=classroom.uuid %}"
 						><i class="material-icons text-sm me-2">add</i>ახალი გაკვეთილი</a
 					>
-				</div>
+				</div> {% endcomment %}
 			</li>
             {% endif %} {% endfor %}
 

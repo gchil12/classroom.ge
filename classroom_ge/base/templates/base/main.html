@@ -231,7 +231,7 @@
 			class="main-content position-relative max-height-vh-100 h-100 border-radius-lg"
 		>
 			<!-- Navbar -->
-			<nav
+			{% comment %} <nav
 				class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
 				id="navbarBlur"
 				data-scroll="true"
@@ -263,19 +263,19 @@
 						</ul>
 					</div>
 				</div>
-			</nav>
+			</nav> {% endcomment %}
 			<!-- End Navbar -->
-			<div class="container-fluid py-4">
+			<div class="container-fluid py-4" style="margin-top: 50px;">
 
-		{% if messages %}
-		<ul class="messages">
-			{% for message in messages %}
-			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-			{% endfor %}
-		</ul>
-		{% endif %}
+			{% if messages %}
+			<ul class="messages">
+				{% for message in messages %}
+				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
         
-		{% block content %} {% endblock %}
+			{% block content %} {% endblock %}
 		
 				<footer class="footer py-4">
 					<div class="container-fluid">

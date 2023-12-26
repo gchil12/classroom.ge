@@ -4,88 +4,118 @@
 
 {% block content %}
 
-<ol style="width: 60%; margin-left: auto; margin-right: auto;">
-    {% for student_question in student_questions %}
-        <li>
-            <div style="width: 100%; margin: 10px;">
-                {{ student_question.question.question.text }}
-                <br>
-                {% for choice in student_question.question.question.questionchoice_set.all %}
-                    {% if student_question.answered %}
-                        {% if choice.is_correct %}
-                            <span style="background-color: lightgreen;">
-                                <input type="radio" style="margin-left: 10px;" disabled>
-                                {{ choice.text }}
-                            </span>
-                        {% else %}
+<div class="container-fluid py-4">
+	<div class="card mb-4">
+		<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+			<div
+				class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3"
+			>
+				<h6 class="text-white text-capitalize ps-3">
+					<span style="opacity: 0.5"
+						><a href="{% url 'app_student:classrooms' %}" class="text-white"
+							>კლასები</a
+						>
+						/
+						<a
+							href="{% url 'app_student:classroom-detail' uuid=test.lesson.classroom.uuid %}"
+							class="text-white"
+						>
+							{{ test.lesson.classroom.name }}
+						</a>
+						/
+						<a
+							href="{% url 'app_student:lesson-detail' lesson_uuid=test.lesson.uuid %}"
+							class="text-white"
+						>
+							{{ test.lesson.name }}
+						</a>
+						/
+					</span>
+					{{ test.name }}
+				</h6>
+			</div>
+		</div>
+		<div class="card-body pt-4 p-3">
+			<form
+				role="form"
+				class="text-start"
+				method="POST"
+			>
+				{% csrf_token %}
+
+				<ul class="list-group">
+					{% for student_question in student_questions %}
+					<li
+						class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+					>
+						<div class="col">
+							<div class="mb-3 d-flex">
+                                <div class="mt-2" style="margin-right: 5px;">
+								<strong
+									style="
+										padding: 10px;
+										color: white;
+										background-color: #d81b60;
+										border-radius: 7px;
+										margin-right: 5px;
+									"
+									>{{ student_question.order|add:"1" }}. </strong
+								>
+                                </div>
+                                <p> {{ student_question.question.question.text }} </p>
+							</div>
+
+							{% for choice in student_question.question.question.questionchoice_set.all %}
+                            {% if student_question.answered %}
+                            {% if choice.is_correct %}
+							<div class="form-check correct-answer">
+                            {% else %}
                             {% if choice in student_question.chosen_choices.all %}
-                                <span style="background-color: lightcoral;">
-                                    <input type="radio" style="margin-left: 10px;" disabled>
-                                    {{ choice.text }}
-                                </span>
+							<div class="form-check incorrect-answer">
                             {% else %}
-                                <input type="radio" style="margin-left: 10px;" disabled>
-                                {{ choice.text }}
+							<div class="form-check">
                             {% endif %}
-                        {% endif %}
-                    {% else %}
-                        <input type="radio" style="margin-left: 10px;" disabled>
-                        {{ choice.text }}
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </li>
-    {% endfor %}
-
-    {% comment %}
-        {% if student_choice.choice.is_correct %}
-            <li>
-                <div style="width: 100%; margin: 10px;">
-                    {{ student_choice.student_question.question.question.text }}
-                    <br>
-                    <div style="text-align: center;">
-                        {% for choice in student_choice.student_question.question.question.questionchoice_set.all %}
-                            {% if student_choice.choice == choice %}
-                                <span style="background-color: lightgreen;">
-                                    <input type="radio" style="margin-left: 10px;" disabled>
-                                    {{ choice.text }}
-                                </span>
-                            {% else %}
-                                <input type="radio" style="margin-left: 10px;" disabled>
-                                {{ choice.text }}
+                                {% endif %}
+								<label class="custom-control-label" for="customRadio1" style="margin-top: 0.5rem;"
+									>{{ choice.text }}</label
+								>
+							</div>
                             {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-            </li>
-        {% else %}
-        <li>
-            <div style="width: 100%; margin: 10px;">
-                {{ student_choice.student_question.question.question.text }}
-                <br>
-                <div style="text-align: center;">
-                    {% for choice in student_choice.student_question.question.question.questionchoice_set.all %}
-                        {% if student_choice.choice == choice %}
-                            <span style="background-color: lightsalmon;">
-                                <input type="radio" style="margin-left: 10px;" disabled>
-                                {{ choice.text }}
-                            </span>
-                        {% elif choice.is_correct %}
-                            <span style="background-color: lightgreen;">
-                                <input type="radio" style="margin-left: 10px;" disabled>
-                                {{ choice.text }}
-                            </span>
-                        {% else %}
-                            <input type="radio" style="margin-left: 10px;" disabled>
-                            {{ choice.text }}
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        </li>
-        {% endif %}
-    {% endfor %}
+							{% endfor %}
+						</div>
+					</li>
+					{% endfor %}
+				</ul>
+			</form>
+		</div>
+    </div>
+</div>
 
-    {% endcomment %}
-</ol>
+
+<style>
+    .correct-answer {
+        background: #c8f4c8;
+        border: 1px solid #5cbc6e;
+        border-radius: 10px;
+    }
+
+    .correct-answer * {
+        color: darkgreen;
+        font-weight: bold;
+    }
+
+    .incorrect-answer {
+        background: #f7e0d9;
+        border: 1px solid coral;
+        border-radius: 10px;
+    }
+
+    .incorrect-answer * {
+        color: darkred;
+        font-weight: bold;
+    }
+</style>
+
+
 {% endblock %}
+

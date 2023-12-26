@@ -3,57 +3,92 @@
 {% load static %}
 
 {% block content %}
-<a href="{% url 'app_student:classrooms' %}" style="background-color: aquamarine;">კლასების სია</a>
 
-<h3>მოსწავლე - კლასის დეტალები</h3>
 
-<br>
 
-<table class="list_table">
-    <tr>
-        <th>კლასის სახელი</th>
-        <td>{{ classroom.name }}</td>
-    </tr>
-    <tr>
-        <th>საგანი</th>
-        <td>{{ classroom.subject }}</td>
-    </tr>
-    <tr>
-        <th>აღწერა</th>
-        <td>{{ classroom.description }}</td>
-    </tr>
-    <tr>
-        <th>შეხვედრის ლინკი</th>
-        <th>{{ classroom.online_meeting_link }}</th>
-    </tr>
-</table>
+<div class="container-fluid py-4">
 
-<br>
+    <div class="card mb-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-warning shadow-warning border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">
+                    <span style="opacity:0.5;"><a href="{% url 'app_student:classrooms' %}" class="text-white">კლასები</a> / </span>
+                    {{ classroom.name }}</h6>
+            </div>
+        </div>
+        <div class="card-body pt-4 p-4">
+            <div class="d-flex flex-column">
+                <ul class="list-group">
+                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">საგანი:</strong> &nbsp; {{ classroom.subject }} </li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">მასწავლებელი:</strong> &nbsp; {{ classroom.owner.name }} {{ classroom.owner.surname }} </li>
+                    {% if classroom.online_meeting_link %}
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">შეხვედრის ბმული:</strong> &nbsp; {{ classroom.online_meeting_link }} </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    
 
-<table style="width:100%" class="list_table" id="list_table">
-    <tr>
-        <th colspan="4">
-            გაკვეთილები
-        </th>
-    </tr>
-    <tr>
-        <th>გაკვეთილის სახელი</th>
-        <th>თარიღი და საათი</th>
-        <th>აღწერა</th>
-        <th>დასაწერი სავარჯიშოები</th>
-    </tr>
-    {% for lesson in lessons %}
-        <tr>
-            <td style="background-color: aqua;">
-                <a href="{% url 'app_student:lesson-detail' lesson_uuid=lesson.uuid %}">
-                    {{ lesson.name }}
-                </a>
-            </td>
-            <td>{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}</td>
-            <td>{{ lesson.description }}</td>
-            <td>{{ lesson.num_tests_written }} </td>
-        </tr>
-    {% endfor %}
-</table>
+    
+    <div class="card">
+        <div class="card-header pb-0 p-3">
+            <div class="row">
+                <div class="col-6 d-flex align-items-center">
+                    <h6 class="mb-0">გაკვეთილები</h6>
+                </div>
+            </div>
+        </div>
+        <div class="card-body pt-4 p-3">
+            <ul class="list-group">
+                {% for lesson in lessons %}
+                <li
+                    class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+                >
+                    <div class="d-flex flex-column">
+                        <h6 class="mb-3 text-sm"><a href="{% url 'app_student:lesson-detail' lesson_uuid=lesson.uuid %}">
+                            {{ lesson.name }}
+                        </a></h6>
+                        <span class="mb-2 text-xs"
+                            >თარიღი:
+                            <span class="text-dark font-weight-bold ms-sm-2"
+                                >{{ lesson.lesson_date }} {{ lesson.lesson_start_time }}</span
+                            ></span
+                        >
+                        <span class="mb-2 text-xs"
+                            >აღწერა:
+                            <span class="text-dark ms-sm-2 font-weight-bold"
+                                >{{ lesson.description }}</span
+                            ></span
+                        >
+                        <span class="mb-2 text-xs"
+                            >დასაწერი სავარჯიშოები:
+                            <span class="text-dark ms-sm-2 font-weight-bold"
+                                >{% if lesson.num_tests_written %}{{ lesson.num_tests_written }} {% else %} 0 {% endif %}</span
+                            ></span
+                        >
+                    </div>
+                </li>
+                {% endfor %}
+    
+            </ul>
+        </div>
+    </div>
+    
+    </div>
+
+
+{% endblock %}
+
+
+
+
+{% block js-foot %}
+
+<script>
+    var nav_page = document.getElementById("nav-classes");
+    nav_page.classList.add("active");
+    nav_page.classList.add("bg-gradient-warning");
+</script>
 
 {% endblock %}

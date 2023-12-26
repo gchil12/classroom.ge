@@ -261,7 +261,8 @@ def test_show_page(request, test_uuid):
 
         context = {
             'student_questions': StudentQuestion.objects.filter(student_test=student_test).all().order_by('order'),
-            'student_test_uuid': student_test.uuid,
+            'student_test': student_test,
+            'test': test,
         }
         
     else:
@@ -273,7 +274,8 @@ def test_show_page(request, test_uuid):
         context = {
             'student_questions': student_questions,
             'selected_choices': selected_choices,
-            'student_test_uuid': student_test.uuid,
+            'student_test': student_test,
+            'test': test,
         }
 
 
@@ -361,6 +363,7 @@ def view_computed_test(request, test_uuid):
     
     context = {
         'student_questions': student_questions,
+        'test': test,
     }
 
     return render(request, 'app_student/test_completed_overview.html', context)
