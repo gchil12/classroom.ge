@@ -17,11 +17,21 @@
 		</div>
         
 		<div class="card-body pt-4 p-3">
-            <a href="{% url 'app_teacher:choose-lesson' topic_uuid=topic.uuid %}">
-                <div class="btn btn-outline-primary shadow-primary">
-                    დააჭირეთ აქ გაკვეთილის იმ ასარჩევად სადაც გსურთ დაამატოთ აღნიშნული სავარჯიშოები    
-                </div>
-            </a>
+            {% if lesson %}
+				<a href="{% url 'app_teacher:choose-lesson' topic_uuid=topic.uuid %}?classroom={{lesson.classroom.uuid}}&lesson={{lesson.uuid}}">
+					<div class="btn btn-outline-primary shadow-primary">
+						ამოცანების დამატება გაკვეთილში: {{ lesson.name }}
+					</div>
+				</a>
+				{% else %}
+				<a href="{% url 'app_teacher:choose-lesson' topic_uuid=topic.uuid %}">
+					<div class="btn btn-outline-primary shadow-primary">
+						დააჭირეთ იმ აქ გაკვეთილის ასარჩევად სადაც გსურთ დაამატოთ აღნიშნული სავარჯიშოები
+					</div>
+				</a>
+				
+				{% endif %}
+            
 			<ol class="list-group">
 				{% for question in questions %}
 				<li

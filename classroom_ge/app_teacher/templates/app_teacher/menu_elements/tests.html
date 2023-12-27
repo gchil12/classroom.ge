@@ -6,6 +6,13 @@
 			<h6 class="text-white text-capitalize ps-3">სავარჯიშოები</h6>
 		</div>
 	</div>
+	<form method="get" action="{% url 'app_teacher:test-main' %}" class="mt-3 mx-auto">
+		<input type="text" style="margin: auto;" name="subject_filter" placeholder="საგანი" value="{{ request.GET.subject_filter }}">
+		<input type="text" style="margin: auto;" name="topic_filter" placeholder="საკითხი" value="{{ request.GET.topic_filter }}">
+		<input type="hidden" style="margin: auto;" name="classroom" placeholder="საკითხი" value="{{lesson.classroom.uuid}}">
+		<input type="hidden" style="margin: auto;" name="lesson" placeholder="საკითხი" value="{{lesson.uuid}}">
+		<input type="submit" style="margin: auto;" class="btn bg-gradient-primary" value="გაფილტრვა">
+	</form>
 	<div class="card-body px-0 pb-2">
 		<div class="table-responsive">
 			<table class="table align-items-center mb-0">
@@ -41,7 +48,7 @@
 						<td>
 							<div class="d-flex flex-column justify-content-center">
 								<a
-									href="{% url 'app_teacher:test-example-page' uuid=topic.uuid %}?lesson={{lesson_uuid}}"
+									href="{% url 'app_teacher:test-example-page' uuid=topic.uuid %}?lesson={{lesson.uuid}}"
 								>
 									{{ topic.name }}
 								</a>

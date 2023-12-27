@@ -436,16 +436,35 @@ def tests_main_page(request):
     if not request.user.is_teacher:
         return redirect('app_base:home')
 
-    lesson_uuid = request.GET.get('lesson')
+    subject_filter = request.GET.get('subject_filter', '')
+    topic_filter = request.GET.get('topic_filter', '')
+
+    lesson_uuid = request.GET.get('lesson', '')
+    print(lesson_uuid)
+    try:
+        lesson = Lesson.objects.get(uuid=lesson_uuid)
+    except Exception:
+        lesson = None
 
     topics_with_at_least_one_question = Topic.objects.annotate(
         n_questions=Count('question')
     ).filter(n_questions__gte=1).order_by('identifier')
 
+    if subject_filter:
+        topics_with_at_least_one_question = topics_with_at_least_one_question.filter(subject__name__icontains=subject_filter)
+    if topic_filter:
+        topics_with_at_least_one_question = topics_with_at_least_one_question.filter(name__icontains=topic_filter)
+
+    if subject_filter:
+        topics_with_at_least_one_question = topics_with_at_least_one_question.filter(subject__name__icontains=subject_filter)
+    if topic_filter:
+        topics_with_at_least_one_question = topics_with_at_least_one_question.filter(name__icontains=topic_filter)
+
     context = {
         'topics': topics_with_at_least_one_question,
-        'lesson_uuid': lesson_uuid,
+        'lesson': lesson,
     }
+
     return render(request, 'app_teacher/menu_elements/tests.html', context)
 
 
