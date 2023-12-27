@@ -10,6 +10,12 @@
 			<h6 class="text-white text-capitalize ps-3">შედეგები</h6>
 		</div>
 	</div>
+
+    <div style="width: 40%; margin: auto;">
+        <canvas id="distribution_points"></canvas>
+    </div>
+    
+
 	<div class="card-body px-0 pb-2">
 		<div class="table-responsive">
 			<table class="table align-items-center mb-0">
@@ -78,5 +84,40 @@
 	</div>
 </div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+    var numbers = {{ student_points|safe }};
+    var labels = {{ student_points_label|safe }};
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('distribution_points').getContext('2d');
+        
+        // Creating labels for each number (optional)
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'ქულების განაწილება',
+                    data: numbers,
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+            }
+        });
+    });
+</script>
 
 {% endblock %}

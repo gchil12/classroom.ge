@@ -17,6 +17,7 @@ import uuid as unique_id_import
 import uuid
 from .models import Test, TestQuestion
 from collections import OrderedDict
+import numpy as np
 
 # Create your views here.
 @login_required(login_url='app_base:login')
@@ -665,9 +666,21 @@ def test_details(request, test_uuid):
         ),
     )
 
+
+    student_points = [student.student_points for student in students if student.student_points is not None and student.completed]
+    print(student_points)
+    student_points_histogram, student_points_bin_edges = np.histogram(student_points, bins=range(11))
+
+    # Convert histogram data to a format suitable for Chart.js
+    
+    student_points = student_points_histogram.tolist()
+    student_points_labels = [f'{int(student_points_bin_edges[i])}' for i in range(len(student_points_bin_edges)-1)]
+    
     context={
         'students': students,
         'test_uuid': test_uuid,
+        'student_points': student_points,
+        'student_points_label': student_points_labels,
     }
 
     return render(request, 'app_teacher/tests/test_details.html', context)
