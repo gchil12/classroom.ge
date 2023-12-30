@@ -45,7 +45,7 @@
 						</div>
 
 						{% for choice in question.questionchoice_set.all %}
-                            <div class="form-check">
+                            <div class="form-check {% if choice.is_correct %} correct-answer {% endif %}">
                                 <label class="custom-control-label" for="customRadio1" style="margin-top: 0.5rem;">
                                     {{ choice.text }}
                                 </label>
@@ -59,4 +59,17 @@
     </div>
 </div>
 
+
+<style>
+    .correct-answer {
+        background: #c8f4c8;
+        border: 1px solid #5cbc6e;
+        border-radius: 10px;
+    }
+
+    .correct-answer * {
+        color: darkgreen;
+        font-weight: bold;
+    }
+</style>
 {% endblock %}
