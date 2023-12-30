@@ -52,7 +52,7 @@
 									border-radius: 7px;
 									margin-right: 5px;
 								"
-								>{{ student_question.order|add:"1" }}. </strong
+								>{{ forloop.counter }}. </strong
 							>
 							</div>
 							<p> {{ student_question.question.question.text }} </p>

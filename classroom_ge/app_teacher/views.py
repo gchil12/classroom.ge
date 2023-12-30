@@ -495,7 +495,7 @@ def test_example_page(request, uuid):
     
     topic = get_object_or_404(Topic, uuid=uuid)
     
-    questions_for_topic = Question.objects.filter(questiontotopic__topic=topic).prefetch_related('questionchoice_set')
+    questions_for_topic = Question.objects.filter(questiontotopic__topic=topic).order_by('uuid').prefetch_related('questionchoice_set')
 
     context = {
         'topic': topic,
@@ -716,7 +716,7 @@ def test_results_student(request, test_uuid, student_uuid):
 
     student_test = get_object_or_404(StudentTest, student=current_student, test=test)
     
-    student_questions = StudentQuestion.objects.filter(student_test=student_test).order_by('order')
+    student_questions = StudentQuestion.objects.filter(student_test=student_test).order_by('question__question__uuid')
     
     
     context = {
