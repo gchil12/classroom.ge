@@ -251,10 +251,10 @@ def add_google_calendar_classroom_sbscription(request, credentials, classroom_uu
 
     if user_subscription.exists():
         if request.user.is_teacher:
-            messages.error(request, _('already_subscribed_to_this_classroom'))
+            messages.error(request, _('classroom_already_added_to_google_calendar'))
             redirect_url = reverse('app_teacher:classroom-detail', kwargs={'uuid': classroom.uuid})
         elif request.user.is_student:
-            messages.error(request, _('already_subscribed_to_this_classroom'))
+            messages.error(request, _('classroom_already_added_to_google_calendar'))
             redirect_url = reverse('app_student:classroom-detail', kwargs={'uuid': classroom.uuid})
         else:
             messages.error(request, _('error_in_class_subscription'))

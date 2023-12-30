@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-26 06:27+0100\n"
+"POT-Creation-Date: 2023-12-30 06:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,6 +46,7 @@ msgstr ""
 
 #: .\classroom_ge\app_student\models.py:63
 #: .\classroom_ge\app_teacher\models.py:47
+#: .\classroom_ge\app_teacher\models.py:91
 msgid "classroom"
 msgstr ""
 
@@ -53,38 +54,39 @@ msgstr ""
 msgid "subscribe"
 msgstr ""
 
-#: .\classroom_ge\app_student\views.py:81
+#: .\classroom_ge\app_student\views.py:82
 msgid "already_subscribed_to_classroom"
 msgstr ""
 
-#: .\classroom_ge\app_student\views.py:88
+#: .\classroom_ge\app_student\views.py:89
 msgid "subscribed_to_classroom_successfully"
 msgstr ""
 
-#: .\classroom_ge\app_student\views.py:303
-#: .\classroom_ge\app_teacher\views.py:143
-#: .\classroom_ge\app_teacher\views.py:257
-#: .\classroom_ge\app_teacher\views.py:278
-#: .\classroom_ge\app_teacher\views.py:302
-#: .\classroom_ge\app_teacher\views.py:347
-#: .\classroom_ge\app_teacher\views.py:370
-#: .\classroom_ge\app_teacher\views.py:468
-#: .\classroom_ge\app_teacher\views.py:540
-#: .\classroom_ge\app_teacher\views.py:560
-#: .\classroom_ge\app_teacher\views.py:621
-#: .\classroom_ge\app_teacher\views.py:690
+#: .\classroom_ge\app_student\views.py:218
+#: .\classroom_ge\app_student\views.py:338
+#: .\classroom_ge\app_teacher\views.py:144
+#: .\classroom_ge\app_teacher\views.py:258
+#: .\classroom_ge\app_teacher\views.py:279
+#: .\classroom_ge\app_teacher\views.py:303
+#: .\classroom_ge\app_teacher\views.py:348
+#: .\classroom_ge\app_teacher\views.py:371
+#: .\classroom_ge\app_teacher\views.py:488
+#: .\classroom_ge\app_teacher\views.py:576
+#: .\classroom_ge\app_teacher\views.py:597
+#: .\classroom_ge\app_teacher\views.py:658
+#: .\classroom_ge\app_teacher\views.py:740
 msgid "error_unauthorized_access"
 msgstr ""
 
-#: .\classroom_ge\app_student\views.py:307
+#: .\classroom_ge\app_student\views.py:342
 msgid "deadline_passed"
 msgstr ""
 
-#: .\classroom_ge\app_student\views.py:340
+#: .\classroom_ge\app_student\views.py:375
 msgid "test_submitted_sucessfully"
 msgstr ""
 
-#: .\classroom_ge\app_student\views.py:345
+#: .\classroom_ge\app_student\views.py:380
 msgid "something_is_wrong"
 msgstr ""
 
@@ -176,6 +178,7 @@ msgid "exam"
 msgstr ""
 
 #: .\classroom_ge\app_teacher\models.py:65
+#: .\classroom_ge\app_teacher\models.py:101
 msgid "lesson"
 msgstr ""
 
@@ -191,6 +194,18 @@ msgstr ""
 #: .\classroom_ge\app_teacher\models.py:82 .\classroom_ge\base\models.py:107
 #: .\classroom_ge\base\models.py:114
 msgid "question"
+msgstr ""
+
+#: .\classroom_ge\app_teacher\models.py:90
+msgid "user"
+msgstr ""
+
+#: .\classroom_ge\app_teacher\models.py:100
+msgid "subsription"
+msgstr ""
+
+#: .\classroom_ge\app_teacher\models.py:102
+msgid "google_calendar_event"
 msgstr ""
 
 #: .\classroom_ge\app_teacher\templates\app_teacher\classroom\confirm_classroom_deletion.html:8
@@ -217,45 +232,43 @@ msgstr ""
 msgid "are_you_shure_to_delete_test_with_name"
 msgstr ""
 
-#: .\classroom_ge\app_teacher\views.py:237
+#: .\classroom_ge\app_teacher\views.py:238
 msgid "new_class_created"
 msgstr ""
 
-#: .\classroom_ge\app_teacher\views.py:241
-#: .\classroom_ge\app_teacher\views.py:331
-#: .\classroom_ge\app_teacher\views.py:602
+#: .\classroom_ge\app_teacher\views.py:242
+#: .\classroom_ge\app_teacher\views.py:332
+#: .\classroom_ge\app_teacher\views.py:639
 msgid "invalid_input"
 msgstr ""
 
-#: .\classroom_ge\app_teacher\views.py:262
-#: .\classroom_ge\app_teacher\views.py:352
+#: .\classroom_ge\app_teacher\views.py:263
+#: .\classroom_ge\app_teacher\views.py:353
 msgid "classroom_deleted"
 msgstr ""
 
-#: .\classroom_ge\app_teacher\views.py:283
+#: .\classroom_ge\app_teacher\views.py:284
 msgid "classroom_archived"
 msgstr ""
 
-#: .\classroom_ge\app_teacher\views.py:285
+#: .\classroom_ge\app_teacher\views.py:286
 msgid "classroom_unarchived"
 msgstr ""
 
-#: .\classroom_ge\app_teacher\views.py:326
+#: .\classroom_ge\app_teacher\views.py:327
 msgid "new_lesson"
 msgstr ""
 
-#: .\classroom_ge\app_teacher\views.py:590
+#: .\classroom_ge\app_teacher\views.py:627
 msgid "exercises_added_successfully"
 msgstr ""
 
-#: .\classroom_ge\app_teacher\views.py:594
-#: .\classroom_ge\app_teacher\views.py:597 .\classroom_ge\base\forms.py:145
-#: .\classroom_ge\base\views.py:290 .\classroom_ge\base\views.py:302
-#: .\classroom_ge\base\views.py:305
+#: .\classroom_ge\app_teacher\views.py:631
+#: .\classroom_ge\app_teacher\views.py:634 .\classroom_ge\base\forms.py:145
 msgid "unknown_error_refresh"
 msgstr ""
 
-#: .\classroom_ge\app_teacher\views.py:695
+#: .\classroom_ge\app_teacher\views.py:745
 msgid "test_deleted"
 msgstr ""
 
@@ -428,7 +441,7 @@ msgid "registration"
 msgstr ""
 
 #: .\classroom_ge\base\templates\base\register.html:9
-#: .\classroom_ge\base\views.py:84
+#: .\classroom_ge\base\views.py:85
 msgid "message_first_step_of_registration_done"
 msgstr ""
 
@@ -448,36 +461,44 @@ msgstr ""
 msgid "resend_activation_code"
 msgstr ""
 
-#: .\classroom_ge\base\views.py:105 .\classroom_ge\base\views.py:119
+#: .\classroom_ge\base\views.py:106 .\classroom_ge\base\views.py:120
 msgid "email_or_password_does_not_exist"
 msgstr ""
 
-#: .\classroom_ge\base\views.py:112
+#: .\classroom_ge\base\views.py:113
 msgid "email_is_not_verified_yet"
 msgstr ""
 
-#: .\classroom_ge\base\views.py:145
+#: .\classroom_ge\base\views.py:146
 msgid "activate_account"
 msgstr ""
 
-#: .\classroom_ge\base\views.py:176
+#: .\classroom_ge\base\views.py:177
 msgid "email_activation_was_successfull"
 msgstr ""
 
-#: .\classroom_ge\base\views.py:181
+#: .\classroom_ge\base\views.py:182
 msgid "something_went_wrong"
 msgstr ""
 
-#: .\classroom_ge\base\views.py:267 .\classroom_ge\base\views.py:274
-msgid "event_added_to_calendar"
+#: .\classroom_ge\base\views.py:254 .\classroom_ge\base\views.py:257
+msgid "classroom_already_added_to_google_calendar"
 msgstr ""
 
-#: .\classroom_ge\base\views.py:269 .\classroom_ge\base\views.py:276
-msgid "error_adding_event_to_calendar"
+#: .\classroom_ge\base\views.py:260 .\classroom_ge\base\views.py:299
+msgid "error_in_class_subscription"
 msgstr ""
 
 #: .\classroom_ge\base\views.py:278
-msgid "event_already_exists_in_calendar"
+msgid "error_adding_lesson_event_to_google_calendar"
+msgstr ""
+
+#: .\classroom_ge\base\views.py:288
+msgid "error_adding_lesson_event_to_database"
+msgstr ""
+
+#: .\classroom_ge\base\views.py:292
+msgid "classroom_sucessfully_added_to_calendar"
 msgstr ""
 
 #: .\classroom_ge\classroom_ge\settings.py:174
