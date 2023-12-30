@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from .forms import RegistrationForm
 from .models import User
 from app_student.models import StudentProfile
-from app_teacher.models import TeacherProfile, Lesson
+from app_teacher.models import TeacherProfile, Classroom, Lesson
 
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
@@ -21,7 +21,7 @@ from classroom_ge.settings import GOOGLE_OAUTH2_CLIENT_ID, GOOGLE_OAUTH2_CLIENT_
 from classroom_ge.my_constants import google_oauth2_redirect_url
 from googleapiclient.discovery import build
 import uuid
-from app_teacher.models import UsersToLessonGoogleCalendarEvents
+from app_teacher.models import GoogleCalendarLessonEvents, GoogleCalendarSubscription
 
 
 # Create your views here.
@@ -185,7 +185,7 @@ def activate_account(request, uidb64, token):
 
 
 ################## Google Calendar ########################
-def google_login(request, called_from, lesson_uuid):
+def google_login(request, classroom_uuid):
     flow = Flow.from_client_config(
         client_config={
             'web': {
@@ -204,8 +204,7 @@ def google_login(request, called_from, lesson_uuid):
         include_granted_scopes='true'
     )
 
-    request.session['called_from'] = called_from
-    request.session['lesson_uuid'] = str(lesson_uuid)
+    request.session['classroom_uuid'] = str(classroom_uuid)
     request.session['state'] = state
     request.session.save()
 
@@ -233,80 +232,72 @@ def google_callback(request):
 
     credentials = flow.credentials
 
-    called_from = request.session.get('called_from')
-    lesson_uuid_str = request.session.get('lesson_uuid')
-    lesson_uuid = uuid.UUID(lesson_uuid_str)
+    classroom_uuid_str = request.session.get('classroom_uuid')
+    classroom_uuid = uuid.UUID(classroom_uuid_str)
 
-    if 'called_from' in request.session:
-        del request.session['called_from']
-
-    if 'lesson_uuid' in request.session:
-        del request.session['lesson_uuid']
+    if 'classroom_uuid' in request.session:
+        del request.session['classroom_uuid']
 
 
-    return add_lesson_to_calendar(request, credentials, called_from, lesson_uuid)
+    return add_google_calendar_classroom_sbscription(request, credentials, classroom_uuid)
 
 
-def add_lesson_to_calendar(request, credentials, called_from, lesson_uuid):
+def add_google_calendar_classroom_sbscription(request, credentials, classroom_uuid):
     service = build('calendar', 'v3', credentials=credentials)
 
-    lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
+    classroom = get_object_or_404(Classroom, uuid=classroom_uuid)
 
-    event_in_database = UsersToLessonGoogleCalendarEvents.objects.filter(user=request.user, lesson=lesson)
+    user_subscription = GoogleCalendarSubscription.objects.filter(user=request.user, classroom=classroom)
 
-    if not event_in_database:
-        try:
-            created_event = add_event_to_google_calendar(request, service, lesson)
-
-            db_new_calendar_event = UsersToLessonGoogleCalendarEvents.objects.create(
-                user=request.user,
-                lesson=lesson,
-                google_calendar_event_id=created_event['id']
-            )
-            db_new_calendar_event.save()
-            messages.success(request, _('event_added_to_calendar'))
-        except Exception:
-            messages.error(request, _('error_adding_event_to_calendar'))
-    else:
-        if not check_event_exists(service, event_in_database.first().google_calendar_event_id):
-            try:
-                add_event_to_google_calendar(request, service, lesson)
-                messages.success(request, _('event_added_to_calendar'))
-            except Exception:
-                messages.error(request, _('error_adding_event_to_calendar'))
-        else:
-            messages.error(request, _('event_already_exists_in_calendar'))
-
-    
-    if called_from == 'classroom':
-        uuid = lesson.classroom.uuid
-        uuid_name = 'uuid'
-
+    if user_subscription.exists():
         if request.user.is_teacher:
-            link_to_reverse = 'app_teacher:classroom-detail'
+            messages.error(request, _('already_subscribed_to_this_classroom'))
+            redirect_url = reverse('app_teacher:classroom-detail', kwargs={'uuid': classroom.uuid})
         elif request.user.is_student:
-            link_to_reverse = 'app_student:classroom-detail'
+            messages.error(request, _('already_subscribed_to_this_classroom'))
+            redirect_url = reverse('app_student:classroom-detail', kwargs={'uuid': classroom.uuid})
         else:
-            messages.error(request, _('unknown_error_refresh'))
-            return redirect('app_base:home')
+            messages.error(request, _('error_in_class_subscription'))
+            redirect_url = reverse('app_base:home')
         
-    elif called_from=='lesson':
-        uuid = lesson.uuid
-        uuid_name = 'lesson_uuid'
+        return redirect(redirect_url)
 
-        if request.user.is_teacher:
-            link_to_reverse = 'app_teacher:lesson-detail'
-        elif request.user.is_student:
-            link_to_reverse = 'app_student:lesson-detail'
-        else:
-            messages.error(request, _('unknown_error_refresh'))
-            return redirect('app_base:home')
-    else:
-        messages.error(request, _('unknown_error_refresh'))
-        return redirect('app_base:home')
+
+    db_current_subscription = GoogleCalendarSubscription.objects.create(
+        user=request.user,
+        classroom=classroom
+    )
+
+    lessons = Lesson.objects.filter(classroom=classroom)
+
+    error_occurred = False
+    for lesson in lessons:
+        try:
+            google_calendar_event = add_event_to_google_calendar(service, lesson)
+        except Exception:
+            messages.error(request, f'{lesson.name}: ' + _('error_adding_lesson_event_to_google_calendar'))
+            error_occurred = True
+
+        try:
+            db_cur_lesson_event = GoogleCalendarLessonEvents.objects.create(
+                subscription=db_current_subscription,
+                lesson=lesson,
+                google_calendar_event_id = google_calendar_event['id']
+            )
+        except Exception as e:
+            messages.error(request, f'{lesson.name}: ' + _('error_adding_lesson_event_to_database'))
+            error_occurred = True
     
-
-    redirect_url = reverse(link_to_reverse, kwargs={uuid_name: uuid})
+    if not error_occurred:
+        messages.success(request, _('classroom_sucessfully_added_to_calendar'))
+    
+    if request.user.is_teacher:
+        redirect_url = reverse('app_teacher:classroom-detail', kwargs={'uuid': classroom.uuid})
+    elif request.user.is_student:
+        redirect_url = reverse('app_student:classroom-detail', kwargs={'uuid': classroom.uuid})
+    else:
+        messages.error(request, _('error_in_class_subscription'))
+        redirect_url = reverse('app_base:home')
     
     return redirect(redirect_url)
 
@@ -321,7 +312,7 @@ def check_event_exists(service, event_id):
         return False  # Event does not exist, return False
     
 
-def add_event_to_google_calendar(request, service, lesson):
+def add_event_to_google_calendar(service, lesson):
     event = {
         'summary': lesson.name,
         'description': lesson.description,

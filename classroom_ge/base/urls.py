@@ -11,6 +11,6 @@ urlpatterns = [
     path('send_verification_email/<uidb64>', views.send_email_after_registration, name='send_email_verification'),
 
     # For Addition to Google Calendar
-    path('google/login/<str:called_from>/<uuid:lesson_uuid>', views.google_login, name='google_login'),
+    path('google/login/<uuid:classroom_uuid>', views.google_login, name='google_login'),
     path('google/callback', views.google_callback, name='google_callback'),
 ]

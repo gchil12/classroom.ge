@@ -83,14 +83,24 @@ class TestQuestion(models.Model):
     max_point = models.IntegerField(default=0, blank=True)
 
 
-class UsersToLessonGoogleCalendarEvents(models.Model):
-    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-    
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True)
-    google_calendar_event_id = models.CharField(max_length=255, blank=True, null=True, default=None)
 
+class GoogleCalendarSubscription(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name=_('user'))
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, verbose_name=_('classroom'))
 
     class Meta:
-        unique_together = ('user', 'lesson')
+        unique_together = ('user', 'classroom')
+
+
+class GoogleCalendarLessonEvents(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    
+    subscription = models.ForeignKey(GoogleCalendarSubscription, on_delete=models.CASCADE, blank=False, null=True, verbose_name=_('subsription'))
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, verbose_name=_('lesson'))
+    google_calendar_event_id = models.CharField(max_length=255, blank=True, null=True, default=None, verbose_name=_('google_calendar_event'))
+
+    class Meta:
+        unique_together = ('subscription', 'lesson')
     

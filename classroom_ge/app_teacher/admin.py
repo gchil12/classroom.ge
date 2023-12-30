@@ -8,7 +8,8 @@ from .models import (
     Lesson,
     Test,
     TestQuestion,
-    UsersToLessonGoogleCalendarEvents
+    GoogleCalendarLessonEvents,
+    GoogleCalendarSubscription,
     # Test,
     # TestVariant,
     # Questions,
@@ -39,4 +40,5 @@ admin.site.register(ClassroomToLevels)
 admin.site.register(Lesson)
 admin.site.register(Test, TestAdmin)
 admin.site.register(TestQuestion, TestQuestionAdmin)
-admin.site.register(UsersToLessonGoogleCalendarEvents)
+admin.site.register(GoogleCalendarLessonEvents)
+admin.site.register(GoogleCalendarSubscription)

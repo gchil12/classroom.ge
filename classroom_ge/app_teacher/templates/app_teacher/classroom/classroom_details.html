@@ -31,6 +31,9 @@
 						{{ domain }}{% url 'app_student:subscribe-classroom' classroom_uuid=classroom.uuid %}
 					</span> <a href="#" onclick="copySubscriptionLink(event)">(კოპირება)</a>
 				</li>
+				<li class="list-group-item border-0 ps-0 text-sm">
+					<a class="btn btn-outline-info mb-0" href="{% url 'app_base:google_login' classroom_uuid=classroom.uuid %}">კლასის Google Calendar-ში დამატება</a>
+				</li>
             </ul>
         </div>
         <div class="ms-auto text-end">
@@ -125,7 +128,6 @@
 							>{{ lesson.description }}</span
 						></span
 					>
-					<a class="btn btn-outline-info mb-0" href="{% url 'app_base:google_login' called_from='classroom' lesson_uuid=lesson.uuid %}">Google Calendar-ში დამატება</a>
 				</div>
 				<div class="ms-auto text-end">
 					<a class="btn btn-outline-danger px-3 mb-0" href="{% url 'app_teacher:lesson-delete' uuid=lesson.uuid %}"

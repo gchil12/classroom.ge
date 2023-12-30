@@ -24,6 +24,9 @@
                     {% if classroom.online_meeting_link %}
                     <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">შეხვედრის ბმული:</strong> &nbsp; {{ classroom.online_meeting_link }} </li>
                     {% endif %}
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">
+                        <a class="btn btn-outline-info mb-0" href="{% url 'app_base:google_login' classroom_uuid=classroom.uuid %}">Google Calendar-ში დამატება</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -69,7 +72,6 @@
                                 >{{ lesson.tests_to_write }}</span
                             ></span
                         >
-                        <a class="btn btn-outline-info mb-0" href="{% url 'app_base:google_login' called_from='classroom' lesson_uuid=lesson.uuid %}">Google Calendar-ში დამატება</a>
                     </div>
                 </li>
                 {% endfor %}
