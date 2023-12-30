@@ -44,7 +44,8 @@ def student_homepage(request):
     upcoming_tests = Test.objects.filter(
         Q(studenttest__isnull=True) |  # Test not attempted by the student
         Exists(incomplete_test_subquery),  # Test attempted but not completed
-        Q(deadline__gt=now.date()) | Q(deadline__isnull=True)
+        Q(deadline__gt=now.date()) | Q(deadline__isnull=True),
+        lesson__classroom__in=student_to_classrooms.values('classroom')
     ).distinct().annotate(
         classroom_name=F('lesson__classroom__name'),
         classroom_uuid=F('lesson__classroom__uuid'),
@@ -210,10 +211,14 @@ def classroom_details(request, uuid):
 def lesson_details(request, lesson_uuid):
     if not request.user.is_student:
         return redirect('app_base:home')
-    
-    current_student = StudentProfile.objects.get(user=request.user)
 
     lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
+
+    if not StudentToClassroom.objects.filter(student=request.user, classroom=lesson.classroom).exists():
+        messages.error(request, _('error_unauthorized_access'))
+        return redirect('app_student:home') #NOSONAR
+
+    current_student = StudentProfile.objects.get(user=request.user)
 
     tests = Test.objects.filter(
         lesson=lesson
@@ -267,7 +272,7 @@ def test_show_page(request, test_uuid):
     current_student = get_object_or_404(StudentProfile, user=request.user)
 
     student_test = StudentTest.objects.filter(student=current_student, test=test)
-    student_test_exists = len(student_test) > 0
+    student_test_exists = student_test.exists()
 
     if not student_test_exists:
         student_test = StudentTest.objects.create(
