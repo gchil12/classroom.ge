@@ -7,7 +7,19 @@
 <div class="card">
 	<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
 		<div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-			<h6 class="text-white text-capitalize ps-3">შედეგები</h6>
+			<h6 class="text-white text-capitalize ps-3">
+                <span style="opacity:0.5;">
+                    <a href="{% url 'app_teacher:classrooms' %}" class="text-white">
+                        კლასები
+                    </a> / 
+                    <a href="{% url 'app_teacher:classroom-detail' uuid=test.lesson.classroom.uuid %}" class="text-white">
+                        {{ test.lesson.classroom.name }}
+                    </a> /
+                    <a href="{% url 'app_teacher:lesson-detail' uuid=test.lesson.uuid %}" class="text-white">
+                        {{ test.lesson.name }}
+                    </a> /
+                </span>
+                {{ test.name }}</h6>
 		</div>
 	</div>
 
@@ -61,7 +73,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex flex-column justify-content-center">
-                                        <a class="btn btn-outline-info px-3 mb-0" href="{% url 'app_teacher:test-results-student' test_uuid=test_uuid student_uuid=student.uuid %}">ტესტის ნახვა</a>
+                                        <a class="btn btn-outline-info px-3 mb-0" href="{% url 'app_teacher:test-results-student' test_uuid=test.uuid student_uuid=student.uuid %}">ტესტის ნახვა</a>
                                     </div>
                                 </td>
                             {% else %}

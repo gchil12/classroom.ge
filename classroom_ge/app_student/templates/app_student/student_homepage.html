@@ -11,16 +11,14 @@
 			<div class="card-body pt-4 p-3">
 				<ul class="list-group">
 					{% for closest_lesson in closest_lessons %}
-					<li
-						class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+					<li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+						onclick='location.href="{% url 'app_student:lesson-detail' lesson_uuid=closest_lesson.uuid %}";' style="cursor: pointer;"
+						onmouseenter='this.classList.add("bg-gray-200")'
+						onmouseleave='this.classList.remove("bg-gray-200")'
 					>
 						<div class="d-flex flex-column">
 							<h6 class="mb-3 text-sm">
-								<a
-									href="{% url 'app_student:lesson-detail' lesson_uuid=closest_lesson.uuid %}"
-								>
-									{{ closest_lesson.name }}
-								</a>
+								{{ closest_lesson.name }}
 							</h6>
 							<span class="mb-2 text-xs"
 								>თარიღი:
@@ -36,10 +34,12 @@
 							>
 							<span class="mb-2 text-xs"
 								>კლასი:
-								<span class="text-dark font-weight-bold ms-sm-2"
-									>{{ closest_lesson.classroom_name }}</span
-								></span
-							>
+								<span class="text-dark font-weight-bold ms-sm-2">
+									<a href="{% url 'app_student:classroom-detail' uuid=closest_lesson.classroom_uuid %}">
+										{{ closest_lesson.classroom_name }}
+									</a>
+								</span>
+							</span>
 						</div>
 					</li>
 					{% endfor %}
@@ -60,15 +60,14 @@
 			<div class="card-body pt-4 p-3">
 				<ul class="list-group">
 					{% for student_to_classroom in student_to_classrooms %}
-					<li
-						class="col-sm list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+					<li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+						onclick='location.href="{% url 'app_student:classroom-detail' uuid=student_to_classroom.classroom.uuid %}";' style="cursor: pointer;"
+						onmouseenter='this.classList.add("bg-gray-200")'
+						onmouseleave='this.classList.remove("bg-gray-200")'
 					>
 						<div class="d-flex flex-column">
 							<h6 class="mb-3 text-sm">
-								<a
-									href="{% url 'app_student:classroom-detail' uuid=student_to_classroom.classroom.uuid %}"
-									>{{ student_to_classroom.classroom.name }}</a
-								>
+								{{ student_to_classroom.classroom.name }}
 							</h6>
 							<span class="mb-2 text-xs"
 								>მასწავლებელი:
@@ -99,16 +98,15 @@
 		<div class="card-body pt-4 p-3">
 			<ul class="list-group">
 				{% for test in upcoming_tests %}
-
-				<li
-					class="col-sm list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+				
+				<li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+					onclick='location.href="{% url 'app_student:lesson-detail' lesson_uuid=test.lesson_uuid %}";' style="cursor: pointer;"
+					onmouseenter='this.classList.add("bg-gray-200")'
+					onmouseleave='this.classList.remove("bg-gray-200")'
 				>
 					<div class="d-flex flex-column">
 						<h6 class="mb-3 text-sm">
-							<a
-								href="{% url 'app_student:lesson-detail' lesson_uuid=test.lesson_uuid %}"
-								>{{ test.name }}</a
-							>
+							{{ test.name }}
 						</h6>
 						<span class="mb-2 text-xs"
 							>გაკვეთილი:

@@ -132,6 +132,8 @@
 							</a>
 						</li>
 						{% endif %}
+						
+						{% comment %}
 						<li class="nav-item">
 							<a class="nav-link text-white" id="nav-notifications" href="#">
 								<div
@@ -139,11 +141,16 @@
 								>
 									<i class="material-icons opacity-10">notifications</i>
 								</div>
+						
 								<span class="nav-link-text ms-1">შეტყობინებები</span>
+						
 							</a>
 						</li>
-					{% endif %}
+						{% endcomment %}
 
+					{% endif %}
+					
+					
 					<li class="nav-item mt-3">
 						<h6
 							class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8"
@@ -151,6 +158,8 @@
 							ანგარიში
 						</h6>
 					</li>
+					
+
 					{% if not request.user.is_authenticated %}
 						<li class="nav-item">
 							<a class="nav-link text-white" id="nav-registration" href="{% url 'app_base:register' %}">
@@ -176,6 +185,8 @@
 					{% endif %}
 					
 					{% if request.user.is_authenticated %}
+
+					{% comment %}
 						<li class="nav-item">
 							<a class="nav-link text-white" id="nav-profile" href="#">
 								<div
@@ -186,6 +197,7 @@
 								<span class="nav-link-text ms-1">პროფილი</span>
 							</a>
 						</li>
+					{% endcomment %}
 						<li class="nav-item">
 							<form method="post" action="{% url 'app_base:logout' %}">
 								{% csrf_token %}

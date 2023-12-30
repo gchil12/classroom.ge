@@ -697,7 +697,7 @@ def test_details(request, test_uuid):
     
     context={
         'students': students,
-        'test_uuid': test_uuid,
+        'test': test,
         'student_points': student_points,
         'student_points_label': student_points_labels,
     }
@@ -722,6 +722,7 @@ def test_results_student(request, test_uuid, student_uuid):
     context = {
         'test': test,
         'student_questions': student_questions,
+        'student_test': student_test,
     }
 
     return render(request, 'app_student/test_completed_overview.html', context)

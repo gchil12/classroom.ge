@@ -11,27 +11,50 @@
 				class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3"
 			>
 				<h6 class="text-white text-capitalize ps-3">
-					<span style="opacity: 0.5"
-						><a href="{% url 'app_student:classrooms' %}" class="text-white"
-							>კლასები</a
-						>
+					<span style="opacity: 0.5">
+						{% if request.user.is_student %}
+							<a href="{% url 'app_student:classrooms' %}" class="text-white">კლასები</a>
+						{% elif request.user.is_teacher %}
+							<a href="{% url 'app_teacher:classrooms' %}" class="text-white">კლასები</a>
+						{% endif %}
 						/
-						<a
-							href="{% url 'app_student:classroom-detail' uuid=test.lesson.classroom.uuid %}"
-							class="text-white"
-						>
-							{{ test.lesson.classroom.name }}
-						</a>
+						{% if request.user.is_student %}
+							<a href="{% url 'app_student:classroom-detail' uuid=test.lesson.classroom.uuid %}" class="text-white">
+								{{ test.lesson.classroom.name }}
+							</a>
+						{% elif request.user.is_teacher %}
+							<a href="{% url 'app_teacher:classroom-detail' uuid=test.lesson.classroom.uuid %}" class="text-white">
+								{{ test.lesson.classroom.name }}
+							</a>
+						{% endif %}
 						/
-						<a
-							href="{% url 'app_student:lesson-detail' lesson_uuid=test.lesson.uuid %}"
-							class="text-white"
-						>
-							{{ test.lesson.name }}
-						</a>
+						{% if request.user.is_student %}
+							<a
+								href="{% url 'app_student:lesson-detail' lesson_uuid=test.lesson.uuid %}"
+								class="text-white">
+								{{ test.lesson.name }}
+							</a>
+						{% elif request.user.is_teacher %}
+							<a
+								href="{% url 'app_teacher:lesson-detail' uuid=test.lesson.uuid %}"
+								class="text-white">
+								{{ test.lesson.name }}
+							</a>
+						{% endif %}
 						/
 					</span>
-					{{ test.name }}
+					{% if request.user.is_student %}
+						{{ test.name }}
+					{% elif request.user.is_teacher %}
+					<span style="opacity: 0.5">
+						<a
+							href="{% url 'app_teacher:test-details' test_uuid=test.uuid %}"
+							class="text-white">
+							{{ test.name }}
+						</a> /
+					</span>
+						ნაწერი ({{ student_test.student.user.name }} {{ student_test.student.user.surname }})
+					{% endif %}
 				</h6>
 			</div>
 		</div>
