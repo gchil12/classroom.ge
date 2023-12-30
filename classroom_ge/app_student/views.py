@@ -388,12 +388,39 @@ def view_computed_test(request, test_uuid):
     if not request.user.is_student:
         return redirect('app_base:home')
     
+    now = timezone.now()
+
     test = get_object_or_404(Test,uuid=test_uuid)
     current_student = StudentProfile.objects.get(user=request.user)
 
-    student_test = get_object_or_404(StudentTest, student=current_student, test=test)
+    try:
+        student_test = StudentTest.objects.get(student=current_student, test=test)
+    except Exception:
+        student_test = StudentTest.objects.create(
+            student=current_student,
+            test=test,
+            completed=False,
+            start_time=now,
+            end_time=now
+        )
+        
     
     student_questions = StudentQuestion.objects.filter(student_test=student_test).order_by('order')
+
+    if not student_questions.exists():
+        test_questions = list(TestQuestion.objects.filter(test=test).all())
+        shuffle(test_questions)
+        order_id = 0
+        for test_question in test_questions:
+            StudentQuestion.objects.create(
+                student_test = student_test,
+                question = test_question,
+                order=order_id,
+                given_point=0
+            )
+            order_id += 1
+
+        student_questions = StudentQuestion.objects.filter(student_test=student_test).order_by('order')
     
     
     context = {
