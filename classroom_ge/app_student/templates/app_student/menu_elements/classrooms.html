@@ -10,11 +10,14 @@
 		<ul class="list-group">
             {% for classroom in classrooms %} {% if classroom.is_archived == False %}
             <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
+				onclick='location.href="{% url 'app_student:classroom-detail' uuid=classroom.uuid %}";' style="cursor: pointer;"
+				onmouseenter='this.classList.add("bg-gray-200")'
+				onmouseleave='this.classList.remove("bg-gray-200")'
 			>
 				<div class="d-flex flex-column">
-					<h6 class="mb-3 text-sm"><a href="{% url 'app_student:classroom-detail' uuid=classroom.uuid %}"
-                        >{{ classroom.name }}</a
-                    ></h6>
+					<h6 class="mb-3 text-sm">
+						{{ classroom.name }}
+					</h6>
 					<span class="mb-2 text-xs"
 						>საგანი:
 						<span class="text-dark font-weight-bold ms-sm-2"
