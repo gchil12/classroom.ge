@@ -35,6 +35,9 @@ def redirect_to_homepage(request):
 
 
 def home(request):
+    if request.user.is_authenticated:
+        return redirect_to_homepage(request)
+    
     return redirect('app_base:login')
     # return render(#request, 'base/home.html')
 
