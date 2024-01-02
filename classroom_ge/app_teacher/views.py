@@ -84,7 +84,7 @@ def annotate_classrooms_with_rank(classrooms_extended_table, now):
                 tests = Test.objects.filter(
                     lesson=lesson
                 ).annotate(
-                    total_max_point = Sum(F('testquestion__max_point')) or 0
+                    total_max_point = Sum(F('testquestion__max_point'))
                 )
 
                 for test in tests:
