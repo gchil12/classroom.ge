@@ -1,7 +1,8 @@
 from django.db import models
 import uuid
-from base.models import User, Subject, Question
+from base.models import User, Subject, Question, VideoLecture
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 
 class TeacherProfile(models.Model):
@@ -82,6 +83,21 @@ class TestQuestion(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, blank=False, null=True, verbose_name=_('question'))
     max_point = models.IntegerField(default=0, blank=True)
 
+
+
+class VideoLectureToLesson(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    video_lecture = models.ForeignKey(VideoLecture, on_delete=models.CASCADE, blank=False, null=True, verbose_name=_('video_lecture'))
+    custom_video_lecture = models.CharField(max_length=255, blank=True, null=True, default=None, verbose_name=_('custom_video_lecture'))
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, blank=False, null=True, verbose_name=_('lesson'))
+
+    def clean(self):
+        if (self.video_lecture is None and self.custom_video_lecture is None) or (self.video_lecture is not None and self.custom_video_lecture is not None):
+            raise ValidationError(_('Either video_lecture or custom_video_lecture must be set, but not both.'))
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super(VideoLectureToLesson, self).save(*args, **kwargs)
 
 
 class GoogleCalendarSubscription(models.Model):

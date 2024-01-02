@@ -22,6 +22,11 @@ urlpatterns = [
     path('test_delete/<uuid:test_uuid>/', views.test_delete, name='test-delete'),
     path('test_results/<uuid:test_uuid>/<uuid:student_uuid>', views.test_results_student, name='test-results-student'),
 
+
+    path('video_lectures', views.video_topic_list, name='video-main-topic-list'),
+    path('video_lectures/<uuid:topic_uuid>/', views.video_topic_videos_list, name='video-main-topic-video-list'),
+    path('add_video/<uuid:video_uuid>/', views.choose_lesson_for_video, name='choose-lesson-for-video'),
+
     path('choose_lesson/<uuid:topic_uuid>/', views.choose_lessons_to_add_test, name='choose-lesson'),
     path('choose_lesson/<uuid:classroom_uuid>/<uuid:lesson_uuid>/<uuid:topic_uuid>', views.add_test_to_lesson_confirmation, name='add-test-confirmation'),
 ]

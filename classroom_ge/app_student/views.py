@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
-from app_teacher.models import Classroom, Lesson, Test, TestQuestion
+from app_teacher.models import Classroom, Lesson, Test, TestQuestion, VideoLectureToLesson
 from base.models import QuestionChoice
 from .models import StudentToClassroom, StudentProfile, StudentTest, StudentQuestion, StudentQuestionToChoice
 from django.utils import timezone
@@ -252,10 +252,16 @@ def lesson_details(request, lesson_uuid):
         ))
     ).distinct().order_by('-date_created')  
     
+
+    videos_to_lesson = VideoLectureToLesson.objects.filter(
+        lesson=lesson
+    )
+
     context = {
         'tests': tests,
         'lesson': lesson,
-        'current_time': timezone.now().date()
+        'current_time': timezone.now().date(),
+        'videos_to_lesson': videos_to_lesson,
     }
 
     return render(request, 'app_student/lesson_details.html', context)

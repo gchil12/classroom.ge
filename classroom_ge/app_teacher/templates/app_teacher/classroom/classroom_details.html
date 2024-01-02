@@ -26,10 +26,10 @@
 				</li>
                 <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">შეხვედრის ბმული:</strong> &nbsp; {{ classroom.online_meeting_link }} </li>
                 <li class="list-group-item border-0 ps-0 text-sm">
-					<strong class="text-dark">მოწვევის ბმული:</strong> &nbsp;
-					<span id="subscription-link">
+					<strong class="text-dark">მოწვევის ბმულის კოპირება:</strong> &nbsp;
+					<span id="subscription-link" style="display: none;">
 						{{ domain }}{% url 'app_student:subscribe-classroom' classroom_uuid=classroom.uuid %}
-					</span> <a href="#" onclick="copySubscriptionLink(event)">(კოპირება)</a>
+					</span> <a href="#" onclick="copySubscriptionLink(event)" title="კოპირება"><i class="material-icons opacity-10">content_copy</i></a>
 				</li>
 				<li class="list-group-item border-0 ps-0 text-sm">
 					<a class="btn btn-outline-info mb-0" href="{% url 'app_base:google_login' classroom_uuid=classroom.uuid %}">კლასის Google Calendar-ში დამატება</a>
@@ -173,7 +173,7 @@
 		document.body.removeChild(textarea);
 
 		// Optional: Alert the user that text has been copied
-		alert('ლინკი წარმატებით დაკოპირდა');
+		alert('მოწვევის ბმული წარმატებით დაკოპირდა');
 	}
 </script>
 

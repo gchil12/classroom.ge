@@ -43,3 +43,9 @@ table{
     border:1px solid black;
     text-align: center;
 }
+
+
+/* Main Menu Design */
+.video-element{
+    background-color: #4786AE !important;
+}

@@ -10,6 +10,7 @@ from .models import (
     TestQuestion,
     GoogleCalendarLessonEvents,
     GoogleCalendarSubscription,
+    VideoLectureToLesson
     # Test,
     # TestVariant,
     # Questions,
@@ -42,3 +43,4 @@ admin.site.register(Test, TestAdmin)
 admin.site.register(TestQuestion, TestQuestionAdmin)
 admin.site.register(GoogleCalendarLessonEvents)
 admin.site.register(GoogleCalendarSubscription)
+admin.site.register(VideoLectureToLesson)

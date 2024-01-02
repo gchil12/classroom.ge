@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Message, Subject, Topic, Question, QuestionChoice, QuestionToTopic
+from .models import User, Message, Subject, Topic, Question, QuestionChoice, QuestionToTopic, VideoLecture, VideoToTopic, VideoToSubject
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
@@ -46,6 +46,19 @@ class QuestionChoiceAdmin(admin.ModelAdmin):
     ordering = ('question',)
 
 
+class VideoLectureAdmin(admin.ModelAdmin):
+    list_display = ('uuid', 'url')
+
+
+class VideoToTopicAdmin(admin.ModelAdmin):
+    list_display = ('video_lecture', 'topic')
+    ordering = ('video_lecture',)
+
+
+class VideoToSubjectAdmin(admin.ModelAdmin):
+    list_display = ('video_lecture', 'subject')
+    ordering = ('video_lecture',)
+
 
 # Register your models here.
 admin.site.register(User, CustomUserAdmin)
@@ -55,4 +68,7 @@ admin.site.register(Topic, TopicAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(QuestionChoice, QuestionChoiceAdmin)
 admin.site.register(QuestionToTopic, QuestionToTopicAdmin)
+admin.site.register(VideoLecture, VideoLectureAdmin)
+admin.site.register(VideoToTopic, VideoToTopicAdmin)
+admin.site.register(VideoToSubject, VideoToSubjectAdmin)
 

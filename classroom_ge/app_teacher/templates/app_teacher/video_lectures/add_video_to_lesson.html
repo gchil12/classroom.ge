@@ -7,8 +7,8 @@
     {% if classrooms %}
         <div class="card">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                <div class="bg-gradient-warning shadow-warning border-radius-lg pt-4 pb-3">
-                    <h6 class="text-white text-capitalize ps-3">დავალების დასამატებლად აირჩიეთ საკლასო ოთახი</h6>
+                <div class="video-menu-element shadow-video-menu-element border-radius-lg pt-4 pb-3">
+                    <h6 class="text-white text-capitalize ps-3">ვიდეო გაკვეთილის დასამატებლად აირჩიეთ საკლასო ოთახი</h6>
                 </div>
             </div>
             <div class="card-body pt-4 p-3">
@@ -17,7 +17,7 @@
                     <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg" style="cursor: pointer;"
                         onmouseenter='this.classList.add("bg-gray-200")'
                         onmouseleave='this.classList.remove("bg-gray-200")'
-                        onclick='location.href="{% url 'app_teacher:choose-lesson'  topic_uuid=topic_uuid %}?classroom={{classroom.uuid}}";' style="cursor: pointer;"
+                        onclick='location.href="{% url 'app_teacher:choose-lesson-for-video'  video_uuid=video_uuid %}?classroom={{classroom.uuid}}";' style="cursor: pointer;"
                     >
                         <div class="d-flex flex-column">
                             <h6 class="mb-3 text-sm">
@@ -73,8 +73,8 @@
     {% if lessons %}
     <div class="card">
         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-            <div class="bg-gradient-info shadow-warning border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">დავალების დასამატებლად აირჩიეთ გაკვეთილი კლასისთვის: {{classroom.name}}</h6>
+            <div class="video-menu-element shadow-video-menu-element border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">ვიდეო გაკვეთილის დასამატებლად აირჩიეთ გაკვეთილი კლასისთვის: {{classroom.name}}</h6>
             </div>
         </div>
         <div class="card-body pt-4 p-3">
@@ -83,7 +83,7 @@
                 <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg" style="cursor: pointer;"
                     onmouseenter='this.classList.add("bg-gray-200")'
                     onmouseleave='this.classList.remove("bg-gray-200")'
-                    onclick='location.href="{% url 'app_teacher:choose-lesson'  topic_uuid=topic_uuid %}?classroom={{classroom.uuid}}&lesson={{lesson.uuid}}";' style="cursor: pointer;"
+                    onclick='location.href="{% url 'app_teacher:choose-lesson-for-video'  video_uuid=video_uuid %}?classroom={{classroom.uuid}}&lesson={{lesson.uuid}}";' style="cursor: pointer;"
                 >
                     <div class="d-flex flex-column">
                         <h6 class="mb-3 text-sm">
@@ -111,5 +111,9 @@
     </div>
     {% endif %}
     
-
+    <script>
+        var nav_page = document.getElementById("nav-video-lectures");
+        nav_page.classList.add("active");
+        nav_page.classList.add("video-menu-element");
+    </script>
 {% endblock %}

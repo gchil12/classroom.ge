@@ -81,6 +81,7 @@ class Topic(models.Model):
     name = models.CharField(verbose_name=_('name'), max_length=200, blank=True, error_messages={'unique':_('topic_already_registered')})
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, verbose_name=_('subject'))
     questions = models.ManyToManyField('Question', through='QuestionToTopic')
+    video_lectures = models.ManyToManyField('VideoLecture', through='VideoToTopic')
 
     def __str__(self) -> str:
         return self.name
@@ -94,6 +95,7 @@ QUESTION_TYPE_CHOICES = [
 
 class Question(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    question_id = models.IntegerField(unique=True, verbose_name=_('question_id'))
     text = models.TextField(verbose_name=_('text'), blank=False, error_messages={'unique':_('question_text_already_exists')})
     question_type = models.CharField(verbose_name=_('question_type'), max_length=20, choices=QUESTION_TYPE_CHOICES, default='single_choice')
     topics = models.ManyToManyField(Topic, through='QuestionToTopic')
@@ -107,6 +109,9 @@ class QuestionToTopic(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, blank=False, verbose_name=_('question'))
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, blank=False, verbose_name=_('topic'))
 
+    class Meta:
+        unique_together = ('question', 'topic')
+
 
 
 class QuestionChoice(models.Model):
@@ -118,6 +123,33 @@ class QuestionChoice(models.Model):
     def __str__(self):
         return self.text
 
+
+class VideoLecture(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    url = models.CharField(max_length=255, blank=False, verbose_name=_('url'), unique=True, error_messages={'unique':_('question_text_already_exists')})
+    title = models.CharField(max_length=255, verbose_name=_('title'),)
+    description = models.CharField(max_length=255, verbose_name=_('description'),)
+    topics = models.ManyToManyField(Topic, through='VideoToTopic')
+    subjects = models.ManyToManyField(Subject, through='VideoToSubject')
+
+    def __str__(self):
+        return self.url
+
+
+class VideoToSubject(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    video_lecture = models.ForeignKey(VideoLecture, on_delete=models.CASCADE, blank=False, verbose_name=_('video_lecture'))
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, blank=False, verbose_name=_('topic'))
+
+
+class VideoToTopic(models.Model):
+    uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
+    video_lecture = models.ForeignKey(VideoLecture, on_delete=models.CASCADE, blank=False, verbose_name=_('video_lecture'))
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, blank=False, verbose_name=_('topic'))
+
+    class Meta:
+        unique_together = ('video_lecture', 'topic')
+    
 
 # TODO: Implement Messates
 class Message(models.Model):

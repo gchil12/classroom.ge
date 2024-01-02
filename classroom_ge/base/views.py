@@ -35,7 +35,8 @@ def redirect_to_homepage(request):
 
 
 def home(request):
-    return render(request, 'base/home.html')
+    return redirect('app_base:login')
+    # return render(#request, 'base/home.html')
 
 
 def register(request):

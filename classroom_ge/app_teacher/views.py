@@ -9,8 +9,8 @@ from django.db.models import Count, Q, Subquery, OuterRef, Avg, FloatField, Expr
 from django.db.models import Case, When, Value, F, Sum
 from django.db.models.functions import Coalesce
 from django.utils import timezone
-from base.models import Topic, Question, QuestionToTopic
-from .models import Classroom, Lesson, Level, ClassroomToLevels
+from base.models import Topic, Question, QuestionToTopic, VideoLecture
+from .models import Classroom, Lesson, Level, ClassroomToLevels, VideoLectureToLesson
 from .forms import CreateNewClassroomForm, CreateNewLessonForm, DateForm
 import json
 import uuid as unique_id_import
@@ -421,10 +421,15 @@ def lesson_details(request, uuid):
         )
 
 
+    videos_to_lesson = VideoLectureToLesson.objects.filter(
+        lesson=lesson
+    )
+
     context = {
         'lesson': lesson,
         'tests': tests,
         'n_students': n_students,
+        'videos_to_lesson': videos_to_lesson,
     }
 
     return render(request, 'app_teacher/classroom/lesson.details.html', context)
@@ -440,7 +445,7 @@ def tests_main_page(request):
     topic_filter = request.GET.get('topic_filter', '')
 
     lesson_uuid = request.GET.get('lesson', '')
-    print(lesson_uuid)
+    
     try:
         lesson = Lesson.objects.get(uuid=lesson_uuid)
     except Exception:
@@ -749,3 +754,166 @@ def test_delete(request, test_uuid):
         return redirect(redirect_url)
     else:
         return render(request, 'app_teacher/tests/confirm_test_deletion.html', {'test': test, 'lesson_uuid': lesson_uuid})
+    
+
+
+
+#############################################
+#               Videos                      #
+#############################################
+@login_required(login_url='app_base:login')
+def video_topic_list(request):
+    if not request.user.is_teacher:
+        return redirect('app_base:home')
+    
+    subject_filter = request.GET.get('subject_filter', '')
+    topic_filter = request.GET.get('topic_filter', '')
+
+    lesson_uuid = request.GET.get('lesson', '')
+    
+    try:
+        lesson = Lesson.objects.get(uuid=lesson_uuid)
+    except Exception:
+        lesson = None
+
+    topics_with_at_least_one_video = Topic.objects.annotate(
+        n_video_lectures=Count('video_lectures')
+    ).filter(n_video_lectures__gte=1).order_by('identifier')
+
+    if subject_filter:
+        topics_with_at_least_one_video = topics_with_at_least_one_video.filter(subject__name__icontains=subject_filter)
+    
+    if topic_filter:
+        topics_with_at_least_one_video = topics_with_at_least_one_video.filter(name__icontains=topic_filter)
+    
+
+    context = {
+        'topics': topics_with_at_least_one_video,
+        'lesson': lesson,
+    }
+
+    return render(request, 'app_teacher/menu_elements/video_topic_list.html', context)
+
+
+
+@login_required(login_url='app_base:login')
+def video_topic_videos_list(request, topic_uuid):
+    if not request.user.is_teacher:
+        return redirect('app_base:home')
+    
+    # Try to get lesson UUID from URL
+    try:
+        lesson_uuid = request.GET.get('lesson')
+        uuid_obj = unique_id_import.UUID(lesson_uuid)
+        
+        # UUID OK
+        if uuid_obj:
+            lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
+
+            # Lesson belongs to current teacher
+            if lesson.classroom.owner != request.user:
+                messages.error(request, _('error_unauthorized_access'))
+                return redirect('app_teacher:home')
+        else:
+            lesson = None
+    except Exception:
+        lesson = None
+        
+    
+    topic = get_object_or_404(Topic, uuid=topic_uuid)
+    
+    videos_for_topic = VideoLecture.objects.filter(videototopic__topic=topic_uuid).order_by('uuid')
+
+    context = {
+        'topic': topic,
+        'videos': videos_for_topic,
+        'lesson': lesson,
+    }
+
+    return render(request, 'app_teacher/video_lectures/video_topic_videos_list.html', context)
+
+
+
+@login_required(login_url='app_base:login')
+def choose_lesson_for_video(request, video_uuid):
+    if not request.user.is_teacher:
+        return redirect('app_base:home')
+    
+
+    # Choosing classroom
+    classroom_uuid = request.GET.get('classroom')
+
+    try:
+        # Classroom already chosen by user
+        classroom = Classroom.objects.get(uuid=classroom_uuid)
+    except Exception:
+        # Classroom was not chosen yet
+        classrooms = Classroom.objects.filter(
+            owner=request.user,
+        )
+
+        now = timezone.now()
+        closest_lesson_subquery = Lesson.objects.filter(
+            Q(lesson_date__gt=now.date()) | (Q(lesson_date=now.date()) & Q(lesson_start_time__gte=now.time())),
+            classroom=OuterRef('pk'),
+        ).order_by('lesson_date', 'lesson_start_time').values('lesson_start_time', 'name', 'lesson_date')[:1]
+            
+        classrooms = Classroom.objects.annotate(
+            num_levels=Count('classroomtolevels__level'),
+            num_students=Count('studenttoclassroom__student', filter=Q(studenttoclassroom__student__is_student=True)),
+            closest_lesson_start_time=Subquery(closest_lesson_subquery[:1].values('lesson_start_time')),
+            closest_lesson_name=Subquery(closest_lesson_subquery[:1].values('name')),
+            closest_lesson_date=Subquery(closest_lesson_subquery[:1].values('lesson_date')),
+        ).filter(owner=request.user)
+
+        classrooms = annotate_classrooms_with_rank(classrooms, now)
+        return render(request, 'app_teacher/video_lectures/add_video_to_lesson.html', {'classrooms': classrooms, 'video_uuid': video_uuid})
+
+
+    # Classroom does not belong to teacher
+    if classroom.owner != request.user:
+        messages.error(request, _('error_unauthorized_access'))
+        return redirect('app_teacher:home')
+
+    
+    # Choosing lesson
+    lesson_uuid = request.GET.get('lesson')
+
+    try:
+        # Lesson already chosen by user
+        lesson = Lesson.objects.get(uuid=lesson_uuid)
+    except Exception:
+        classroom=Classroom.objects.get(uuid=classroom_uuid)
+        # Lesson was not chosen yet
+        lessons = Lesson.objects.filter(
+            classroom=classroom
+        )
+        return render(request, 'app_teacher/video_lectures/add_video_to_lesson.html', {'lessons': lessons, 'video_uuid': video_uuid, 'classroom': classroom},)
+
+
+    # Lesson does not belong to teacher
+    if lesson.classroom.owner != request.user:
+        messages.error(request, _('error_unauthorized_access'))
+        return redirect('app_teacher:home')
+    
+
+    video_lecture = get_object_or_404(VideoLecture, uuid=video_uuid)
+    lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
+
+    if VideoLectureToLesson.objects.filter(video_lecture=video_lecture, lesson=lesson):
+        messages.error(request, _('video_already_is_added_to_lesson'))
+        redirect_url = reverse('app_teacher:lesson-detail', kwargs={'uuid': lesson_uuid})
+        return redirect(redirect_url)
+
+    try:
+        VideoLectureToLesson.objects.create(
+            video_lecture = video_lecture,
+            lesson = lesson,
+        )
+    except Exception:
+        messages.error(request, _('could_not_add_video_to_lesson'))
+    
+
+    messages.success(request, _('video_added_to_lesson'))
+    redirect_url = reverse('app_teacher:lesson-detail', kwargs={'uuid': lesson_uuid})
+    return redirect(redirect_url)

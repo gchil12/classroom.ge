@@ -11,7 +11,7 @@
         <div class="card">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-info shadow-warning border-radius-lg pt-4 pb-3">
-                    <h6 class="text-white text-capitalize ps-3">შემდეგი გაკვეთილები</h6>
+                    <h6 class="text-white text-capitalize ps-3">მოახლოებული გაკვეთილები</h6>
                 </div>
             </div>
             <div class="card-body pt-4 p-3">
@@ -23,15 +23,9 @@
                         onmouseleave='this.classList.remove("bg-gray-200")'
                     >
                         <div class="d-flex flex-column">
-                            <h6 class="mb-3 text-sm">თემა:
+                            <h6 class="mb-3 text-sm">
                                 {{ closest_lesson.name }}
                             </h6>
-                            <span class="mb-2 text-xs"
-                                >საგანი:
-                                <span class="text-dark font-weight-bold ms-sm-2"
-                                    >{{ closest_lesson.classroom.subject }}</span
-                                ></span
-                            >
                             <span class="mb-2 text-xs"
                                 >კლასი:
                                 <span class="text-dark font-weight-bold ms-sm-2"
@@ -42,6 +36,12 @@
                                 >თარიღი:
                                 <span class="text-dark font-weight-bold ms-sm-2"
                                     >{{ closest_lesson.lesson_date }} {{ closest_lesson.lesson_start_time }}</span
+                                ></span
+                            >
+                            <span class="mb-2 text-xs"
+                                >საგანი:
+                                <span class="text-dark font-weight-bold ms-sm-2"
+                                    >{{ closest_lesson.classroom.subject }}</span
                                 ></span
                             >
                         </div>

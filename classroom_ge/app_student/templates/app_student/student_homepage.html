@@ -5,7 +5,7 @@
 		<div class="card">
 			<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
 				<div class="bg-gradient-info shadow-warning border-radius-lg pt-4 pb-3">
-					<h6 class="text-white text-capitalize ps-3">უახლოესი გაკვეთილები</h6>
+					<h6 class="text-white text-capitalize ps-3">მოახლოებული გაკვეთილები</h6>
 				</div>
 			</div>
 			<div class="card-body pt-4 p-3">
@@ -21,6 +21,14 @@
 								{{ closest_lesson.name }}
 							</h6>
 							<span class="mb-2 text-xs"
+								>კლასი:
+								<span class="text-dark font-weight-bold ms-sm-2">
+									<a href="{% url 'app_student:classroom-detail' uuid=closest_lesson.classroom_uuid %}">
+										{{ closest_lesson.classroom_name }}
+									</a>
+								</span>
+							</span>
+							<span class="mb-2 text-xs"
 								>თარიღი:
 								<span class="text-dark font-weight-bold ms-sm-2"
 									>{{ closest_lesson.lesson_date }} {{ closest_lesson.lesson_start_time }}</span
@@ -32,14 +40,6 @@
 									>{{ closest_lesson.classroom_subject }}</span
 								></span
 							>
-							<span class="mb-2 text-xs"
-								>კლასი:
-								<span class="text-dark font-weight-bold ms-sm-2">
-									<a href="{% url 'app_student:classroom-detail' uuid=closest_lesson.classroom_uuid %}">
-										{{ closest_lesson.classroom_name }}
-									</a>
-								</span>
-							</span>
 						</div>
 					</li>
 					{% endfor %}
@@ -54,7 +54,7 @@
 				<div
 					class="bg-gradient-warning shadow-warning border-radius-lg pt-4 pb-3"
 				>
-					<h6 class="text-white text-capitalize ps-3">საკლასო ოთახები</h6>
+					<h6 class="text-white text-capitalize ps-3">ჩემი კლასები</h6>
 				</div>
 			</div>
 			<div class="card-body pt-4 p-3">
@@ -93,7 +93,7 @@
 <div class="card" style="margin-top: 50px">
 	<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
 		<div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-			<h6 class="text-white text-capitalize ps-3">უახლოესი დავალებები</h6>
+			<h6 class="text-white text-capitalize ps-3">საშინაო დავალებები</h6>
 		</div>
 		<div class="card-body pt-4 p-3">
 			<ul class="list-group">

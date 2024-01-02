@@ -20,7 +20,7 @@
 	</div>
 	<div class="col-6" style="margin-top: 20px; margin-left: 20px;">
 		<a class="btn bg-gradient-success mb-0" href="{% url 'app_teacher:create-new-classroom' %}"
-			><i class="material-icons text-sm">add</i>&nbsp;&nbsp;ახალი საკლასო ოთახი</a
+			><i class="material-icons text-sm">add</i>&nbsp;&nbsp;კლასის შექმნა</a
 		>
 	</div>
 	<div class="card-body pt-4 p-3">
@@ -36,9 +36,21 @@
 						{{ classroom.name }}
 					</h6>
 					<span class="mb-2 text-xs"
-						>საგანი:
-						<span class="text-dark font-weight-bold ms-sm-2"
-							>{{ classroom.subject }}</span
+						>შემდეგი გაკვეთილი:
+						<span class="text-dark ms-sm-2 font-weight-bold"
+							>
+                            {% if classroom.closest_lesson_name %}
+                            {{ classroom.closest_lesson_name }} ({{ classroom.closest_lesson_date }}; {{ classroom.closest_lesson_start_time }})
+                            {% else %}
+                                გაკვეთილები არ არის დაგეგმილი
+                            {% endif %}
+                            </span
+						></span
+					>
+					<span class="mb-2 text-xs"
+						>მოსწავლეების რაოდენობა:
+						<span class="text-dark ms-sm-2 font-weight-bold"
+							>{{ classroom.num_students }}</span
 						></span
 					>
 					<span class="mb-2 text-xs"
@@ -50,27 +62,15 @@
 						></span
 					>
                     <span class="mb-2 text-xs"
-						>მოსწავლეების რაოდენობა:
-						<span class="text-dark ms-sm-2 font-weight-bold"
-							>{{ classroom.num_students }}</span
-						></span
-					>
-                    <span class="mb-2 text-xs"
-						>რანგი:
+						>საშუალო ქულა:
 						<span class="text-dark ms-sm-2 font-weight-bold"
 							>{{ classroom.rank }}%</span
 						></span
 					>
-					<span class="text-xs"
-						>შემდეგი გაკვეთილი:
-						<span class="text-dark ms-sm-2 font-weight-bold"
-							>
-                            {% if classroom.closest_lesson_name %}
-                            {{ classroom.closest_lesson_name }} ({{ classroom.closest_lesson_date }}; {{ classroom.closest_lesson_start_time }})
-                            {% else %}
-                                გაკვეთილები არ არის დაგეგმილი
-                            {% endif %}
-                            </span
+					<span class="mb-2 text-xs"
+						>საგანი:
+						<span class="text-dark font-weight-bold ms-sm-2"
+							>{{ classroom.subject }}</span
 						></span
 					>
 				</div>

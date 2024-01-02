@@ -20,17 +20,17 @@
             {% if lesson %}
 				<a href="{% url 'app_teacher:choose-lesson' topic_uuid=topic.uuid %}?classroom={{lesson.classroom.uuid}}&lesson={{lesson.uuid}}">
 					<div class="btn btn-outline-primary shadow-primary">
-						ამოცანების დამატება გაკვეთილში: {{ lesson.name }}
+						გაკვეთილზე მიბმა: "{{ lesson.name }}"
 					</div>
 				</a>
 				{% else %}
 				<a href="{% url 'app_teacher:choose-lesson' topic_uuid=topic.uuid %}">
 					<div class="btn btn-outline-primary shadow-primary">
-						დააჭირეთ იმ აქ გაკვეთილის ასარჩევად სადაც გსურთ დაამატოთ აღნიშნული სავარჯიშოები
+						გაკვეთილზე მიბმა
 					</div>
 				</a>
 				
-				{% endif %}
+			{% endif %}
             
 			<ol class="list-group">
 				{% for question in questions %}

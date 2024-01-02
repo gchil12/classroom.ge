@@ -1,0 +1,52 @@
+{
+    "url": {
+        "0": "https://www.youtube.com/embed/jT3nK6V11YA",
+        "1": "https://www.youtube.com/embed/F73jQj6Oicc?list=PL3nu0cu3xi4brjCfuiN3sTC88uVziatlt",
+        "2": "https://www.youtube.com/embed/vo7XpiqJFos?list=PL3nu0cu3xi4brjCfuiN3sTC88uVziatlt",
+        "3": "https://www.youtube.com/embed/x4_Zkrfz0ms?list=PL3nu0cu3xi4brjCfuiN3sTC88uVziatlt",
+        "4": "https://www.youtube.com/embed/1-P4qH6TuKQ?list=PL3nu0cu3xi4brjCfuiN3sTC88uVziatlt",
+        "5": "https://www.youtube.com/embed/AtkxS6kJlDg?list=PL3nu0cu3xi4brjCfuiN3sTC88uVziatlt",
+        "6": "https://www.youtube.com/embed/j2dtnMIkWJ0",
+        "7": "https://www.youtube.com/embed/1W5xqwPzjT0?list=PL3nu0cu3xi4brjCfuiN3sTC88uVziatlt"
+    },
+    "topic": {
+        "0": "ALGEBRA-2.5",
+        "1": "ALGEBRA-10.1",
+        "2": "ALGEBRA-10.1",
+        "3": "ALGEBRA-10.1",
+        "4": "ALGEBRA-10.1",
+        "5": "ALGEBRA-10.1",
+        "6": "ALGEBRA-23.1",
+        "7": "ALGEBRA-23.2"
+    },
+    "subject": {
+        "0": "მათემატიკა",
+        "1": "მათემატიკა",
+        "2": "მათემატიკა",
+        "3": "მათემატიკა",
+        "4": "მათემატიკა",
+        "5": "მათემატიკა",
+        "6": "მათემატიკა",
+        "7": "მათემატიკა"
+    },
+    "title": {
+        "0": "შესავალი ნაშთებში",
+        "1": "თანაფარდობები და პროპორციული დამოკიდებულებები: მაგალითი",
+        "2": "თანაფარდობები და პროპორციული დამოკიდებულებები: სიჩქარე დედამიწის ორბიტაზე",
+        "3": "პროპორციული დამოკიდებულებების გრაფიკულად ასახვა: ერთეულის სიხშირის მაჩვენებელი",
+        "4": "პროპორციული დამოკიდებულებების გრაფიკულად ასახვა ცხრილიდან",
+        "5": "პროპორციული დამოკიდებულებების ასახვა განტოლებიდან",
+        "6": "რა არის ფუნქცია?",
+        "7": "ფუნქციის ცნობა გრაფიკით"
+    },
+    "description": {
+        "0": "",
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "6": "",
+        "7": ""
+    }
+}
