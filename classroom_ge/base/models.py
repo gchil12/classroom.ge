@@ -95,7 +95,7 @@ QUESTION_TYPE_CHOICES = [
 
 class Question(models.Model):
     uuid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False, unique=True)
-    question_id = models.IntegerField(unique=True, verbose_name=_('question_id'))
+    question_id = models.IntegerField(verbose_name=_('question_id')) # TODO: Change to unique
     text = models.TextField(verbose_name=_('text'), blank=False, error_messages={'unique':_('question_text_already_exists')})
     question_type = models.CharField(verbose_name=_('question_type'), max_length=20, choices=QUESTION_TYPE_CHOICES, default='single_choice')
     topics = models.ManyToManyField(Topic, through='QuestionToTopic')
