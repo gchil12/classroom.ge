@@ -46,6 +46,10 @@ table{
 
 
 /* Main Menu Design */
-.video-element{
+.video-menu-element{
     background-color: #4786AE !important;
+}
+
+.shadow-video-menu-element{
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px #4786AE !important;
 }
