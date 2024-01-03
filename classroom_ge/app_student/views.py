@@ -432,7 +432,6 @@ def test_submit(request, student_test_uuid):
         else:
 
             text_explanations_list = [(qid, text) for qid, text in text_explanations.items()]
-            print(selected_choice_ids)
 
             return render(request, 'app_student/test_form.html', {
                 'student_test': student_test,

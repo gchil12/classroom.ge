@@ -694,7 +694,7 @@ def test_details(request, test_uuid):
 
 
     student_points = [student.student_points for student in students if student.student_points is not None and student.completed]
-    print(student_points)
+    
     student_points_histogram, student_points_bin_edges = np.histogram(student_points, bins=range(11))
 
     # Convert histogram data to a format suitable for Chart.js
