@@ -44,7 +44,7 @@ def student_homepage(request):
     upcoming_tests = Test.objects.filter(
         Q(studenttest__isnull=True) |  # Test not attempted by the student
         Exists(incomplete_test_subquery),  # Test attempted but not completed
-        Q(deadline__gt=now.date()) | Q(deadline__isnull=True),
+        Q(deadline__gte=now.date()) | Q(deadline__isnull=True),
         lesson__classroom__in=student_to_classrooms.values('classroom')
     ).distinct().annotate(
         classroom_name=F('lesson__classroom__name'),
