@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-03 07:32+0100\n"
+"POT-Creation-Date: 2024-01-03 17:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,11 +38,11 @@ msgstr ""
 msgid "test_end_time"
 msgstr ""
 
-#: .\app_student\models.py:65
+#: .\app_student\models.py:74
 msgid "student"
 msgstr ""
 
-#: .\app_student\models.py:66 .\app_teacher\models.py:48
+#: .\app_student\models.py:75 .\app_teacher\models.py:48
 #: .\app_teacher\models.py:109
 msgid "classroom"
 msgstr ""
@@ -51,15 +51,27 @@ msgstr ""
 msgid "subscribe"
 msgstr ""
 
-#: .\app_student\views.py:82
+#: .\app_student\templates\app_student\test_completed_overview.html:126
+msgid "knowledge"
+msgstr ""
+
+#: .\app_student\templates\app_student\test_completed_overview.html:127
+msgid "reasoning"
+msgstr ""
+
+#: .\app_student\templates\app_student\test_completed_overview.html:128
+msgid "formulation"
+msgstr ""
+
+#: .\app_student\views.py:84
 msgid "already_subscribed_to_classroom"
 msgstr ""
 
-#: .\app_student\views.py:89
+#: .\app_student\views.py:91
 msgid "subscribed_to_classroom_successfully"
 msgstr ""
 
-#: .\app_student\views.py:218 .\app_student\views.py:344
+#: .\app_student\views.py:220 .\app_student\views.py:346
 #: .\app_teacher\views.py:144 .\app_teacher\views.py:258
 #: .\app_teacher\views.py:279 .\app_teacher\views.py:303
 #: .\app_teacher\views.py:348 .\app_teacher\views.py:371
@@ -70,25 +82,25 @@ msgstr ""
 msgid "error_unauthorized_access"
 msgstr ""
 
-#: .\app_student\views.py:348
+#: .\app_student\views.py:350
 msgid "deadline_passed"
 msgstr ""
 
-#: .\app_student\views.py:374
+#: .\app_student\views.py:376
 msgid "Please provide both: choice and an explanation for your answer."
 msgstr ""
 
-#: .\app_student\views.py:410
+#: .\app_student\views.py:429
 msgid "test_submitted_sucessfully"
 msgstr ""
 
-#: .\app_student\views.py:425
+#: .\app_student\views.py:444
 msgid ""
 "Either leave the question out or do both: select choice and fill the text "
 "field."
 msgstr ""
 
-#: .\app_student\views.py:430
+#: .\app_student\views.py:449
 msgid "something_is_wrong"
 msgstr ""
 
@@ -100,7 +112,7 @@ msgstr ""
 msgid "class_level"
 msgstr ""
 
-#: .\app_teacher\forms.py:72 .\app_teacher\forms.py:98
+#: .\app_teacher\forms.py:72 .\app_teacher\forms.py:99
 msgid "please_check_lesson_date"
 msgstr ""
 

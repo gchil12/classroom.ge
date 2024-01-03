@@ -12,6 +12,8 @@ from django.db.models import BooleanField, Case, When, Value, F, Sum, IntegerFie
 from django.db.models.functions import Coalesce
 from random import shuffle
 
+from base.lib.GPT.OpenAIAPI import OpenAIThread
+
 
 @login_required(login_url='app_base:login')
 def student_homepage(request):
@@ -382,12 +384,26 @@ def test_submit(request, student_test_uuid):
             # Handle form submission
             student_test.end_time = now
             student_test.completed = True
+            
+            prompts_for_gpt = []
 
             for student_question in student_test.studentquestion_set.all():
                 choice_pk = request.POST.get(f'chosen_choices_{student_question.question.pk}')
                 text_explanation = request.POST.get(f'chosen_choice_explanation_{student_question.question.pk}', '')
 
-                
+                if text_explanation:
+                    try:
+                        prompts_for_gpt.append(
+                            {
+                                'question_text': student_question.question.question.text,
+                                'student_answer': QuestionChoice.objects.get(uuid=choice_pk),
+                                'student_explanation': text_explanation,
+                                'question': student_question,
+                            }
+                        )
+                    except Exception:
+                        pass
+
                 if choice_pk:
                     choice = get_object_or_404(QuestionChoice, pk=choice_pk)
                     StudentQuestionToChoice.objects.create(
@@ -406,6 +422,9 @@ def test_submit(request, student_test_uuid):
                     student_question.save()
 
             student_test.save()
+
+            if prompts_for_gpt:
+                OpenAIThread(prompts_for_gpt).start()
 
             messages.success(request, _('test_submitted_sucessfully'))
             redirect_url = reverse('app_student:test-view', kwargs={'test_uuid': student_test.test.uuid})

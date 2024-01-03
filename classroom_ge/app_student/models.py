@@ -41,9 +41,18 @@ class StudentQuestion(models.Model):
     question = models.ForeignKey(TestQuestion, on_delete=models.CASCADE)
     text_response = models.TextField(blank=True, null=True)
     given_point = models.IntegerField(default=0, blank=True)
+    
+    # Points given by GPT
+    submitted_to_gpt = models.BooleanField(default=False)
     gpt_knowledge = models.FloatField(default=None, blank=True, null=True)
     gpt_reasoning = models.FloatField(default=None, blank=True, null=True)
     gpt_formulation  = models.FloatField(default=None, blank=True, null=True)
+
+    # Teacher corrected version of the points given by GPT
+    teacher_knowledge = models.FloatField(default=None, blank=True, null=True)
+    teacher_reasoning = models.FloatField(default=None, blank=True, null=True)
+    teacher_formulation  = models.FloatField(default=None, blank=True, null=True)
+    
     answered = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
 
