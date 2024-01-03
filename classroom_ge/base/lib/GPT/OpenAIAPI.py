@@ -3,17 +3,15 @@
 import threading
 import requests
 import json
-from app_student.models import StudentQuestion
-
-api_key = "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"
+from classroom_ge.my_constants import openai_api_key, openai_url
 
 # The API URL for GPT-3.5-turbo model
-url = "https://api.openai.com/v1/chat/completions"
+
 
 # Headers including the Authorization with your API key
 headers = {
     "Content-Type": "application/json",
-    "Authorization": f"Bearer {api_key}"
+    "Authorization": f"Bearer {openai_api_key}"
 }
 
 
@@ -44,10 +42,11 @@ class OpenAIThread(threading.Thread):
                     "temperature": 0.7
                 }
 
-                response = requests.post(url, headers=headers, data=json.dumps(data))
+                response = requests.post(openai_url, headers=headers, data=json.dumps(data))
                 
                 if response.status_code == 200:
                     response_data = response.json()
+                    print(response_data)
                     if 'choices' in response_data and len(response_data['choices']) > 0 and 'message' in response_data['choices'][0]:
                         # Extracting the content from the response
                         response_content = response_data['choices'][0]['message']['content']
