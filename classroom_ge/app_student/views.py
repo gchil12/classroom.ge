@@ -354,33 +354,77 @@ def test_submit(request, student_test_uuid):
         return redirect(redirect_url)
 
     if request.method == 'POST':
-        # Handle form submission
-        student_test.end_time = now
-        student_test.completed = True
+        # In case of mandatory text explanation: check if the text explanations are given for all answered
+        # questions. If student did not answer a question, than the text explanation is not mandatory 
+        form_is_valid = True
+        text_explanations = {}
+        error_messages = {}
+        selected_choice_ids = []
 
         for student_question in student_test.studentquestion_set.all():
+            student_question.text_explanation = request.POST.get(f'chosen_choice_explanation_{student_question.question.pk}', '')
+
             choice_pk = request.POST.get(f'chosen_choices_{student_question.question.pk}')
             if choice_pk:
-                choice = get_object_or_404(QuestionChoice, pk=choice_pk)
-                StudentQuestionToChoice.objects.create(
-                    student_question=student_question,
-                    choice=choice,
-                )
+                selected_choice_ids.append(choice_pk)
+            text_explanation = request.POST.get(f'chosen_choice_explanation_{student_question.question.pk}', '').strip()
 
-                student_question.answered = True
+            if student_test.test.text_input_required and ((choice_pk and not text_explanation) or (not choice_pk and text_explanation)):
+                form_is_valid = False
+                error_messages[student_question.pk] = _("Please provide both: choice and an explanation for your answer.")
+            else:
+                error_messages[student_question.pk] = None
 
-                if choice.is_correct:
-                    student_question.given_point = student_question.question.max_point
-                else:
-                    student_question.given_point = 0
+            text_explanations[student_question.question.pk] = text_explanation
 
-                student_question.save()
 
-        student_test.save()
+        if form_is_valid:
+            # Handle form submission
+            student_test.end_time = now
+            student_test.completed = True
 
-        messages.success(request, _('test_submitted_sucessfully'))
-        redirect_url = reverse('app_student:test-view', kwargs={'test_uuid': student_test.test.uuid})
-        return redirect(redirect_url)
+            for student_question in student_test.studentquestion_set.all():
+                choice_pk = request.POST.get(f'chosen_choices_{student_question.question.pk}')
+                text_explanation = request.POST.get(f'chosen_choice_explanation_{student_question.question.pk}', '')
+
+                
+                if choice_pk:
+                    choice = get_object_or_404(QuestionChoice, pk=choice_pk)
+                    StudentQuestionToChoice.objects.create(
+                        student_question=student_question,
+                        choice=choice,
+                    )
+
+                    student_question.text_response = text_explanation
+                    student_question.answered = True
+
+                    if choice.is_correct:
+                        student_question.given_point = student_question.question.max_point
+                    else:
+                        student_question.given_point = 0
+
+                    student_question.save()
+
+            student_test.save()
+
+            messages.success(request, _('test_submitted_sucessfully'))
+            redirect_url = reverse('app_student:test-view', kwargs={'test_uuid': student_test.test.uuid})
+            return redirect(redirect_url)
+        else:
+
+            text_explanations_list = [(qid, text) for qid, text in text_explanations.items()]
+            print(selected_choice_ids)
+
+            return render(request, 'app_student/test_form.html', {
+                'student_test': student_test,
+                'test': student_test.test,
+                'selected_choice_ids': selected_choice_ids,
+                'text_explanations_list': text_explanations_list,
+                'student_questions': student_test.studentquestion_set.all(),
+                'text_explanations': text_explanations,
+                'error': _('Either leave the question out or do both: select choice and fill the text field.'),
+                'error_messages': error_messages,
+            })
     
 
     messages.success(request, _('something_is_wrong'))

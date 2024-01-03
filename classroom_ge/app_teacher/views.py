@@ -11,7 +11,7 @@ from django.db.models.functions import Coalesce
 from django.utils import timezone
 from base.models import Topic, Question, QuestionToTopic, VideoLecture
 from .models import Classroom, Lesson, Level, ClassroomToLevels, VideoLectureToLesson
-from .forms import CreateNewClassroomForm, CreateNewLessonForm, DateForm
+from .forms import CreateNewClassroomForm, CreateNewLessonForm, TestToLessonForm
 import json
 import uuid as unique_id_import
 import uuid
@@ -512,7 +512,7 @@ def test_example_page(request, uuid):
 
 
 
-def create_test_questions(topic_uuid:uuid, lesson_uuid:uuid, deadline):
+def create_test_questions(topic_uuid:uuid, lesson_uuid:uuid, deadline, text_input_required:bool):
     topic = get_object_or_404(Topic, uuid=topic_uuid)
     lesson = get_object_or_404(Lesson, uuid=lesson_uuid)
     
@@ -521,7 +521,8 @@ def create_test_questions(topic_uuid:uuid, lesson_uuid:uuid, deadline):
             lesson=lesson,
             name=topic.name,
             test_type='assignment',
-            deadline=deadline
+            deadline=deadline,
+            text_input_required=text_input_required
         )
     except Exception as e:
         return False
@@ -619,14 +620,15 @@ def add_test_to_lesson_confirmation(request, classroom_uuid, lesson_uuid, topic_
     }
 
     if request.method == 'POST':
-        form = DateForm(request.POST)
+        form = TestToLessonForm(request.POST)
         try:
             if form.is_valid():
                 deadline = form.cleaned_data['deadline']
+                text_input_required = form.cleaned_data['text_input_required']
 
                 # Adding test to lesson
                 try: 
-                    res = create_test_questions(topic_uuid, lesson_uuid, deadline)
+                    res = create_test_questions(topic_uuid, lesson_uuid, deadline, text_input_required)
 
                     if res:
                         messages.success(request, _('exercises_added_successfully'))
@@ -642,10 +644,10 @@ def add_test_to_lesson_confirmation(request, classroom_uuid, lesson_uuid, topic_
                 raise Exception
         except Exception:
             messages.error(request, _('invalid_input'))
-            context['deadline_form'] = DateForm()
+            context['deadline_form'] = TestToLessonForm()
             return render(request, 'app_teacher/tests/add_test_to_lesson_confirmation_page.html', context)
     else:
-        deadline_form = DateForm()
+        deadline_form = TestToLessonForm()
 
         context['deadline_form'] = deadline_form
         return render(request, 'app_teacher/tests/add_test_to_lesson_confirmation_page.html', context)

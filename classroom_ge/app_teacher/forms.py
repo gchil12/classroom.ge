@@ -75,16 +75,24 @@ class CreateNewLessonForm(ModelForm):
             self.add_error("lesson_start_time", _('please_check_start_and_end_times'))
 
 
-class DateForm(forms.Form):
-    deadline = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'id': 'georgianDate'}), label=_('deadline'),)
+class TestToLessonForm(forms.Form):
+    deadline = forms.DateField(widget=forms.DateInput(
+        attrs={'type': 'date', 'id': 'georgianDate'}),
+        label=_('deadline'),
+        required=False
+    )
 
+    text_input_required = forms.BooleanField(
+        label=_('require_text_input',),
+        required=False,
+    )
     
     def clean(self):
         now = timezone.now()
 
-        cleaned_data = super(DateForm, self).clean()
+        cleaned_data = super(TestToLessonForm, self).clean()
 
         deadline = cleaned_data.get('deadline')
 
-        if deadline < now.date():
+        if deadline and deadline < now.date():
             self.add_error("deadline", _('please_check_lesson_date'))

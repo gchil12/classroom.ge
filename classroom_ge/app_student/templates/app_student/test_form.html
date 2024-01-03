@@ -1,5 +1,11 @@
 {% extends 'base/main.html' %} {% load i18n %} {% load static %} {% block content %}
 
+<style>
+	textarea {
+        resize: none;
+    }
+</style>
+
 <div class="container-fluid py-4">
 	<div class="card mb-4">
 		<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
@@ -32,6 +38,11 @@
 			</div>
 		</div>
 		<div class="card-body pt-4 p-3">
+			{% if error %}
+				<div class="alert alert-danger" role="alert">
+					{{ error }}
+				</div>
+			{% endif %}
 			<form
 				role="form"
 				class="text-start"
@@ -46,6 +57,11 @@
 						class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg"
 					>
 						<div class="col">
+							{% for key, value in error_messages.items %}
+								{% if value and key == student_question.pk %}
+									<p class="text-danger">{{ value }}</p>
+								{% endif %}
+							{% endfor %}
 							<div class="mb-3 d-flex">
                                 <div class="mt-2" style="margin-right: 5px;">
 								<strong
@@ -70,12 +86,34 @@
 									name="chosen_choices_{{ student_question.question.pk }}"
 									id="chosen_choices_{{ student_question.order|add:"1" }}"
 									value="{{ choice.pk }}"
+									{% if choice.pk|stringformat:"s" in selected_choice_ids %} checked {% endif %}
 								/>
 								<label class="custom-control-label"
 									>{{ choice.text }}</label
 								>
 							</div>
 							{% endfor %}
+
+							{% if test.text_input_required %}
+								<label class="custom-control-label"
+									>მიღებული პასუხის გზის ახსნა:</label
+								>
+								<div>
+									{% if text_explanations_list %}
+										{% for qid, text in text_explanations_list %}
+											{% if qid == student_question.question.pk %}
+												<textarea id="chosen_choice_explanation_{{ student_question.question.pk }}" 
+														name="chosen_choice_explanation_{{ student_question.question.pk }}" 
+														rows="5" style="width: 100%;">{{ text }}</textarea>	
+											{% endif %}
+										{% endfor %}
+									{% else %}
+										<textarea id="chosen_choice_explanation_{{ student_question.question.pk }}" 
+												name="chosen_choice_explanation_{{ student_question.question.pk }}" 
+												rows="5" style="width: 100%;"></textarea>
+									{% endif %}
+								</div>
+							{% endif %}
 						</div>
 					</li>
 					{% endfor %}

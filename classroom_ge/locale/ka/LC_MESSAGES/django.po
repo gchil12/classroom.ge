@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-02 20:40+0100\n"
+"POT-Creation-Date: 2024-01-03 07:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,596 +18,553 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: .\classroom.ge\classroom_ge\app_student\models.py:12
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:12
+#: .\app_student\models.py:12 .\app_teacher\models.py:12
 msgid "profile_picture"
 msgstr "პროფილის სურათი"
 
-#: .\classroom.ge\classroom_ge\app_student\models.py:13
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:13
+#: .\app_student\models.py:13 .\app_teacher\models.py:13
 msgid "phone_number"
 msgstr "მობილურის ნომერი"
 
-#: .\classroom.ge\classroom_ge\app_student\models.py:14
+#: .\app_student\models.py:14
 msgid "school_year"
 msgstr "სასკოლო წელი"
 
-#: .\classroom.ge\classroom_ge\app_student\models.py:25
+#: .\app_student\models.py:25
 msgid "test_start_time"
 msgstr "დაწყების დრო"
 
-#: .\classroom.ge\classroom_ge\app_student\models.py:26
+#: .\app_student\models.py:26
 msgid "test_end_time"
 msgstr "დამთავრების დრო"
 
-#: .\classroom.ge\classroom_ge\app_student\models.py:62
+#: .\app_student\models.py:65
 msgid "student"
 msgstr "მოსწავლე"
 
-#: .\classroom.ge\classroom_ge\app_student\models.py:63
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:48
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:107
+#: .\app_student\models.py:66 .\app_teacher\models.py:48
+#: .\app_teacher\models.py:109
 msgid "classroom"
 msgstr "საკლასო ოთახი"
 
-#: .\classroom.ge\classroom_ge\app_student\templates\app_student\classroom_subscribe.html:33
+#: .\app_student\templates\app_student\classroom_subscribe.html:33
 msgid "subscribe"
 msgstr "გაწევრიანება"
 
-#: .\classroom.ge\classroom_ge\app_student\views.py:82
+#: .\app_student\views.py:82
 msgid "already_subscribed_to_classroom"
 msgstr "თქვენ უკვე ხართ აღნიშნულ საკლასო ოთახში გაწევრიანებული"
 
-#: .\classroom.ge\classroom_ge\app_student\views.py:89
+#: .\app_student\views.py:89
 msgid "subscribed_to_classroom_successfully"
 msgstr "საკლასო ოთახში გაწევრიანება წარმატებით დასრულდა!"
 
-#: .\classroom.ge\classroom_ge\app_student\views.py:218
-#: .\classroom.ge\classroom_ge\app_student\views.py:344
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:144
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:258
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:279
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:303
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:348
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:371
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:493
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:581
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:602
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:663
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:745
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:815
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:875
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:896
+#: .\app_student\views.py:218 .\app_student\views.py:344
+#: .\app_teacher\views.py:144 .\app_teacher\views.py:258
+#: .\app_teacher\views.py:279 .\app_teacher\views.py:303
+#: .\app_teacher\views.py:348 .\app_teacher\views.py:371
+#: .\app_teacher\views.py:493 .\app_teacher\views.py:582
+#: .\app_teacher\views.py:603 .\app_teacher\views.py:665
+#: .\app_teacher\views.py:747 .\app_teacher\views.py:817
+#: .\app_teacher\views.py:877 .\app_teacher\views.py:898
 msgid "error_unauthorized_access"
 msgstr "თქვენ არ ხართ ავტორიზებული აღნიშნული ქმედებისთვის"
 
-#: .\classroom.ge\classroom_ge\app_student\views.py:348
+#: .\app_student\views.py:348
 msgid "deadline_passed"
 msgstr "ჩაბარების ვადა ამოიწურა"
 
-#: .\classroom.ge\classroom_ge\app_student\views.py:381
+#: .\app_student\views.py:374
+msgid "Please provide both: choice and an explanation for your answer."
+msgstr "გთხოვთ შეავსოთ ორივე ველი: აირჩეთ სწორი პასუხი და დაწერეთ ამოხსნა შესაბამის ველში"
+
+#: .\app_student\views.py:410
 msgid "test_submitted_sucessfully"
 msgstr "ტესტი დაემატა წარმატებით"
 
-#: .\classroom.ge\classroom_ge\app_student\views.py:386
+#: .\app_student\views.py:425
+msgid ""
+"Either leave the question out or do both: select choice and fill the text "
+"field."
+msgstr "შეავსეთ ორივე ველი (აირჩიეთ სწორი პასუხი და დაწერეთ ამოხსნის გზა) ან გამოტოვეთ სავარჯიშო"
+
+#: .\app_student\views.py:430
 msgid "something_is_wrong"
 msgstr "უცნობი შეცდომა. განმეორების შემთხვევაში გთხოვთ დაგვიკავშირდეთ"
 
-#: .\classroom.ge\classroom_ge\app_teacher\forms.py:14
+#: .\app_teacher\forms.py:14
 msgid "None"
 msgstr "არცერთი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\forms.py:15
+#: .\app_teacher\forms.py:15
 msgid "class_level"
 msgstr "საფეხური"
 
-#: .\classroom.ge\classroom_ge\app_teacher\forms.py:72
-#: .\classroom.ge\classroom_ge\app_teacher\forms.py:90
+#: .\app_teacher\forms.py:72 .\app_teacher\forms.py:98
 msgid "please_check_lesson_date"
 msgstr "გთხოვთ გადაამოწმოთ გაკვეთილის ჩატარების დღე"
 
-#: .\classroom.ge\classroom_ge\app_teacher\forms.py:75
+#: .\app_teacher\forms.py:75
 msgid "please_check_start_and_end_times"
 msgstr "გთხოვთ გადაამოწმოთ დაწყების და დამთავრების დროები"
 
-#: .\classroom.ge\classroom_ge\app_teacher\forms.py:79
+#: .\app_teacher\forms.py:81
 msgid "deadline"
 msgstr "ჩაბარების ბოლო ვადა"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:20
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:36
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:37
+#: .\app_teacher\forms.py:86
+msgid "require_text_input"
+msgstr "მოსწავლემ უნდა წარმოადგინოს ამოხსნის გამოყენებული გზა"
+
+#: .\app_teacher\models.py:20 .\app_teacher\models.py:36
+#: .\app_teacher\models.py:37
 msgid "owner"
 msgstr "შემქმნელი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:21
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:49
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:67
-#: .\classroom.ge\classroom_ge\base\forms.py:53
-#: .\classroom.ge\classroom_ge\base\models.py:35
-#: .\classroom.ge\classroom_ge\base\models.py:72
-#: .\classroom.ge\classroom_ge\base\models.py:81
+#: .\app_teacher\models.py:21 .\app_teacher\models.py:49
+#: .\app_teacher\models.py:67 .\base\forms.py:53 .\base\models.py:35
+#: .\base\models.py:72 .\base\models.py:81
 msgid "name"
 msgstr "სახელი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:22
-#: .\classroom.ge\classroom_ge\base\models.py:82
+#: .\app_teacher\models.py:22 .\base\models.py:82
 msgid "subject"
 msgstr "საგანი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:23
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:50
-#: .\classroom.ge\classroom_ge\base\models.py:131
-#: .\classroom.ge\classroom_ge\base\models.py:159
+#: .\app_teacher\models.py:23 .\app_teacher\models.py:50 .\base\models.py:131
+#: .\base\models.py:159
 msgid "description"
 msgstr "აღწერა"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:24
+#: .\app_teacher\models.py:24
 msgid "online_meeging_link"
 msgstr "ონლაინ შეხვედრების ლინკი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:26
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:54
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:72
-#: .\classroom.ge\classroom_ge\base\models.py:161
+#: .\app_teacher\models.py:26 .\app_teacher\models.py:54
+#: .\app_teacher\models.py:74 .\base\models.py:161
 msgid "date_created"
 msgstr "შექმნის თარიღი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:27
+#: .\app_teacher\models.py:27
 msgid "is_archived"
 msgstr "დაარქივებულია"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:51
+#: .\app_teacher\models.py:51
 msgid "lesson_date"
 msgstr "გაკვეთილი ჩატარების დღე"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:52
+#: .\app_teacher\models.py:52
 msgid "lesson_start_time"
 msgstr "დაწყების დრო"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:53
+#: .\app_teacher\models.py:53
 msgid "lesson_end_time"
 msgstr "დამთავრების დრო"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:58
+#: .\app_teacher\models.py:58
 msgid "assignment"
 msgstr "დავალება"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:59
+#: .\app_teacher\models.py:59
 msgid "quiz"
 msgstr "ქვიზი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:60
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:82
+#: .\app_teacher\models.py:60 .\app_teacher\models.py:84
 msgid "test"
 msgstr "ტესტი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:61
+#: .\app_teacher\models.py:61
 msgid "exam"
 msgstr "გამოცდა"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:66
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:92
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:117
+#: .\app_teacher\models.py:66 .\app_teacher\models.py:94
+#: .\app_teacher\models.py:119
 msgid "lesson"
 msgstr "გაკვეთილი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:68
+#: .\app_teacher\models.py:68
 msgid "test_type"
 msgstr "ტესტის სახეობა"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:69
+#: .\app_teacher\models.py:69
 msgid "test_deadline"
 msgstr "ჩაბარების ბოლო ვადა"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:71
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:83
-#: .\classroom.ge\classroom_ge\base\models.py:109
-#: .\classroom.ge\classroom_ge\base\models.py:119
+#: .\app_teacher\models.py:73 .\app_teacher\models.py:85 .\base\models.py:109
+#: .\base\models.py:119
 msgid "question"
 msgstr "კითხვა"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:90
-#: .\classroom.ge\classroom_ge\base\models.py:141
-#: .\classroom.ge\classroom_ge\base\models.py:147
+#: .\app_teacher\models.py:92 .\base\models.py:141 .\base\models.py:147
 msgid "video_lecture"
 msgstr "ვიდეო გაკვეთილი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:91
+#: .\app_teacher\models.py:93
 msgid "custom_video_lecture"
 msgstr ""
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:96
+#: .\app_teacher\models.py:98
 msgid "Either video_lecture or custom_video_lecture must be set, but not both."
 msgstr ""
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:106
+#: .\app_teacher\models.py:108
 msgid "user"
 msgstr "მომხმარებელი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:116
+#: .\app_teacher\models.py:118
 msgid "subsription"
 msgstr "გაწევრიანება"
 
-#: .\classroom.ge\classroom_ge\app_teacher\models.py:118
+#: .\app_teacher\models.py:120
 msgid "google_calendar_event"
 msgstr "Google Calendar-ის ევენთი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\templates\app_teacher\classroom\confirm_classroom_deletion.html:8
+#: .\app_teacher\templates\app_teacher\classroom\confirm_classroom_deletion.html:8
 msgid "are_you_shure_to_delete_classroom_with_name"
 msgstr "დარწმუნებული ხართ, რომ გსურთ შემდეგი საკლასო ოთახის წაშლა: "
 
-#: .\classroom.ge\classroom_ge\app_teacher\templates\app_teacher\classroom\confirm_classroom_deletion.html:13
-#: .\classroom.ge\classroom_ge\app_teacher\templates\app_teacher\classroom\confirm_lesson_deletion.html:13
-#: .\classroom.ge\classroom_ge\app_teacher\templates\app_teacher\tests\confirm_test_deletion.html:13
+#: .\app_teacher\templates\app_teacher\classroom\confirm_classroom_deletion.html:13
+#: .\app_teacher\templates\app_teacher\classroom\confirm_lesson_deletion.html:13
+#: .\app_teacher\templates\app_teacher\tests\confirm_test_deletion.html:13
 msgid "delete"
 msgstr "წაშლა"
 
-#: .\classroom.ge\classroom_ge\app_teacher\templates\app_teacher\classroom\confirm_classroom_deletion.html:17
-#: .\classroom.ge\classroom_ge\app_teacher\templates\app_teacher\classroom\confirm_lesson_deletion.html:17
-#: .\classroom.ge\classroom_ge\app_teacher\templates\app_teacher\tests\confirm_test_deletion.html:17
+#: .\app_teacher\templates\app_teacher\classroom\confirm_classroom_deletion.html:17
+#: .\app_teacher\templates\app_teacher\classroom\confirm_lesson_deletion.html:17
+#: .\app_teacher\templates\app_teacher\tests\confirm_test_deletion.html:17
 msgid "cancel"
 msgstr "გაუქმება"
 
-#: .\classroom.ge\classroom_ge\app_teacher\templates\app_teacher\classroom\confirm_lesson_deletion.html:8
+#: .\app_teacher\templates\app_teacher\classroom\confirm_lesson_deletion.html:8
 msgid "are_you_shure_to_delete_lesson_with_name"
 msgstr "დარწმუნებული ხართ, რომ გსურთ შემდეგი საკლასო ოთახის წაშლა: "
 
-#: .\classroom.ge\classroom_ge\app_teacher\templates\app_teacher\tests\confirm_test_deletion.html:8
+#: .\app_teacher\templates\app_teacher\tests\confirm_test_deletion.html:8
 msgid "are_you_shure_to_delete_test_with_name"
 msgstr "დარწმუნებული ხართ, რომ გსურთ შემდეგი დავალების წაშლა: "
 
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:238
+#: .\app_teacher\views.py:238
 msgid "new_class_created"
 msgstr "შეიქმნა ახალი საკლასო ოთახი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:242
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:332
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:644
+#: .\app_teacher\views.py:242 .\app_teacher\views.py:332
+#: .\app_teacher\views.py:646
 msgid "invalid_input"
 msgstr "შეამოწმეთ ველების სისწორე"
 
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:263
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:353
+#: .\app_teacher\views.py:263 .\app_teacher\views.py:353
 msgid "classroom_deleted"
 msgstr "საკლასო ოთახი წარმატებით წაიშალა"
 
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:284
+#: .\app_teacher\views.py:284
 msgid "classroom_archived"
 msgstr "საკლასო ოთახი დაარქივებულია"
 
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:286
+#: .\app_teacher\views.py:286
 msgid "classroom_unarchived"
 msgstr "საკლასო ოთახი ამოაარქივებულია"
 
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:327
+#: .\app_teacher\views.py:327
 msgid "new_lesson"
 msgstr "ახალი გაკვეთილი"
 
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:632
+#: .\app_teacher\views.py:634
 msgid "exercises_added_successfully"
 msgstr "სავარჯიშოები დაემატა წარმატებით"
 
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:636
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:639
-#: .\classroom.ge\classroom_ge\base\forms.py:145
+#: .\app_teacher\views.py:638 .\app_teacher\views.py:641 .\base\forms.py:145
 msgid "unknown_error_refresh"
 msgstr "უცნობი შეცდომა. გთხოვთ სცადოთ ხელახლა."
 
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:750
+#: .\app_teacher\views.py:752
 msgid "test_deleted"
 msgstr "ტესტი წაიშალა წარმატებით"
 
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:904
+#: .\app_teacher\views.py:906
 msgid "video_already_is_added_to_lesson"
 msgstr "ვიდეო უკვე დამატებულია გაკვეთილში"
 
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:914
+#: .\app_teacher\views.py:916
 msgid "could_not_add_video_to_lesson"
 msgstr "ვიდეოს დამატება ვერ მოხერხდა"
 
-#: .\classroom.ge\classroom_ge\app_teacher\views.py:917
+#: .\app_teacher\views.py:919
 msgid "video_added_to_lesson"
 msgstr "ვიდეო წარმატებით დაემატა"
 
-#: .\classroom.ge\classroom_ge\base\admin.py:9
+#: .\base\admin.py:9
 msgid "Personal info"
 msgstr "პირადი ინფორმაცია"
 
-#: .\classroom.ge\classroom_ge\base\admin.py:10
+#: .\base\admin.py:10
 msgid "WEB Groups"
 msgstr "WEB Groups"
 
-#: .\classroom.ge\classroom_ge\base\admin.py:11
+#: .\base\admin.py:11
 msgid "Permissions"
 msgstr "მომხმარებლის უფლებები"
 
-#: .\classroom.ge\classroom_ge\base\admin.py:12
+#: .\base\admin.py:12
 msgid "Important dates"
 msgstr "მნიშვნელოვანი თარიღები"
 
-#: .\classroom.ge\classroom_ge\base\forms.py:21
+#: .\base\forms.py:21
 msgid "confirm_email"
 msgstr "გაიმეორეთ ელ-ფოსტა"
 
-#: .\classroom.ge\classroom_ge\base\forms.py:27
-#: .\classroom.ge\classroom_ge\base\forms.py:38
-#: .\classroom.ge\classroom_ge\base\forms.py:43
-#: .\classroom.ge\classroom_ge\base\forms.py:64
-#: .\classroom.ge\classroom_ge\base\forms.py:67
-#: .\classroom.ge\classroom_ge\base\forms.py:70
-#: .\classroom.ge\classroom_ge\base\forms.py:73
-#: .\classroom.ge\classroom_ge\base\forms.py:76
-#: .\classroom.ge\classroom_ge\base\forms.py:79
-#: .\classroom.ge\classroom_ge\base\forms.py:82
+#: .\base\forms.py:27 .\base\forms.py:38 .\base\forms.py:43 .\base\forms.py:64
+#: .\base\forms.py:67 .\base\forms.py:70 .\base\forms.py:73 .\base\forms.py:76
+#: .\base\forms.py:79 .\base\forms.py:82
 msgid "this_field_is_required"
 msgstr "აღნიშნული ველის შევსება აუცილებელია"
 
-#: .\classroom.ge\classroom_ge\base\forms.py:32
+#: .\base\forms.py:32
 msgid "confirm_password"
 msgstr "გაიმეორეთ პაროლი"
 
-#: .\classroom.ge\classroom_ge\base\forms.py:54
-#: .\classroom.ge\classroom_ge\base\models.py:36
+#: .\base\forms.py:54 .\base\models.py:36
 msgid "surname"
 msgstr "გვარი"
 
-#: .\classroom.ge\classroom_ge\base\forms.py:55
-#: .\classroom.ge\classroom_ge\base\models.py:37
+#: .\base\forms.py:55 .\base\models.py:37
 msgid "date_of_birth"
 msgstr "დაბადების თარიღი"
 
-#: .\classroom.ge\classroom_ge\base\forms.py:56
-#: .\classroom.ge\classroom_ge\base\models.py:38
+#: .\base\forms.py:56 .\base\models.py:38
 msgid "school"
 msgstr "სკოლა"
 
-#: .\classroom.ge\classroom_ge\base\forms.py:57
-#: .\classroom.ge\classroom_ge\base\models.py:39
+#: .\base\forms.py:57 .\base\models.py:39
 msgid "city"
 msgstr "ქალაქი"
 
-#: .\classroom.ge\classroom_ge\base\forms.py:58
-#: .\classroom.ge\classroom_ge\base\models.py:49
-#: .\classroom.ge\classroom_ge\base\templates\base\login.html:13
+#: .\base\forms.py:58 .\base\models.py:49 .\base\templates\base\login.html:13
 msgid "email"
 msgstr "ელ-ფოსტა"
 
-#: .\classroom.ge\classroom_ge\base\forms.py:59
-#: .\classroom.ge\classroom_ge\base\templates\base\login.html:17
+#: .\base\forms.py:59 .\base\templates\base\login.html:17
 msgid "password"
 msgstr "პაროლი"
 
-#: .\classroom.ge\classroom_ge\base\forms.py:122
+#: .\base\forms.py:122
 msgid "chosen_date_in_future"
 msgstr "თარიღი არასწორია"
 
-#: .\classroom.ge\classroom_ge\base\forms.py:132
-#: .\classroom.ge\classroom_ge\base\forms.py:138
-#: .\classroom.ge\classroom_ge\base\models.py:52
+#: .\base\forms.py:132 .\base\forms.py:138 .\base\models.py:52
 msgid "invalid_email"
 msgstr "შეამოწმეთ ელ-ფოსტის სისწორე"
 
-#: .\classroom.ge\classroom_ge\base\forms.py:142
+#: .\base\forms.py:142
 msgid "emails_do_not_match"
 msgstr "ელ-ფოსტები არ ემთხვევა ერთმანეთს"
 
-#: .\classroom.ge\classroom_ge\base\models.py:41
+#: .\base\models.py:41
 msgid "email_verified"
 msgstr "ელ-ფოსტა ვერიფიცირებულია"
 
-#: .\classroom.ge\classroom_ge\base\models.py:43
+#: .\base\models.py:43
 msgid "is_student"
 msgstr "სტუდენტის სტატუსი"
 
-#: .\classroom.ge\classroom_ge\base\models.py:44
+#: .\base\models.py:44
 msgid "is_teacher"
 msgstr "მასწავლებლის სტატუსი"
 
-#: .\classroom.ge\classroom_ge\base\models.py:45
+#: .\base\models.py:45
 msgid "is_moderator"
 msgstr "მოდერატორის სტატუსი"
 
-#: .\classroom.ge\classroom_ge\base\models.py:46
+#: .\base\models.py:46
 msgid "is_administrator"
 msgstr "ადმინისტრატორის სტატუსი"
 
-#: .\classroom.ge\classroom_ge\base\models.py:54
+#: .\base\models.py:54
 msgid "email_already_registered"
 msgstr "აღნიშნული ელ-ფოსტა უკვე დარეგისტრირებულია"
 
-#: .\classroom.ge\classroom_ge\base\models.py:65
+#: .\base\models.py:65
 msgid "User"
 msgstr "მომხმარებელი"
 
-#: .\classroom.ge\classroom_ge\base\models.py:66
+#: .\base\models.py:66
 msgid "Users"
 msgstr "მომხმარებლები"
 
-#: .\classroom.ge\classroom_ge\base\models.py:72
+#: .\base\models.py:72
 msgid "subject_already_registered"
 msgstr "აღნიშნული სახელით საგანი უკვე არსებობს"
 
-#: .\classroom.ge\classroom_ge\base\models.py:80
+#: .\base\models.py:80
 msgid "identifier"
 msgstr "იდენტიფიკატორი"
 
-#: .\classroom.ge\classroom_ge\base\models.py:80
+#: .\base\models.py:80
 msgid "identifier_already_registered"
 msgstr "აღნიშნული სახელით თემა უკვე არსებობს უკვე არსებობს"
 
-#: .\classroom.ge\classroom_ge\base\models.py:81
+#: .\base\models.py:81
 msgid "topic_already_registered"
 msgstr "აღნიშნული თემა უკვე დარეგისტრირებულია"
 
-#: .\classroom.ge\classroom_ge\base\models.py:91
+#: .\base\models.py:91
 msgid "single_choice"
 msgstr "Signle Choice"
 
-#: .\classroom.ge\classroom_ge\base\models.py:92
+#: .\base\models.py:92
 msgid "multiple_choice"
 msgstr "Multiple Choice"
 
-#: .\classroom.ge\classroom_ge\base\models.py:93
+#: .\base\models.py:93
 msgid "open_end"
 msgstr "ღია კითხვა"
 
-#: .\classroom.ge\classroom_ge\base\models.py:98
+#: .\base\models.py:98
 msgid "question_id"
 msgstr "კითხვის ID"
 
-#: .\classroom.ge\classroom_ge\base\models.py:99
-#: .\classroom.ge\classroom_ge\base\models.py:120
+#: .\base\models.py:99 .\base\models.py:120
 msgid "text"
 msgstr "ტექსტი"
 
-#: .\classroom.ge\classroom_ge\base\models.py:99
-#: .\classroom.ge\classroom_ge\base\models.py:129
+#: .\base\models.py:99 .\base\models.py:129
 msgid "question_text_already_exists"
 msgstr "სავარჯიშოს ტექსტი ბაზაში უკვე არსებობს"
 
-#: .\classroom.ge\classroom_ge\base\models.py:100
+#: .\base\models.py:100
 msgid "question_type"
 msgstr "კითხვის ტიპი"
 
-#: .\classroom.ge\classroom_ge\base\models.py:110
-#: .\classroom.ge\classroom_ge\base\models.py:142
-#: .\classroom.ge\classroom_ge\base\models.py:148
+#: .\base\models.py:110 .\base\models.py:142 .\base\models.py:148
 msgid "topic"
 msgstr "თემა"
 
-#: .\classroom.ge\classroom_ge\base\models.py:121
+#: .\base\models.py:121
 msgid "is_correct"
 msgstr "სწორია"
 
-#: .\classroom.ge\classroom_ge\base\models.py:129
+#: .\base\models.py:129
 msgid "url"
 msgstr "ლინკი"
 
-#: .\classroom.ge\classroom_ge\base\models.py:130
+#: .\base\models.py:130
 msgid "title"
 msgstr "სათაური"
 
-#: .\classroom.ge\classroom_ge\base\models.py:160
+#: .\base\models.py:160
 msgid "has_read"
 msgstr "წაკითხულია"
 
-#: .\classroom.ge\classroom_ge\base\templates\base\login.html:27
+#: .\base\templates\base\login.html:27
 msgid "login"
 msgstr "შესვლა"
 
-#: .\classroom.ge\classroom_ge\base\templates\base\login.html:30
+#: .\base\templates\base\login.html:30
 msgid "dont_have_account_questionmark"
 msgstr "არ ხართ დარეგისტრირებული?"
 
-#: .\classroom.ge\classroom_ge\base\templates\base\login.html:34
-#: .\classroom.ge\classroom_ge\base\templates\base\register.html:181
+#: .\base\templates\base\login.html:34 .\base\templates\base\register.html:181
 msgid "registration"
 msgstr "რეგისტრაცია"
 
-#: .\classroom.ge\classroom_ge\base\templates\base\register.html:9
-#: .\classroom.ge\classroom_ge\base\views.py:86
+#: .\base\templates\base\register.html:9 .\base\views.py:89
 msgid "message_first_step_of_registration_done"
 msgstr ""
 "თქვენ წარმატებით დარეგისტრირდით! შეამოწმეთ ელ-ფოსტა და გაიარეთ იმეილის "
 "ვერიფიკაცია, რათა შეძლოთ ისარგებლოთ ჩვენი სერვისებით."
 
-#: .\classroom.ge\classroom_ge\base\templates\base\template_activate_account.html:4
+#: .\base\templates\base\template_activate_account.html:4
 msgid "hello"
 msgstr "გამარჯობათ"
 
-#: .\classroom.ge\classroom_ge\base\templates\base\template_activate_account.html:6
+#: .\base\templates\base\template_activate_account.html:6
 msgid "follow_link_for_email_verification"
 msgstr "გთხოვთ გადახვიდეთ შემდეგ ბმულზე ანგარიშის ვალიდაციისთვის"
 
-#: .\classroom.ge\classroom_ge\base\templates\base\template_activation_link_expired.html:7
+#: .\base\templates\base\template_activation_link_expired.html:7
 msgid "activation_link_expired"
 msgstr "აქტივაციის ლინკის ვადა ამოიწურა"
 
-#: .\classroom.ge\classroom_ge\base\templates\base\template_activation_link_expired.html:12
+#: .\base\templates\base\template_activation_link_expired.html:12
 msgid "resend_activation_code"
 msgstr "აქტივაციის ლინკის ხელახლა გამოგზავნა"
 
-#: .\classroom.ge\classroom_ge\base\views.py:107
-#: .\classroom.ge\classroom_ge\base\views.py:121
+#: .\base\views.py:110 .\base\views.py:124
 msgid "email_or_password_does_not_exist"
 msgstr "ელ. ფოსტა ან პაროლი არასწორია"
 
-#: .\classroom.ge\classroom_ge\base\views.py:114
+#: .\base\views.py:117
 msgid "email_is_not_verified_yet"
 msgstr "ელ. ფოსტა არ არის ვერიფიცირებული"
 
-#: .\classroom.ge\classroom_ge\base\views.py:147
+#: .\base\views.py:150
 msgid "activate_account"
 msgstr "ანგარიშის აქტივაცია"
 
-#: .\classroom.ge\classroom_ge\base\views.py:178
+#: .\base\views.py:181
 msgid "email_activation_was_successfull"
 msgstr "ელექტრონული ფოსტის აქტივაცია წარმატებით განხორციელდა!"
 
-#: .\classroom.ge\classroom_ge\base\views.py:183
+#: .\base\views.py:186
 msgid "something_went_wrong"
 msgstr "უცნობი შეცდომა. განმეორების შემთხვევაში გთხოვთ დაგვიკავშირდეთ"
 
-#: .\classroom.ge\classroom_ge\base\views.py:255
-#: .\classroom.ge\classroom_ge\base\views.py:258
+#: .\base\views.py:258 .\base\views.py:261
 msgid "classroom_already_added_to_google_calendar"
 msgstr "საკლასო ოთახი უკვე არის დამატებული Google Calendar-ში!"
 
-#: .\classroom.ge\classroom_ge\base\views.py:261
-#: .\classroom.ge\classroom_ge\base\views.py:300
+#: .\base\views.py:264 .\base\views.py:303
 msgid "error_in_class_subscription"
 msgstr "შეცდომა კლასის გამოწერაში"
 
-#: .\classroom.ge\classroom_ge\base\views.py:279
+#: .\base\views.py:282
 msgid "error_adding_lesson_event_to_google_calendar"
 msgstr "პრობლემა გაკვეთილის Google Calendar-შო დამატებისას..."
 
-#: .\classroom.ge\classroom_ge\base\views.py:289
+#: .\base\views.py:292
 msgid "error_adding_lesson_event_to_database"
 msgstr "პრობლემა გაკვეთილის კალენდრის მონაცემთა ბაზაში დამატებისას..."
 
-#: .\classroom.ge\classroom_ge\base\views.py:293
+#: .\base\views.py:296
 msgid "classroom_sucessfully_added_to_calendar"
 msgstr "საკლასო ოთახი წარმატებით დაემატა კალენდარში!"
 
-#: .\classroom.ge\classroom_ge\classroom_ge\settings.py:174
+#: .\classroom_ge\settings.py:174
 msgid "Georgian"
 msgstr "ქართული"
 
-#: .\classroom.ge\classroom_ge\src\validators.py:13
+#: .\src\validators.py:13
 msgid "password_only_contains_these_characters"
 msgstr ""
 "პაროლი შეიძლება შეიცავდეს მხოლოდ ლათინურ ასოებს (a-z,A-Z), ციფრებს (0-9) და "
 "შემდეგ სიმბოლოებს ~!@#$%^&*()_-+={[}]:;<,>.?"
 
-#: .\classroom.ge\classroom_ge\src\validators.py:17
+#: .\src\validators.py:17
 msgid "password_at_lest_eight_chars"
 msgstr "პაროლი უნდა შეიცავდეს არანაკლებ 8 სიმბოლოს"
 
-#: .\classroom.ge\classroom_ge\src\validators.py:20
+#: .\src\validators.py:20
 msgid "password_not_more_than_50_chars"
 msgstr "პაროლი უნდა შეიცავდეს არაუმეტეს 50 სიმბოლოს"
 
-#: .\classroom.ge\classroom_ge\src\validators.py:23
+#: .\src\validators.py:23
 msgid "password_at_lest_one_digit"
 msgstr "პაროლი უნდა შეიცავდეს ერთ ციფრს (0-9) მაინც"
 
-#: .\classroom.ge\classroom_ge\src\validators.py:26
+#: .\src\validators.py:26
 msgid "password_at_lest_one_uppercase"
 msgstr "პაროლი უნდა შეიცავდეს ერთ დიდ ლათინურ სიმბოლოს მაინც (A-Z)"
 
-#: .\classroom.ge\classroom_ge\src\validators.py:29
+#: .\src\validators.py:29
 msgid "password_at_lest_one_lowercase"
 msgstr "პაროლი უნდა შეიცავდეს ერთ პატარა ლათინურ სიმბოლოს მაინც (a-z)"
 
-#: .\classroom.ge\classroom_ge\src\validators.py:32
+#: .\src\validators.py:32
 msgid "password_at_lest_one_special"
 msgstr ""
 "პაროლი უნდა შეიცავდეს ერთ სპეციალურ სიმბოლოს მაინც: ~!@#$%^&*()_-+={[}]:;<,"
 ">.?"
 
-#: .\classroom.ge\classroom_ge\src\validators.py:35
+#: .\src\validators.py:35
 msgid "passwords_do_not_match"
 msgstr "პაროლები არ ემთხვევა ერთმანეთს"
 

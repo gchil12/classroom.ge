@@ -100,6 +100,17 @@
 							</label>
 							</div>
 						{% endfor %}
+
+						{% if student_question.text_response %}
+							<div>
+								ამოხსნა:
+							</div>
+							<div style="background-color: white; width: 100%; border: solid 1px;">
+								<p class="m-1">
+									{{student_question.text_response}}
+								</p>
+							</div>
+						{% endif %}
 					</div>
 				</li>
 				{% endfor %}
