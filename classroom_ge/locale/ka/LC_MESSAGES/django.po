@@ -114,7 +114,7 @@ msgstr "ჩაბარების ბოლო ვადა"
 
 #: .\app_teacher\forms.py:86
 msgid "require_text_input"
-msgstr "მოსწავლემ უნდა წარმოადგინოს ამოხსნის გამოყენებული გზა"
+msgstr "ტექსტური ველის დამატება ამოცანების ამოხსნის გზის შესაყვანად"
 
 #: .\app_teacher\models.py:20 .\app_teacher\models.py:36
 #: .\app_teacher\models.py:37

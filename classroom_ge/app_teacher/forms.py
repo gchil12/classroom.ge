@@ -85,6 +85,7 @@ class TestToLessonForm(forms.Form):
     text_input_required = forms.BooleanField(
         label=_('require_text_input',),
         required=False,
+        initial=True,
     )
     
     def clean(self):

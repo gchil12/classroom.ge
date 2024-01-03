@@ -68,7 +68,7 @@ class Test(models.Model):
     test_type = models.CharField(verbose_name=_('test_type'), max_length=20, choices=TEST_TYPE_CHOICES, default='assignment')
     deadline = models.DateField(blank=False, null=True, verbose_name=_('test_deadline'), default=None)
 
-    text_input_required = models.BooleanField(default=False)
+    text_input_required = models.BooleanField(default=True)
 
     questions = models.ManyToManyField(Question, through='TestQuestion', verbose_name=_('question'))
     date_created = models.DateTimeField(auto_now_add=True, blank=True, verbose_name=_('date_created'),)
