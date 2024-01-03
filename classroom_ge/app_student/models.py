@@ -43,7 +43,7 @@ class StudentQuestion(models.Model):
     given_point = models.IntegerField(default=0, blank=True)
     
     # Points given by GPT
-    submitted_to_gpt = models.BooleanField(default=False)
+    submitted_to_gpt = models.BooleanField(default=False, blank=True, null=True)
     gpt_knowledge = models.FloatField(default=None, blank=True, null=True)
     gpt_reasoning = models.FloatField(default=None, blank=True, null=True)
     gpt_formulation  = models.FloatField(default=None, blank=True, null=True)
